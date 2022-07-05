@@ -4,7 +4,7 @@ import com.company.internshipProject.Authentication.TokenManager;
 import com.company.internshipProject.Controller.LoginController;
 import com.company.internshipProject.Dal.UserDal.IUserDal;
 import com.company.internshipProject.Entity.Movie;
-import com.company.internshipProject.Entity.Userr;
+import com.company.internshipProject.Entity.UserEntity;
 import com.company.internshipProject.Exceptions.MovieExceptions.JWTErrorException;
 import com.company.internshipProject.Exceptions.MovieExceptions.PermissionDeniedException;
 import com.company.internshipProject.Exceptions.UserExceptions.InvalidUsernameOrPasswordException;
@@ -34,7 +34,7 @@ public class UserService  implements IUserService
 
     @Override
     @Transactional
-    public Userr getUserByUsername(String username)
+    public UserEntity getUserByUsername(String username)
     {
         if (username.isBlank() || username.isEmpty())
             return null;
@@ -43,48 +43,48 @@ public class UserService  implements IUserService
 
     @Override
     @Transactional
-    public List<Userr> getAllUsers()
+    public List<UserEntity> getAllUsers()
     {
         return userDal.getAllUsers();
     }
 
     @Override
     @Transactional
-    public Userr addUser(Userr userr)
+    public UserEntity addUser(UserEntity userEntity)
     {
 
-        if (userr.getUsername().isEmpty() || userr.getUsername().isBlank() ||
-            userr.getPassword().isBlank() || userr.getPassword().isEmpty()
-            || userr.getUsername() == null || userr.getPassword() == null)
+        if (userEntity.getUsername().isEmpty() || userEntity.getUsername().isBlank() ||
+            userEntity.getPassword().isBlank() || userEntity.getPassword().isEmpty()
+            || userEntity.getUsername() == null || userEntity.getPassword() == null)
             throw new InvalidUsernameOrPasswordException();
 
-        if (isUserExists(userr))
+        if (isUserExists(userEntity))
             throw new UserAlreadyExistsException();
-        return userDal.addUser(userr);
+        return userDal.addUser(userEntity);
     }
 
 
 
     @Override
-    public boolean isUserExists(Userr userr)
+    public boolean isUserExists(UserEntity userEntity)
     {
-        List<Userr> users = userDal.getAllUsers();
+        List<UserEntity> users = userDal.getAllUsers();
 
-        for (Userr user : users)
-            if (user.getUsername().equals(userr.getUsername()))
+        for (UserEntity user : users)
+            if (user.getUsername().equals(userEntity.getUsername()))
                 return true;
         return false;
     }
 
     @Override
-    public Movie addMovieToFavouriteList(Userr user,int id)
+    public Movie addMovieToFavouriteList(UserEntity user, int id)
     {
-        Userr userr = userDal.getUserByUsername(user.getUsername());
+        UserEntity userEntity = userDal.getUserByUsername(user.getUsername());
 
-        if (userr == null)
+        if (userEntity == null)
             throw new UserNotExistsException();
 
-        if (!tokenManager.getUsernameToken(userr.getToken()).equals(LoginController.USER.getUsername()))
+        if (!tokenManager.getUsernameToken(userEntity.getToken()).equals(LoginController.USER.getUsername()))
             throw new JWTErrorException();
 
         return userDal.addMovieToFavouriteList(user,id);
@@ -96,7 +96,7 @@ public class UserService  implements IUserService
         if (username.isBlank() || username.isEmpty())
             throw new InvalidUsernameOrPasswordException();
 
-        Userr user = userDal.getUserByUsername(username);
+        UserEntity user = userDal.getUserByUsername(username);
 
         if (user == null)
             throw new UserNotExistsException();
@@ -120,14 +120,14 @@ public class UserService  implements IUserService
     }
 
     @Override
-    public Movie deleteMovieFromFavouriteMovieList(Userr user, int movie_id)
+    public Movie deleteMovieFromFavouriteMovieList(UserEntity user, int movie_id)
     {
-        if (movie_id < 0 || movie_id > Integer.MAX_VALUE)
+        if (movie_id <= 0 || movie_id > Integer.MAX_VALUE)
             throw new InvalidUsernameOrPasswordException();
 
-        Userr userr = userDal.getUserByUsername(user.getUsername());
+        UserEntity userEntity = userDal.getUserByUsername(user.getUsername());
 
-        if (userr == null)
+        if (userEntity == null)
             throw new UserNotExistsException();
 
         return userDal.deleteMovieFromFavouriteMovieList(user,movie_id);

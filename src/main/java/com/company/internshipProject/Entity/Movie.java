@@ -28,11 +28,11 @@ public class Movie
 
 
     @ManyToMany
-    @JoinTable( name = "movie_has_user",
+    @JoinTable(name = "movie_has_user",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private List<Userr> userrs;
+    private List<UserEntity> userEntities;
 
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -93,11 +93,11 @@ public class Movie
         this.movieDetails = movieDetails;
     }
 
-    public void addUser(Userr user)
+    public void addUser(UserEntity user)
     {
-        if (userrs == null)
-            userrs = new ArrayList<>();
-        userrs.add(user);
+        if (userEntities == null)
+            userEntities = new ArrayList<>();
+        userEntities.add(user);
 
     }
     @Override

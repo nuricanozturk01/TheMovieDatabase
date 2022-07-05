@@ -19,14 +19,14 @@ public class FavouriteMovie
     @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="user_id")
-    private Userr userr;
+    private UserEntity userEntity;
 
     public FavouriteMovie() {
     }
 
-    public FavouriteMovie(Movie movie, Userr userr) {
+    public FavouriteMovie(Movie movie, UserEntity userEntity) {
         this.movie = movie;
-        this.userr = userr;
+        this.userEntity = userEntity;
     }
 
     public Movie getMovie() {
@@ -37,11 +37,11 @@ public class FavouriteMovie
         this.movie = movie;
     }
 
-    public Userr getUser() {
-        return userr;
+    public UserEntity getUser() {
+        return userEntity;
     }
 
-    public void setUser(Userr userr) {
-        this.userr = userr;
+    public void setUser(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 }

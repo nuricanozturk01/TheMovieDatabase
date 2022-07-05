@@ -2,7 +2,7 @@ package com.company.internshipProject.Controller;
 
 
 import com.company.internshipProject.Authentication.TokenManager;
-import com.company.internshipProject.Entity.Userr;
+import com.company.internshipProject.Entity.UserEntity;
 import com.company.internshipProject.Exceptions.UserExceptions.InvalidUserException;
 import com.company.internshipProject.Service.IUserService;
 
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/login")
 public class LoginController
 {
-    public static Userr USER ;
+    public static UserEntity USER ;
     private IUserService loginService;
     @Autowired
     private TokenManager tokenManager;
@@ -36,20 +36,20 @@ public class LoginController
 
 
     @PostMapping("/loginuser")
-    public ResponseEntity<String> loginUser(@RequestBody Userr userr)
+    public ResponseEntity<String> loginUser(@RequestBody UserEntity userEntity)
     {
         try
         {
-            userr.setPassword(Hash.hashing(userr.getPassword()));
+            userEntity.setPassword(Hash.hashing(userEntity.getPassword()));
 
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userr.getUsername(), userr.getPassword()));
+                    new UsernamePasswordAuthenticationToken(userEntity.getUsername(), userEntity.getPassword()));
 
-            String token = tokenManager.generateToken(userr.getUsername());
+            String token = tokenManager.generateToken(userEntity.getUsername());
 
-            loginService.addToken(token,userr.getUsername());
+            loginService.addToken(token, userEntity.getUsername());
 
-            USER = loginService.getUserByUsername(userr.getUsername());
+            USER = loginService.getUserByUsername(userEntity.getUsername());
 
             return ResponseEntity.ok(token);
         }

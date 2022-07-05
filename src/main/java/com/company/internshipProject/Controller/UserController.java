@@ -1,7 +1,7 @@
 package com.company.internshipProject.Controller;
 
 import com.company.internshipProject.Entity.Movie;
-import com.company.internshipProject.Entity.Userr;
+import com.company.internshipProject.Entity.UserEntity;
 import com.company.internshipProject.Service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public class UserController
     }
 
     @GetMapping("/getUser/{username}")
-    public Userr getUser(@PathVariable String username)
+    public UserEntity getUser(@PathVariable String username)
     {
         return service.getUserByUsername(username);
     }
@@ -28,14 +28,14 @@ public class UserController
 
 
     @GetMapping("/getUsers")
-    public List<Userr> getUsers()
+    public List<UserEntity> getUsers()
     {
         return service.getAllUsers();
     }
 
 
     @PostMapping("/addFavouriteList/{id}")
-    public Movie addMovieToFavouriteList(@RequestBody Userr user, @PathVariable int id)
+    public Movie addMovieToFavouriteList(@RequestBody UserEntity user, @PathVariable int id)
     {
         return service.addMovieToFavouriteList(user,id);
     }
@@ -47,7 +47,7 @@ public class UserController
     }
 
     @PostMapping("/delete/{id}")
-    public Movie deleteMovieFromFavouriteList(@PathVariable int id, @RequestBody Userr user)
+    public Movie deleteMovieFromFavouriteList(@PathVariable int id, @RequestBody UserEntity user)
     {
         return service.deleteMovieFromFavouriteMovieList(user, id);
     }

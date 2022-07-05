@@ -3,8 +3,9 @@ package com.company.internshipProject.Service.MovieAPIService;
 import com.company.internshipProject.Dal.MovieAPIDAL.IMovieAPIDal;
 import com.company.internshipProject.Entity.JSONParser.Detail.Detail;
 import com.company.internshipProject.Entity.JSONParser.MovieObject;
-import com.company.internshipProject.Entity.Movie;
-import com.company.internshipProject.Entity.Userr;
+import com.company.internshipProject.Exceptions.MovieExceptions.InvalidMovieIdException;
+import com.company.internshipProject.Exceptions.MovieExceptions.InvalidPageNumberException;
+import com.company.internshipProject.Exceptions.MovieExceptions.MovieNotExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class MovieAPIService implements IMovieAPIService
     public Detail getMovieDetail(int movie_id)
     {
         if (movie_id < 0 || movie_id > Integer.MAX_VALUE)
-            return null;
+            throw new InvalidMovieIdException();
 
         return movieAPIDal.getMovieDetail(movie_id);
     }
@@ -37,7 +38,7 @@ public class MovieAPIService implements IMovieAPIService
     public List<MovieObject> getPopularMovies(int page)
     {
         if (page < 0 || page > Integer.MAX_VALUE)
-            return null;
+            throw new InvalidPageNumberException();
         return movieAPIDal.getPopularMovies(page);
     }
 
@@ -45,7 +46,7 @@ public class MovieAPIService implements IMovieAPIService
     public List<MovieObject> searchMovie(String title)
     {
         if (title.isEmpty() || title.isBlank())
-            return null;
+            throw new MovieNotExistsException();
 
         return movieAPIDal.searchMovie(title);
     }
@@ -61,7 +62,7 @@ public class MovieAPIService implements IMovieAPIService
     public List<MovieObject> getMovies(int pageNumber)
     {
         if (pageNumber < 0 || pageNumber > Integer.MAX_VALUE)
-            return null;
+            throw new InvalidPageNumberException();
         return movieAPIDal.getMovies(pageNumber);
     }
 

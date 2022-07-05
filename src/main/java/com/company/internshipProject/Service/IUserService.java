@@ -1,25 +1,25 @@
 package com.company.internshipProject.Service;
 
 import com.company.internshipProject.Entity.Movie;
-import com.company.internshipProject.Entity.Userr;
+import com.company.internshipProject.Entity.UserEntity;
 
 import java.util.List;
 
 public interface IUserService
 {
-    Userr getUserByUsername(String username);
-    List<Userr> getAllUsers();
+    UserEntity getUserByUsername(String username);
+    List<UserEntity> getAllUsers();
 
-    Userr addUser(Userr userr);
+    UserEntity addUser(UserEntity userEntity);
 
-    boolean isUserExists(Userr userr);
+    boolean isUserExists(UserEntity userEntity);
 
-    Movie addMovieToFavouriteList(Userr user,int id);
+    Movie addMovieToFavouriteList(UserEntity user, int id);
 
     List<Movie> getFavouriteMoviesByUsername(String username);
 
     String addToken(String token, String username);
 
-    Movie deleteMovieFromFavouriteMovieList(Userr user, int movie_id);
+    Movie deleteMovieFromFavouriteMovieList(UserEntity user, int movie_id);
 
 }

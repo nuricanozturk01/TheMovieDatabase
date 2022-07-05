@@ -34,7 +34,6 @@ public class LogoutController
     @PostMapping("/logoutuser")
     public String logout()
     {
-
         userService.addToken(null,LoginController.USER.getUsername());
         return "logout successfully!";
     }

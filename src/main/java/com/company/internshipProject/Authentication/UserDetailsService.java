@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import com.company.internshipProject.Dal.UserDal.IUserDal;
-import com.company.internshipProject.Entity.Userr;
+import com.company.internshipProject.Entity.UserEntity;
 import com.company.internshipProject.Exceptions.UserExceptions.InvalidUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
     private IUserDal userDal;
-    private List<Userr> userList;
+    private List<UserEntity> userList;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -33,17 +33,17 @@ public class UserDetailsService implements org.springframework.security.core.use
     @PostConstruct
     public void init() {
         userList = new ArrayList<>();
-        userList = userDal.getAllUsers();
+
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-
-        for (Userr userr : userList)
-            if (userr.getUsername().equals(username))
-                return new User(username, passwordEncoder.encode(userr.getPassword()), new ArrayList<>());
+        userList = userDal.getAllUsers();
+        for (UserEntity userEntity : userList)
+            if (userEntity.getUsername().equals(username))
+                return new User(username, passwordEncoder.encode(userEntity.getPassword()), new ArrayList<>());
 
         throw new InvalidUserException();
     }

@@ -2,8 +2,6 @@ package com.company.internshipProject.Service.MovieAPIService;
 
 import com.company.internshipProject.Entity.JSONParser.Detail.Detail;
 import com.company.internshipProject.Entity.JSONParser.MovieObject;
-import com.company.internshipProject.Entity.Movie;
-import com.company.internshipProject.Entity.Userr;
 
 import java.util.HashMap;
 import java.util.List;

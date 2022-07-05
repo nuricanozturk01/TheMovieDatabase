@@ -1,20 +1,20 @@
 package com.company.internshipProject.Dal.UserDal;
 
 import com.company.internshipProject.Entity.Movie;
-import com.company.internshipProject.Entity.Userr;
+import com.company.internshipProject.Entity.UserEntity;
 
 import java.util.List;
 
 public interface IUserDal
 {
-    Userr getUserByUsername(String username);
-    List<Userr> getAllUsers();
-    Userr addUser(Userr userr);
-    Movie addMovieToFavouriteList(Userr user,int id);
+    UserEntity getUserByUsername(String username);
+    List<UserEntity> getAllUsers();
+    UserEntity addUser(UserEntity userEntity);
+    Movie addMovieToFavouriteList(UserEntity user, int id);
     List<Movie> getFavouriteMoviesByUsername(String username);
     String addToken(String token, String username);
     String getToken(String username);
 
-    Movie deleteMovieFromFavouriteMovieList(Userr user, int movie_id);
+    Movie deleteMovieFromFavouriteMovieList(UserEntity user, int movie_id);
 
 }

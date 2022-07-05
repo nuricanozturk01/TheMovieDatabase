@@ -1,6 +1,6 @@
 package com.company.internshipProject.Controller;
 
-import com.company.internshipProject.Entity.Userr;
+import com.company.internshipProject.Entity.UserEntity;
 import com.company.internshipProject.Service.IUserService;
 import com.company.internshipProject.util.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +22,11 @@ public class SignUpController
     }
 
     @PostMapping("/add")
-    public String addUser(@RequestBody Userr userr)
+    public String addUser(@RequestBody UserEntity userEntity)
     {
-        userr.setPassword(Hash.hashing(userr.getPassword()));
-        userService.addUser(userr);
-        return userr.getUsername() + " added successfully!";
+        userEntity.setPassword(Hash.hashing(userEntity.getPassword()));
+        userService.addUser(userEntity);
+        return userEntity.getUsername() + " added successfully!";
     }
 
 }

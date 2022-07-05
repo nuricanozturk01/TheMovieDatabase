@@ -2,8 +2,6 @@ package com.company.internshipProject.Controller;
 
 import com.company.internshipProject.Entity.JSONParser.Detail.Detail;
 import com.company.internshipProject.Entity.JSONParser.MovieObject;
-import com.company.internshipProject.Entity.Movie;
-import com.company.internshipProject.Entity.Userr;
 import com.company.internshipProject.Service.MovieAPIService.IMovieAPIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
