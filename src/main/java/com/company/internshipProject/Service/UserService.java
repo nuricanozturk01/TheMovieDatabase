@@ -2,7 +2,7 @@ package com.company.internshipProject.Service;
 
 import com.company.internshipProject.Authentication.TokenManager;
 import com.company.internshipProject.Controller.LoginController;
-import com.company.internshipProject.Dal.UserDal.IUserDal;
+import com.company.internshipProject.DAO.UserDal.IUserDAO;
 import com.company.internshipProject.Entity.Movie;
 import com.company.internshipProject.Entity.UserEntity;
 import com.company.internshipProject.Exceptions.MovieExceptions.JWTErrorException;
@@ -20,13 +20,13 @@ import java.util.List;
 @Service
 public class UserService  implements IUserService
 {
-    private IUserDal userDal;
+    private IUserDAO userDal;
     @Autowired
     private TokenManager tokenManager;
 
 
     @Autowired
-    public UserService(IUserDal userDal)
+    public UserService(IUserDAO userDal)
     {
         this.userDal = userDal;
     }
@@ -112,9 +112,6 @@ public class UserService  implements IUserService
 
     public String addToken(String token, String username)
     {
-        if (token.isEmpty() || token.isBlank() ||
-            username.isBlank() || username.isEmpty())
-            throw new JWTErrorException();
 
         return userDal.addToken(token,username);
     }

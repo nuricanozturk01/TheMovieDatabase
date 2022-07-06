@@ -7,6 +7,7 @@ import com.company.internshipProject.Exceptions.UserExceptions.InvalidUserExcept
 import com.company.internshipProject.Service.IUserService;
 
 import com.company.internshipProject.util.Hash;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,7 +47,6 @@ public class LoginController
                     new UsernamePasswordAuthenticationToken(userEntity.getUsername(), userEntity.getPassword()));
 
             String token = tokenManager.generateToken(userEntity.getUsername());
-
             loginService.addToken(token, userEntity.getUsername());
 
             USER = loginService.getUserByUsername(userEntity.getUsername());

@@ -19,6 +19,8 @@ public class UserController
         this.service = service;
     }
 
+    // Written for Test
+    /*
     @GetMapping("/getUser/{username}")
     public UserEntity getUser(@PathVariable String username)
     {
@@ -26,13 +28,12 @@ public class UserController
     }
 
 
-
     @GetMapping("/getUsers")
     public List<UserEntity> getUsers()
     {
         return service.getAllUsers();
     }
-
+    */
 
     @PostMapping("/addFavouriteList/{id}")
     public Movie addMovieToFavouriteList(@RequestBody UserEntity user, @PathVariable int id)

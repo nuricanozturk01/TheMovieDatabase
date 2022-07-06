@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import com.company.internshipProject.Dal.UserDal.IUserDal;
+import com.company.internshipProject.DAO.UserDal.IUserDAO;
 import com.company.internshipProject.Entity.UserEntity;
 import com.company.internshipProject.Exceptions.UserExceptions.InvalidUserException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
-    private IUserDal userDal;
+    private IUserDAO userDal;
     private List<UserEntity> userList;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
 
-    public UserDetailsService(IUserDal userDal) {
+    public UserDetailsService(IUserDAO userDal) {
         this.userDal = userDal;
     }
 

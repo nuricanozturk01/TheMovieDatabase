@@ -1,6 +1,6 @@
 package com.company.internshipProject.Service.MovieAPIService;
 
-import com.company.internshipProject.Dal.MovieAPIDAL.IMovieAPIDal;
+import com.company.internshipProject.DAO.MovieAPIDAL.IMovieAPIDAO;
 import com.company.internshipProject.Entity.JSONParser.Detail.Detail;
 import com.company.internshipProject.Entity.JSONParser.MovieObject;
 import com.company.internshipProject.Exceptions.MovieExceptions.InvalidMovieIdException;
@@ -17,10 +17,10 @@ import java.util.List;
 public class MovieAPIService implements IMovieAPIService
 {
 
-    private IMovieAPIDal movieAPIDal;
+    private IMovieAPIDAO movieAPIDal;
 
     @Autowired
-    public MovieAPIService(IMovieAPIDal movieAPIDal)
+    public MovieAPIService(IMovieAPIDAO movieAPIDal)
     {
         this.movieAPIDal = movieAPIDal;
     }

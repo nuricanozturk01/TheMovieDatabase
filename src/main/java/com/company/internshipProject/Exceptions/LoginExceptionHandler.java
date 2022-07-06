@@ -1,7 +1,6 @@
 package com.company.internshipProject.Exceptions;
 
 import com.company.internshipProject.Exceptions.UserExceptions.InvalidUserException;
-import com.company.internshipProject.Exceptions.UserExceptions.UserAlreadyExistsException;
 import com.company.internshipProject.Exceptions.UserExceptions.UserNotExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
