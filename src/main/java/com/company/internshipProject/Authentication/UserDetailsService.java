@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import com.company.internshipProject.DAO.UserDal.IUserDAO;
+import com.company.internshipProject.DAO.UserDAO.IUserDAO;
 import com.company.internshipProject.Entity.UserEntity;
 import com.company.internshipProject.Exceptions.UserExceptions.InvalidUserException;
 import org.springframework.beans.factory.annotation.Autowired;

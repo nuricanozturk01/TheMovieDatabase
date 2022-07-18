@@ -1,6 +1,7 @@
 package com.company.internshipProject.Controller;
 
-import com.company.internshipProject.Entity.Movie;
+import com.company.internshipProject.Entity.MovieEntity.Movie;
+import com.company.internshipProject.Entity.TVSeriesEntity.TVShow;
 import com.company.internshipProject.Entity.UserEntity;
 import com.company.internshipProject.Service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,22 +36,56 @@ public class UserController
     }
     */
 
-    @PostMapping("/addFavouriteList/{id}")
+
+    // Movie Operations
+    @PostMapping("/movie/addFavouriteList/{id}")
     public Movie addMovieToFavouriteList(@RequestBody UserEntity user, @PathVariable int id)
     {
         return service.addMovieToFavouriteList(user,id);
     }
 
-    @GetMapping("/getFavouriteMovies/{username}")
+    @GetMapping("/movie/getFavouriteMovies/{username}")
     public List<Movie> getFavouriteMovies(@PathVariable String username)
     {
         return service.getFavouriteMoviesByUsername(username);
     }
 
-    @PostMapping("/delete/{id}")
+    @PostMapping("/movie/delete/{id}")
     public Movie deleteMovieFromFavouriteList(@PathVariable int id, @RequestBody UserEntity user)
     {
         return service.deleteMovieFromFavouriteMovieList(user, id);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    // TV Show Operations
+    @PostMapping("/tv/addFavouriteList/{id}")
+    public TVShow addTVShowToFavouriteList(@RequestBody UserEntity user, @PathVariable int id)
+    {
+
+        return service.addTvShowToFavouriteList(user,id);
+    }
+
+    @GetMapping("/tv/getFavouriteTvSeries/{username}")
+    public List<TVShow> getFavouriteTVShows(@PathVariable String username)
+    {
+        return service.getFavouriteSeriesByUsername(username);
+    }
+
+
+
+
+
+
+
 
 }

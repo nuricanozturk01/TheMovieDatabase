@@ -2,8 +2,9 @@ package com.company.internshipProject.Service;
 
 import com.company.internshipProject.Authentication.TokenManager;
 import com.company.internshipProject.Controller.LoginController;
-import com.company.internshipProject.DAO.UserDal.IUserDAO;
-import com.company.internshipProject.Entity.Movie;
+import com.company.internshipProject.DAO.UserDAO.IUserDAO;
+import com.company.internshipProject.Entity.MovieEntity.Movie;
+import com.company.internshipProject.Entity.TVSeriesEntity.TVShow;
 import com.company.internshipProject.Entity.UserEntity;
 import com.company.internshipProject.Exceptions.MovieExceptions.JWTErrorException;
 import com.company.internshipProject.Exceptions.MovieExceptions.PermissionDeniedException;
@@ -128,6 +129,40 @@ public class UserService  implements IUserService
             throw new UserNotExistsException();
 
         return userDal.deleteMovieFromFavouriteMovieList(user,movie_id);
+    }
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public TVShow addTvShowToFavouriteList(UserEntity user, int id)
+    {
+        UserEntity userEntity = userDal.getUserByUsername(user.getUsername());
+
+        if (userEntity == null)
+            throw new UserNotExistsException();
+
+        if (!tokenManager.getUsernameToken(userEntity.getToken()).equals(LoginController.USER.getUsername()))
+            throw new JWTErrorException();
+
+        return userDal.addTvShowToFavouriteList(user,id);
+    }
+
+    @Override
+    public List<TVShow> getFavouriteSeriesByUsername(String username) {
+        return userDal.getFavouriteSeriesByUsername(username);
+    }
+
+    @Override
+    public TVShow deleteSeriesFromFavouriteMovieList(UserEntity user, int tv_show_id) {
+        return null;
     }
 
 }

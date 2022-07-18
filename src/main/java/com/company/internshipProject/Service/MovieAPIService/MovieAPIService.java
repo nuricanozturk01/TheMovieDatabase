@@ -1,7 +1,7 @@
 package com.company.internshipProject.Service.MovieAPIService;
 
-import com.company.internshipProject.DAO.MovieAPIDAL.IMovieAPIDAO;
-import com.company.internshipProject.Entity.JSONParser.Detail.Detail;
+import com.company.internshipProject.DAO.MovieAPIDAO.IMovieAPIDAO;
+import com.company.internshipProject.Entity.JSONParser.DetailForMovie.MovieDetail;
 import com.company.internshipProject.Entity.JSONParser.MovieObject;
 import com.company.internshipProject.Exceptions.MovieExceptions.InvalidMovieIdException;
 import com.company.internshipProject.Exceptions.MovieExceptions.InvalidPageNumberException;
@@ -26,7 +26,7 @@ public class MovieAPIService implements IMovieAPIService
     }
 
     @Override
-    public Detail getMovieDetail(int movie_id)
+    public MovieDetail getMovieDetail(int movie_id)
     {
         if (movie_id < 0 || movie_id > Integer.MAX_VALUE)
             throw new InvalidMovieIdException();

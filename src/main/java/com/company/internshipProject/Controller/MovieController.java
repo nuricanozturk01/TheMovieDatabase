@@ -1,6 +1,6 @@
 package com.company.internshipProject.Controller;
 
-import com.company.internshipProject.Entity.JSONParser.Detail.Detail;
+import com.company.internshipProject.Entity.JSONParser.DetailForMovie.MovieDetail;
 import com.company.internshipProject.Entity.JSONParser.MovieObject;
 import com.company.internshipProject.Service.MovieAPIService.IMovieAPIService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class MovieController
 
 
     @GetMapping("/getMovie/{movie_id}")
-    public Detail getMovieByMovieId(@PathVariable int movie_id)
+    public MovieDetail getMovieByMovieId(@PathVariable int movie_id)
     {
         return apiService.getMovieDetail(movie_id);
     }

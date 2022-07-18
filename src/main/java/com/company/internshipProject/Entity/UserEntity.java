@@ -1,5 +1,8 @@
 package com.company.internshipProject.Entity;
 
+import com.company.internshipProject.Entity.MovieEntity.Movie;
+import com.company.internshipProject.Entity.TVSeriesEntity.TVShow;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,14 @@ public class UserEntity
 
     @Column(name = "token")
     private String token;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_has_tv",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "tv_show_id")
+    )
+    private List<TVShow> tvShows;
     @ManyToMany
     @JoinTable( name = "movie_has_user",
                 joinColumns = @JoinColumn(name = "user_id"),
@@ -29,11 +40,6 @@ public class UserEntity
     private List<Movie> movies;
 
 
-    @OneToMany(fetch=FetchType.LAZY,
-            mappedBy= "userEntity",
-            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-                    CascadeType.DETACH, CascadeType.REFRESH})
-    private List<FavouriteMovie> favouriteMovies;
 
     public UserEntity()
     {
@@ -44,6 +50,14 @@ public class UserEntity
     {
         this.username = username;
         this.password = password;
+    }
+
+    public List<TVShow> getTvShows() {
+        return tvShows;
+    }
+
+    public void setTvShows(List<TVShow> tvShows) {
+        this.tvShows = tvShows;
     }
 
     public List<Movie> getMovies() {
@@ -78,14 +92,6 @@ public class UserEntity
         this.password = password;
     }
 
-    public List<FavouriteMovie> getFavouriteMovies() {
-        return favouriteMovies;
-    }
-
-    public void setFavouriteMovies(List<FavouriteMovie> favouriteMovies) {
-        this.favouriteMovies = favouriteMovies;
-    }
-
 
     public String getToken() {
         return token;
@@ -101,22 +107,16 @@ public class UserEntity
             movies = new ArrayList<>();
         movies.add(movie);
     }
-    public void addFavouriteMovie(Movie movie)
+
+
+    public void addTvShow(TVShow tv)
     {
-        if (favouriteMovies == null)
-            favouriteMovies = new ArrayList<>();
-        FavouriteMovie fav = new FavouriteMovie(movie,this);
-        favouriteMovies.add(fav);
-       // session.save(fav);
-        //session.saveOrUpdate(this);
+        if (tvShows == null)
+            tvShows = new ArrayList<>();
+        tvShows.add(tv);
     }
 
-    public void addFavouriteMovie(FavouriteMovie movie)
-    {
-        if (favouriteMovies == null)
-            favouriteMovies = new ArrayList<>();
-        favouriteMovies.add(movie);
-    }
+
     @Override
     public String toString()
     {
