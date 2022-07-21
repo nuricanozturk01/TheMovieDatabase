@@ -57,17 +57,10 @@ public class Movie
         return movieId;
     }
 
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
-    }
-
     public int getRealMovieId() {
         return realMovieId;
     }
 
-    public void setRealMovieId(int realMovieId) {
-        this.realMovieId = realMovieId;
-    }
 
     public String getTitle() {
         return title;

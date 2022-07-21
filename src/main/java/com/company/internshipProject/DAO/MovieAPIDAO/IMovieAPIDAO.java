@@ -2,6 +2,8 @@ package com.company.internshipProject.DAO.MovieAPIDAO;
 
 import com.company.internshipProject.Entity.JSONParser.DetailForMovie.MovieDetail;
 import com.company.internshipProject.Entity.JSONParser.MovieObject;
+import com.company.internshipProject.Entity.MovieEntity.Movie;
+import com.company.internshipProject.Entity.UserEntity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,4 +23,5 @@ public interface IMovieAPIDAO
 
 
     HashMap<Integer, String> getGenres();
+
 }

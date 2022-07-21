@@ -4,24 +4,23 @@ package com.company.internshipProject.Controller;
 import com.company.internshipProject.Authentication.TokenManager;
 import com.company.internshipProject.Entity.UserEntity;
 import com.company.internshipProject.Exceptions.UserExceptions.InvalidUserException;
-import com.company.internshipProject.Service.IUserService;
+import com.company.internshipProject.Exceptions.UserExceptions.InvalidUsernameOrPasswordException;
+import com.company.internshipProject.Exceptions.UserExceptions.UserNotExistsException;
+import com.company.internshipProject.Service.UserService.IUserService;
 
 import com.company.internshipProject.util.Hash;
-import org.apache.catalina.User;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/login")
 public class LoginController
 {
-    public static UserEntity USER ;
+    public static String TOKEN;
     private IUserService loginService;
     @Autowired
     private TokenManager tokenManager;
@@ -36,9 +35,11 @@ public class LoginController
     }
 
 
+
     @PostMapping("/loginuser")
     public ResponseEntity<String> loginUser(@RequestBody UserEntity userEntity)
     {
+
         try
         {
             userEntity.setPassword(Hash.hashing(userEntity.getPassword()));
@@ -46,17 +47,42 @@ public class LoginController
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userEntity.getUsername(), userEntity.getPassword()));
 
-            String token = tokenManager.generateToken(userEntity.getUsername());
-            loginService.addToken(token, userEntity.getUsername());
+            TOKEN = tokenManager.generateToken(userEntity.getUsername());;
 
-            USER = loginService.getUserByUsername(userEntity.getUsername());
+            loginService.addToken(TOKEN, userEntity.getUsername());
 
-            return ResponseEntity.ok(token);
+            UserEntity user = loginService.getUserByUsername(userEntity.getUsername());
+
+            if (!user.getEmail().equals(userEntity.getEmail()))
+                throw new InvalidUserException();
+
+            return ResponseEntity.ok(TOKEN);
         }
         catch (InvalidUserException e)
         {
             throw new InvalidUserException();
         }
+    }
+
+    @PostMapping("/changePassword")
+    public String changePassword(@RequestBody String userInfo)
+    {
+        JSONObject obj = new JSONObject(userInfo);
+
+        String username = obj.getString("username");
+        String email = obj.getString("email");
+
+        UserEntity user = loginService.getUserByUsername(username);
+
+        if (user == null)
+            throw new UserNotExistsException();
+
+        if (!user.getEmail().equals(email))
+            throw new InvalidUsernameOrPasswordException();
+
+        loginService.changePassword(user);
+
+        return "New password has been sent to you email address!";
     }
 
 }

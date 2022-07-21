@@ -6,13 +6,12 @@ import com.company.internshipProject.Entity.JSONParser.TV.DetailOfTV;
 import com.company.internshipProject.Entity.MovieEntity.Movie;
 import com.company.internshipProject.Entity.TVSeriesEntity.TVDetail;
 import com.company.internshipProject.Entity.TVSeriesEntity.TVShow;
+import com.company.internshipProject.Entity.TVSeriesEntity.UserHasTvShow;
 import com.company.internshipProject.Entity.UserEntity;
 import com.company.internshipProject.Exceptions.MovieExceptions.MovieNotExistsException;
 import com.company.internshipProject.Service.MovieAPIService.IMovieAPIService;
 import com.company.internshipProject.Service.TVSeriesAPIService.ITVSeriesAPIService;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -49,10 +48,9 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
         try
         {
             List<UserEntity> list = getAllUsers();
-            for (int i = 0; i < list.size(); i++) {
+            for (int i = 0; i < list.size(); i++)
                 if (list.get(i).getUsername().equals(username))
                     return list.get(i);
-            }
             //Session session = entityManager.unwrap(Session.class);
             //return (UserEntity) session.createSQLQuery("FROM UserEntity WHERE username='"+username+"';").getSingleResult();
             //return (UserEntity) session.createQuery("FROM UserEntity WHERE username='"+username+"'").getSingleResult();
@@ -121,9 +119,8 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
 
     @Override
     @Transactional
-    public List<Movie> getFavouriteMoviesByUsername(String username)
+    public List<Movie> getFavouriteMoviesByUsername(UserEntity user)
     {
-        UserEntity user = getUserByUsername(username);
         return user.getMovies();
     }
 
@@ -192,14 +189,14 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
         Session session = entityManager.unwrap(Session.class);
 
         UserEntity user = getUserByUsername(u.getUsername());
-        System.out.println("In movies user is: " + u.getUsername() + " " + u.getUserId());
+
         // For prevent duplicate but next time, I will add trigger to database side for this problem.
         //This is temporary solution.
         for (int i = 0; i < user.getMovies().size(); i++)
             if (user.getMovies().get(i).getMovieId() == movie.getMovieId())
                 return;
 
-        user.addMovie(movie);
+        movieService.addMovie(user,movie);
 
         session.saveOrUpdate(movie);
 
@@ -215,8 +212,6 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
                         Movie.class);
         List<Movie> movies = theQuery.getResultList();
 
-        /*if (movies == null || movies.isEmpty())
-            throw new MovieNotExistsException();*/
         for (Movie movie : movies)
             if (movie.getRealMovieId() == id)
                 return movie;
@@ -224,7 +219,6 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
 
         return null;
     }
-
 
 
 
@@ -271,8 +265,6 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
                         TVShow.class);
         List<TVShow> tvShows = theQuery.getResultList();
 
-        /*if (movies == null || movies.isEmpty())
-            throw new MovieNotExistsException();*/
         for (TVShow show : tvShows)
             if (show.getRealTvShowId() == id)
                 return show;
@@ -283,8 +275,6 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
 
 
 
-
-    // New
     @Override
     public TVShow addTvShowToFavouriteList(UserEntity user, int id)
     {
@@ -293,7 +283,6 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
 
         if (tvShow == null)
         {
-            System.out.println("Tv show is null!");
             DetailOfTV detailOfTV = tvService.getDetail(id);
             tvShow = new TVShow(detailOfTV.getId(),detailOfTV.getOriginal_name());
             TVDetail detail = new TVDetail(detailOfTV.getOverview(),
@@ -302,40 +291,57 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
             tvShow.setTvDetails(detail);
         }
         session.saveOrUpdate(tvShow);
-        saveTvShowToUser(user, tvShow);
+        saveTvShowToUser(user.getUsername());
         session.close();
         return tvShow;
 
 
     }
 
-    private void saveTvShowToUser(UserEntity user, TVShow tvShow)
+
+    private void saveTvShowToUser(String username)
     {
-        System.out.println("I am in saveToTvShowToUser");
+
         Session session = entityManager.unwrap(Session.class);
 
-        UserEntity userr = getUserByUsername(user.getUsername());
+        UserEntity userr = getUserByUsername(username);
+
+        // Get last Tv show id from database
+        TVShow show = (TVShow) session.createQuery("from TVShow ORDER BY id DESC").getResultList().get(0);
+
         if (userr.getTvShows() != null)
             for (int i = 0; i < userr.getTvShows().size(); i++)
-                if (userr.getTvShows().get(i).getRealTvShowId() == tvShow.getId())
+                if (userr.getTvShows().get(i).getRealTvShowId() == show.getRealTvShowId())
                     return;
-        TVShow show = (TVShow) session.createQuery("from TVShow ORDER BY id DESC").getResultList().get(0);
-        System.out.println(show.getTitle());
-        userr.addTvShow(show);
-        System.out.println("Added TvShow to User in List");
-        session.update(show);
-       // session.saveOrUpdate(userr);
+
+        tvService.addTvShow(userr,show);
+        UserHasTvShow userHasTv = new UserHasTvShow(show.getId(), userr.getUserId());
+        session.saveOrUpdate(userHasTv);
         session.close();
     }
 
     @Override
-    public List<TVShow> getFavouriteSeriesByUsername(String username)
+    public List<TVShow> getFavouriteSeriesByUsername(UserEntity user)
     {
-        return null;
+        return user.getTvShows();
     }
 
     @Override
     public TVShow deleteSeriesFromFavouriteMovieList(UserEntity user, int tv_show_id) {
         return null;
     }
+
+
+
+    @Override
+    @Transactional
+    public void updateUser(UserEntity user, String hashedPassword)
+    {
+        Session session = entityManager.unwrap(Session.class);
+        user.setPassword(hashedPassword);
+        session.update(user);
+        session.close();
+    }
+
+
 }

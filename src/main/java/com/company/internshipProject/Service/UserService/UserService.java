@@ -1,9 +1,8 @@
-package com.company.internshipProject.Service;
+package com.company.internshipProject.Service.UserService;
 
 import com.company.internshipProject.Authentication.TokenManager;
 import com.company.internshipProject.Controller.LoginController;
 import com.company.internshipProject.DAO.UserDAO.IUserDAO;
-import com.company.internshipProject.Entity.JSONParser.TV.ResultOfTVSeries;
 import com.company.internshipProject.Entity.MovieEntity.Movie;
 import com.company.internshipProject.Entity.TVSeriesEntity.TVShow;
 import com.company.internshipProject.Entity.UserEntity;
@@ -12,6 +11,9 @@ import com.company.internshipProject.Exceptions.MovieExceptions.PermissionDenied
 import com.company.internshipProject.Exceptions.UserExceptions.InvalidUsernameOrPasswordException;
 import com.company.internshipProject.Exceptions.UserExceptions.UserAlreadyExistsException;
 import com.company.internshipProject.Exceptions.UserExceptions.UserNotExistsException;
+import com.company.internshipProject.PasswordGenerator.PasswordGenerator;
+import com.company.internshipProject.util.Hash;
+import com.company.internshipProject.util.Mail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,9 +33,13 @@ public class UserService  implements IUserService
     public UserService(IUserDAO userDal)
     {
         this.userDal = userDal;
+
     }
 
-
+    private UserEntity getUser()
+    {
+        return getUserByUsername(tokenManager.getUsernameToken(LoginController.TOKEN));
+    }
     @Override
     @Transactional
     public UserEntity getUserByUsername(String username)
@@ -78,38 +84,44 @@ public class UserService  implements IUserService
         return false;
     }
 
-    @Override
-    public Movie addMovieToFavouriteList(UserEntity user, int id)
-    {
-        UserEntity userEntity = userDal.getUserByUsername(user.getUsername());
 
-        if (userEntity == null)
+
+
+
+
+
+
+
+    @Override
+    public Movie addMovieToFavouriteList(int id)
+    {
+        UserEntity user = userDal.getUserByUsername(tokenManager.getUsernameToken(LoginController.TOKEN));
+
+        if (user == null)
             throw new UserNotExistsException();
 
-        if (!tokenManager.getUsernameToken(userEntity.getToken()).equals(LoginController.USER.getUsername()))
+
+        if (!tokenManager.getUsernameToken(user.getToken()).equals(getUser().getUsername()))
             throw new JWTErrorException();
 
         return userDal.addMovieToFavouriteList(user,id);
     }
 
     @Override
-    public List<Movie> getFavouriteMoviesByUsername(String username)
+    public List<Movie> getFavouriteMoviesByUsername()
     {
-        if (username.isBlank() || username.isEmpty())
-            throw new InvalidUsernameOrPasswordException();
-
-        UserEntity user = userDal.getUserByUsername(username);
+       UserEntity user = getUser();
 
         if (user == null)
             throw new UserNotExistsException();
 
-        if (!user.getUsername().equals(LoginController.USER.getUsername()))
+        if (!user.getUsername().equals(getUser().getUsername()))
             throw new PermissionDeniedException();
 
-        if(!tokenManager.getUsernameToken(user.getToken()).equals(LoginController.USER.getUsername()))
+        if(!tokenManager.getUsernameToken(user.getToken()).equals(getUser().getUsername()))
             throw new JWTErrorException();
 
-        return userDal.getFavouriteMoviesByUsername(username);
+        return userDal.getFavouriteMoviesByUsername(user);
     }
 
     public String addToken(String token, String username)
@@ -119,17 +131,17 @@ public class UserService  implements IUserService
     }
 
     @Override
-    public Movie deleteMovieFromFavouriteMovieList(UserEntity user, int movie_id)
+    public Movie deleteMovieFromFavouriteMovieList(int movie_id)
     {
         if (movie_id <= 0 || movie_id > Integer.MAX_VALUE)
             throw new InvalidUsernameOrPasswordException();
 
-        UserEntity userEntity = userDal.getUserByUsername(user.getUsername());
+        UserEntity userEntity = userDal.getUserByUsername(getUser().getUsername());
 
         if (userEntity == null)
             throw new UserNotExistsException();
 
-        return userDal.deleteMovieFromFavouriteMovieList(user,movie_id);
+        return userDal.deleteMovieFromFavouriteMovieList(getUser(),movie_id);
     }
 
 
@@ -143,15 +155,15 @@ public class UserService  implements IUserService
 
 
     @Override
-    public TVShow addTvShowToFavouriteList(UserEntity user, int id)
+    public TVShow addTvShowToFavouriteList(int id)
     {
 
-        UserEntity userEntity = userDal.getUserByUsername(user.getUsername());
+        UserEntity user = getUser();
 
-        if (userEntity == null)
+        if (user == null)
             throw new UserNotExistsException();
 
-        if (!tokenManager.getUsernameToken(userEntity.getToken()).equals(LoginController.USER.getUsername()))
+        if (!tokenManager.getUsernameToken(user.getToken()).equals(getUser().getUsername()))
             throw new JWTErrorException();
 
         return userDal.addTvShowToFavouriteList(user,id);
@@ -159,27 +171,36 @@ public class UserService  implements IUserService
 
 
     @Override
-    public List<TVShow> getFavouriteSeriesByUsername(String username)
+    public List<TVShow> getFavouriteSeriesByUsername()
     {
-        if (username.isBlank() || username.isEmpty())
-            throw new InvalidUsernameOrPasswordException();
-
-        UserEntity user = userDal.getUserByUsername(username);
+        UserEntity user = getUser();
 
         if (user == null)
             throw new UserNotExistsException();
 
-        if (!user.getUsername().equals(LoginController.USER.getUsername()))
+        if (!user.getUsername().equals(getUser().getUsername()))
             throw new PermissionDeniedException();
 
-        if(!tokenManager.getUsernameToken(user.getToken()).equals(LoginController.USER.getUsername()))
+        if(!tokenManager.getUsernameToken(user.getToken()).equals(getUser().getUsername()))
             throw new JWTErrorException();
-        return userDal.getFavouriteSeriesByUsername(username);
+        return userDal.getFavouriteSeriesByUsername(user);
     }
 
     @Override
     public TVShow deleteSeriesFromFavouriteMovieList(UserEntity user, int tv_show_id) {
         return null;
     }
+
+
+
+    @Override
+    public void changePassword(UserEntity user)
+    {
+        PasswordGenerator passwordGenerator = new PasswordGenerator(PasswordGenerator.DEFAULT_PASSWORD_SIZE);
+        String newPassword = passwordGenerator.randomGenerate();
+        Mail.sendMessage(user.getEmail(),"New Password","Your new password is: " + newPassword);;
+        userDal.updateUser(user,Hash.hashing(newPassword));
+    }
+
 
 }

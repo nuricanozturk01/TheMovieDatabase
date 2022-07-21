@@ -2,8 +2,7 @@ package com.company.internshipProject.Controller;
 
 import com.company.internshipProject.Entity.MovieEntity.Movie;
 import com.company.internshipProject.Entity.TVSeriesEntity.TVShow;
-import com.company.internshipProject.Entity.UserEntity;
-import com.company.internshipProject.Service.IUserService;
+import com.company.internshipProject.Service.UserService.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,72 +19,38 @@ public class UserController
         this.service = service;
     }
 
-    // Written for Test
-    /*
-    @GetMapping("/getUser/{username}")
-    public UserEntity getUser(@PathVariable String username)
-    {
-        return service.getUserByUsername(username);
-    }
-
-
-    @GetMapping("/getUsers")
-    public List<UserEntity> getUsers()
-    {
-        return service.getAllUsers();
-    }
-    */
-
 
     // Movie Operations
-    @PostMapping("/movie/addFavouriteList/{id}")
-    public Movie addMovieToFavouriteList(@RequestBody UserEntity user, @PathVariable int id)
+    @PostMapping("/movie/addFavouriteList")
+    public Movie addMovieToFavouriteList(@RequestParam int id)
     {
-        return service.addMovieToFavouriteList(user,id);
+        return service.addMovieToFavouriteList(id);
     }
 
-    @GetMapping("/movie/getFavouriteMovies/{username}")
-    public List<Movie> getFavouriteMovies(@PathVariable String username)
+    @GetMapping("/movie/getFavouriteMovies")
+    public List<Movie> getFavouriteMovies()
     {
-        return service.getFavouriteMoviesByUsername(username);
+        return service.getFavouriteMoviesByUsername();
     }
 
-    @PostMapping("/movie/delete/{id}")
-    public Movie deleteMovieFromFavouriteList(@PathVariable int id, @RequestBody UserEntity user)
+    @PostMapping("/movie/delete")
+    public Movie deleteMovieFromFavouriteList(@RequestParam(name = "id") int id)
     {
-        return service.deleteMovieFromFavouriteMovieList(user, id);
+        return service.deleteMovieFromFavouriteMovieList(id);
     }
-
-
-
-
-
-
-
-
-
 
 
 
     // TV Show Operations
-    @PostMapping("/tv/addFavouriteList/{id}")
-    public TVShow addTVShowToFavouriteList(@RequestBody UserEntity user, @PathVariable int id)
+    @PostMapping("/tv/addFavouriteList")
+    public TVShow addTVShowToFavouriteList(@RequestParam int id)
     {
-
-        return service.addTvShowToFavouriteList(user,id);
+        return service.addTvShowToFavouriteList(id);
     }
 
-    @GetMapping("/tv/getFavouriteTvSeries/{username}")
-    public List<TVShow> getFavouriteTVShows(@PathVariable String username)
+    @GetMapping("/tv/getFavouriteTvSeries")
+    public List<TVShow> getFavouriteTVShows()
     {
-        return service.getFavouriteSeriesByUsername(username);
+        return service.getFavouriteSeriesByUsername();
     }
-
-
-
-
-
-
-
-
 }

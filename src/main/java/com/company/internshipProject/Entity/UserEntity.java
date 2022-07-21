@@ -4,7 +4,6 @@ import com.company.internshipProject.Entity.MovieEntity.Movie;
 import com.company.internshipProject.Entity.TVSeriesEntity.TVShow;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,6 +24,9 @@ public class UserEntity
     @Column(name = "token")
     private String token;
 
+    @Column(name = "email", nullable = false)
+    private String email;
+
     @ManyToMany
     @JoinTable(
             name = "user_has_tv",
@@ -32,6 +34,7 @@ public class UserEntity
             inverseJoinColumns = @JoinColumn(name = "tv_show_id")
     )
     private List<TVShow> tvShows;
+
     @ManyToMany
     @JoinTable( name = "movie_has_user",
                 joinColumns = @JoinColumn(name = "user_id"),
@@ -72,9 +75,6 @@ public class UserEntity
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public String getUsername() {
         return username;
@@ -92,6 +92,9 @@ public class UserEntity
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
     public String getToken() {
         return token;
@@ -99,21 +102,6 @@ public class UserEntity
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public void addMovie(Movie movie)
-    {
-        if (movies == null)
-            movies = new ArrayList<>();
-        movies.add(movie);
-    }
-
-
-    public void addTvShow(TVShow tv)
-    {
-        if (tvShows == null)
-            tvShows = new ArrayList<>();
-        tvShows.add(tv);
     }
 
 

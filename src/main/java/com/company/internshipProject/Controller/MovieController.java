@@ -3,6 +3,7 @@ package com.company.internshipProject.Controller;
 import com.company.internshipProject.Entity.JSONParser.DetailForMovie.MovieDetail;
 import com.company.internshipProject.Entity.JSONParser.MovieObject;
 import com.company.internshipProject.Service.MovieAPIService.IMovieAPIService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,31 +22,32 @@ public class MovieController
     }
 
 
-    @GetMapping("/getAllMovies/{pageNumber}")
-    public List<MovieObject> listMovies(@PathVariable int pageNumber)
+    @GetMapping("/getAllMovies")
+    public List<MovieObject> listMovies(@RequestParam(value = "page", defaultValue = "1") int pageNumber)
     {
         return apiService.getMovies(pageNumber);
     }
 
 
-    @GetMapping("/getPopularMovies/{pageNumber}")
-    public List<MovieObject> listPopularMovies(@PathVariable int pageNumber)
+    @GetMapping("/getPopularMovies")
+    public List<MovieObject> listPopularMovies(@RequestParam(value = "page", defaultValue = "1") int pageNumber)
     {
         return apiService.getPopularMovies(pageNumber);
     }
 
 
-    @GetMapping("/getMovie/{movie_id}")
-    public MovieDetail getMovieByMovieId(@PathVariable int movie_id)
+    @GetMapping("/getMovie")
+    public MovieDetail getMovieByMovieId(@RequestParam(value = "id") int movie_id)
     {
         return apiService.getMovieDetail(movie_id);
     }
 
 
-    @GetMapping("/search/{title}")
-    public List<MovieObject> searchMovie(@PathVariable String title)
+    @GetMapping("/search")
+    public List<MovieObject> searchMovie(@RequestBody String title)
     {
-        return apiService.searchMovie(title);
+        JSONObject obj = new JSONObject(title);
+        return apiService.searchMovie(obj.getString("title"));
     }
 
 

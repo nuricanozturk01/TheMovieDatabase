@@ -43,27 +43,5 @@ public class TVDetail
         this.id = id;
     }
 
-    public String getOverview() {
-        return overview;
-    }
 
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public int getSeasonNumber() {
-        return seasonNumber;
-    }
-
-    public void setSeasonNumber(int seasonNumber) {
-        this.seasonNumber = seasonNumber;
-    }
-
-    public int getEpisodeNumber() {
-        return episodeNumber;
-    }
-
-    public void setEpisodeNumber(int episodeNumber) {
-        this.episodeNumber = episodeNumber;
-    }
 }

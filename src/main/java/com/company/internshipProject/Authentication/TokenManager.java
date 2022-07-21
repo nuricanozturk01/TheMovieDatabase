@@ -5,13 +5,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
+import java.time.LocalDate;
 import java.util.Date;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TokenManager {
 
-    private static final int validity = 30 * 60 * 1000;
+    private static final int validity = 10 * 60 * 1000;
     Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String generateToken(String username) {
@@ -23,11 +24,9 @@ public class TokenManager {
                 .compact();
     }
 
-    public boolean tokenValidate(String token) {
-        if (getUsernameToken(token) != null && isExpired(token)) {
-            return true;
-        }
-        return false;
+    public boolean tokenValidate(String token)
+    {
+        return getUsernameToken(token) != null && isExpired(token);
     }
 
 
@@ -41,6 +40,7 @@ public class TokenManager {
         Claims claims = getClaims(token);
         return claims.getExpiration().after(new Date(System.currentTimeMillis()));
     }
+
 
     private Claims getClaims(String token)
     {

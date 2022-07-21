@@ -3,12 +3,15 @@ package com.company.internshipProject.Service.MovieAPIService;
 import com.company.internshipProject.DAO.MovieAPIDAO.IMovieAPIDAO;
 import com.company.internshipProject.Entity.JSONParser.DetailForMovie.MovieDetail;
 import com.company.internshipProject.Entity.JSONParser.MovieObject;
+import com.company.internshipProject.Entity.MovieEntity.Movie;
+import com.company.internshipProject.Entity.UserEntity;
 import com.company.internshipProject.Exceptions.MovieExceptions.InvalidMovieIdException;
 import com.company.internshipProject.Exceptions.MovieExceptions.InvalidPageNumberException;
 import com.company.internshipProject.Exceptions.MovieExceptions.MovieNotExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -66,5 +69,11 @@ public class MovieAPIService implements IMovieAPIService
         return movieAPIDal.getMovies(pageNumber);
     }
 
+    public void addMovie(UserEntity user, Movie movie)
+    {
+        if (user.getMovies() == null)
+            user.setMovies(new ArrayList<>());
+        user.getMovies().add(movie);
+    }
 
 }

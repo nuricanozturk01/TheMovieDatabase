@@ -1,5 +1,6 @@
 package com.company.internshipProject.Service;
 
+import com.company.internshipProject.Entity.JSONParser.TV.ResultOfTVSeries;
 import com.company.internshipProject.Entity.MovieEntity.Movie;
 import com.company.internshipProject.Entity.TVSeriesEntity.TVShow;
 import com.company.internshipProject.Entity.UserEntity;
@@ -27,4 +28,5 @@ public interface IUserService
     TVShow addTvShowToFavouriteList(UserEntity user, int id);
     List<TVShow> getFavouriteSeriesByUsername(String username);
     TVShow deleteSeriesFromFavouriteMovieList(UserEntity user, int tv_show_id);
+
 }

@@ -1,7 +1,8 @@
 package com.company.internshipProject.Controller;
 
 import com.company.internshipProject.Authentication.TokenManager;
-import com.company.internshipProject.Service.IUserService;
+import com.company.internshipProject.Entity.UserEntity;
+import com.company.internshipProject.Service.UserService.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +26,13 @@ public class LogoutController
     @PostMapping("/logoutuser")
     public String logout()
     {
-        if (tokenManager.isExpired(LoginController.USER.getToken()))
+        UserEntity user = userService.getUserByUsername(tokenManager.getUsernameToken(LoginController.TOKEN));
+        if (tokenManager.isExpired(user.getToken()))
         {
-            userService.addToken(null,LoginController.USER.getUsername());
-            LoginController.USER.setToken(null);
-            LoginController.USER = null;
+            userService.addToken(null,user.getUsername());
+            user.setToken(null);
+            LoginController.TOKEN = null;
+
         }
         return "logout successfully!";
     }

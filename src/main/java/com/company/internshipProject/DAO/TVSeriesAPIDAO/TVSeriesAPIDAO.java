@@ -1,7 +1,5 @@
 package com.company.internshipProject.DAO.TVSeriesAPIDAO;
 
-import com.company.internshipProject.Entity.JSONParser.MovieObject;
-import com.company.internshipProject.Entity.JSONParser.Root;
 import com.company.internshipProject.Entity.JSONParser.TV.DetailOfTV;
 import com.company.internshipProject.Entity.JSONParser.TV.ResultOfTVSeries;
 import com.company.internshipProject.Entity.JSONParser.TV.RootOfTVSeries;
@@ -91,9 +89,7 @@ public class TVSeriesAPIDAO implements ITVSeriesAPIDAO{
         {
             throw new RuntimeException(e);
         }
-        for (int i = 0 ; i < series.size(); ++i)
-            System.out.println(series.get(i).getName());
-        System.out.println("NOOOO");
+
         return series;
     }
 

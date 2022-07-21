@@ -36,15 +36,6 @@ public class MovieDetail
         this.production = production;
     }
 
-
-    public int getDetailId() {
-        return detailId;
-    }
-
-    public void setDetailId(int detailId) {
-        this.detailId = detailId;
-    }
-
     public String getOverview() {
         return overview;
     }
@@ -57,17 +48,11 @@ public class MovieDetail
         return genre;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
     public String getProduction() {
         return production;
     }
 
-    public void setProduction(String production) {
-        this.production = production;
-    }
+
 
 
 }

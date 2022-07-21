@@ -1,6 +1,7 @@
 package com.company.internshipProject.Exceptions;
 
 import com.company.internshipProject.Exceptions.UserExceptions.InvalidUsernameOrPasswordException;
+import com.company.internshipProject.Exceptions.UserExceptions.MissingUserInformationException;
 import com.company.internshipProject.Exceptions.UserExceptions.UserAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,10 @@ public class SignUpExceptionHandler
        {
            ErrorResponse response = new ErrorResponse();
            response.setMessage(e.getMessage());
-           response.setStatus(HttpStatus.NO_CONTENT.value());
+           response.setStatus(HttpStatus.NOT_FOUND.value());
            response.setTimeStamp(System.currentTimeMillis());
 
-           return new ResponseEntity<>(response,HttpStatus.NO_CONTENT);
+           return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
        }
 
 
@@ -31,6 +32,17 @@ public class SignUpExceptionHandler
         response.setTimeStamp(System.currentTimeMillis());
 
         return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleMissingUserInformation(MissingUserInformationException e)
+    {
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(e.getMessage());
+        response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        response.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<>(response,HttpStatus.NOT_ACCEPTABLE);
     }
 
 
