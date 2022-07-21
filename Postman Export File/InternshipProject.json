@@ -1,0 +1,488 @@
+{
+	"info": {
+		"_postman_id": "9f524519-9fa6-493b-b207-a4a767c92b51",
+		"name": "Internship Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21563631"
+	},
+	"item": [
+		{
+			"name": "Get Movies Page by Page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/movies/getAllMovies?page=21",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"movies",
+						"getAllMovies"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "21"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get popular Movies Page by Page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/movies/getPopularMovies?page=79",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"movies",
+						"getPopularMovies"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "79"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movie Detail by Movie id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/movies/getMovie?id=69",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"movies",
+						"getMovie"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "69"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Movie By Title",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\" : \"thor\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/movies/search",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"movies",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Favourite Movies by Username",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/users/movie/getFavouriteMovies",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"users",
+						"movie",
+						"getFavouriteMovies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign Up",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"can\",\r\n    \"password\" : \"1234\",\r\n    \"email\" : \"nuricanozturk01@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/signup/add",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"signup",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"can\",\r\n    \"password\" : \"gWt5q<OP7G\",\r\n    \"email\" : \"nuricanozturk01@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/login/loginuser",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"login",
+						"loginuser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Movie to Favourite List",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/users/movie/addFavouriteList?id=535",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"users",
+						"movie",
+						"addFavouriteList"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "535"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Movie From Favourite List",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"ali\",\r\n    \"password\" : \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/users/delete/10",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"users",
+						"delete",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"can\",\r\n    \"password\" : \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/logout/logoutuser",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"logout",
+						"logoutuser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get TV Details By id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/tv/getTvDetail?id=63",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"tv",
+						"getTvDetail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "63"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get TV Series Page by Page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/tv/getPopularTvSeries?id=234",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"tv",
+						"getPopularTvSeries"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "234"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Popular TV Series Page by Page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/tv/getPopularTvSeries?page=358",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"tv",
+						"getPopularTvSeries"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "358"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search TV Show",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\" : \"breaking bad\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/tv/searchTvShow",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"tv",
+						"searchTvShow"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add TV Show to Favourite List",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/users/tv/addFavouriteList?id=723",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"users",
+						"tv",
+						"addFavouriteList"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "723"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Favourite Tv Series List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/users/tv/getFavouriteTvSeries",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"users",
+						"tv",
+						"getFavouriteTvSeries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"can\",\r\n    \"email\" : \"nuricanozturk01@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/login/changePassword",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"login",
+						"changePassword"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYW4iLCJpYXQiOjE2NTg0MjU5OTEsImV4cCI6MTY1ODQyNjU5MX0.35Jek8N3I-t9ooBx-hC6t0iRMF31z_3TNKvCbdUwdq4",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "localhost",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYW4iLCJpYXQiOjE2NTcwNDMwNTUsImV4cCI6MTY1NzA0MzM1NX0.JkH1-rL5TmWHPx25vKk2VcNlkOOJvcan2ea5Gv92h7E",
+			"type": "string"
+		}
+	]
+}
