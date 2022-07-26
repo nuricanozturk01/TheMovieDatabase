@@ -106,7 +106,7 @@
 	"title": "breaking bad"
 }
 ```
-##### <a id="addMovieToFavouriteList"> Add Movie to Favourite List -> /user/addFavouriteList (Request param is "id")
+##### <a id="addMovieToFavouriteList"> Add Movie to Favourite List -> /user/movie/addFavouriteList (Request param is "id")
 ```http request
     http://localhost:8080/user/movie/addFavouriteList?id=536
 ```
