@@ -37,6 +37,9 @@ public class TVSeriesAPIService implements ITVSeriesAPIService
     @Override
     public List<ResultOfTVSeries> getTvSeriesPageByPage(int page_number)
     {
+        if (page_number < 0 || page_number > Integer.MAX_VALUE)
+            throw new InvalidPageNumberException();
+
         return tvDao.getTvSeriesPageByPage(page_number);
     }
 
@@ -45,6 +48,7 @@ public class TVSeriesAPIService implements ITVSeriesAPIService
     {
         if (page_number < 0 || page_number > Integer.MAX_VALUE)
             throw new InvalidPageNumberException();
+
         return tvDao.getPopularTvSeriesPageByPage(page_number);
     }
 

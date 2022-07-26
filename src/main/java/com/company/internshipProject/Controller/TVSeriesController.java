@@ -38,7 +38,7 @@ public class TVSeriesController
         return tv.getPopularTvSeriesPageByPage(page_number);
     }
 
-    @GetMapping("/searchTvShow")
+    @GetMapping("/search")
     public List<ResultOfTVSeries> searchTvShow (@RequestBody String title)
     {
         JSONObject obj = new JSONObject(title);

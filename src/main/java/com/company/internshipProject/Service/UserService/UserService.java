@@ -1,7 +1,7 @@
 package com.company.internshipProject.Service.UserService;
 
 import com.company.internshipProject.Authentication.TokenManager;
-import com.company.internshipProject.Controller.LoginController;
+import com.company.internshipProject.Controller.AuthController;
 import com.company.internshipProject.DAO.UserDAO.IUserDAO;
 import com.company.internshipProject.Entity.MovieEntity.Movie;
 import com.company.internshipProject.Entity.TVSeriesEntity.TVShow;
@@ -38,7 +38,7 @@ public class UserService  implements IUserService
 
     private UserEntity getUser()
     {
-        return getUserByUsername(tokenManager.getUsernameToken(LoginController.TOKEN));
+        return getUserByUsername(tokenManager.getUsernameToken(AuthController.TOKEN));
     }
     @Override
     @Transactional
@@ -95,7 +95,7 @@ public class UserService  implements IUserService
     @Override
     public Movie addMovieToFavouriteList(int id)
     {
-        UserEntity user = userDal.getUserByUsername(tokenManager.getUsernameToken(LoginController.TOKEN));
+        UserEntity user = userDal.getUserByUsername(tokenManager.getUsernameToken(AuthController.TOKEN));
 
         if (user == null)
             throw new UserNotExistsException();

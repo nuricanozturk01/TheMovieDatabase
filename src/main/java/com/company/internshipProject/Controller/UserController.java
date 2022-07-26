@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController
 {
     private IUserService service;
@@ -20,14 +20,13 @@ public class UserController
     }
 
 
-    // Movie Operations
     @PostMapping("/movie/addFavouriteList")
     public Movie addMovieToFavouriteList(@RequestParam int id)
     {
         return service.addMovieToFavouriteList(id);
     }
 
-    @GetMapping("/movie/getFavouriteMovies")
+    @GetMapping("/movie/getFavouriteList")
     public List<Movie> getFavouriteMovies()
     {
         return service.getFavouriteMoviesByUsername();
@@ -39,16 +38,13 @@ public class UserController
         return service.deleteMovieFromFavouriteMovieList(id);
     }
 
-
-
-    // TV Show Operations
     @PostMapping("/tv/addFavouriteList")
     public TVShow addTVShowToFavouriteList(@RequestParam int id)
     {
         return service.addTvShowToFavouriteList(id);
     }
 
-    @GetMapping("/tv/getFavouriteTvSeries")
+    @GetMapping("/tv/getFavouriteList")
     public List<TVShow> getFavouriteTVShows()
     {
         return service.getFavouriteSeriesByUsername();

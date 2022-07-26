@@ -51,9 +51,6 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
             for (int i = 0; i < list.size(); i++)
                 if (list.get(i).getUsername().equals(username))
                     return list.get(i);
-            //Session session = entityManager.unwrap(Session.class);
-            //return (UserEntity) session.createSQLQuery("FROM UserEntity WHERE username='"+username+"';").getSingleResult();
-            //return (UserEntity) session.createQuery("FROM UserEntity WHERE username='"+username+"'").getSingleResult();
         }
         catch (NoResultException e)
         {
@@ -102,29 +99,12 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
         return getUserByUsername(username).getToken();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     @Transactional
     public List<Movie> getFavouriteMoviesByUsername(UserEntity user)
     {
         return user.getMovies();
     }
-
-
 
     private Movie getMovieByMovieId(int movie_id)
     {
@@ -190,8 +170,6 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
 
         UserEntity user = getUserByUsername(u.getUsername());
 
-        // For prevent duplicate but next time, I will add trigger to database side for this problem.
-        //This is temporary solution.
         for (int i = 0; i < user.getMovies().size(); i++)
             if (user.getMovies().get(i).getMovieId() == movie.getMovieId())
                 return;
@@ -219,44 +197,6 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
 
         return null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private TVShow isExistsTvShow(int id)
     {
         Session session = entityManager.unwrap(Session.class);
@@ -272,9 +212,6 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
 
         return null;
     }
-
-
-
     @Override
     public TVShow addTvShowToFavouriteList(UserEntity user, int id)
     {
@@ -297,8 +234,6 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
 
 
     }
-
-
     private void saveTvShowToUser(String username)
     {
 
@@ -330,9 +265,6 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
     public TVShow deleteSeriesFromFavouriteMovieList(UserEntity user, int tv_show_id) {
         return null;
     }
-
-
-
     @Override
     @Transactional
     public void updateUser(UserEntity user, String hashedPassword)
@@ -342,6 +274,5 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
         session.update(user);
         session.close();
     }
-
 
 }
