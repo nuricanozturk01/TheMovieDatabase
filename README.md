@@ -1,7 +1,4 @@
-# TheMovieDatabaseDemo
- tmdb java spring backend
- 
- # Spring Boot, Hibernate, JWT, Rest API
+# Spring Boot, Hibernate, JWT, Rest API
 
 ### Auth
 | Method | URL                  | Description       | Link                    |
@@ -25,16 +22,16 @@
 | GET    | /tv/getTvDetail        | Get tv detail with page   | [JSON](#getTvDetail)        |
 | GET    | /tv/getTvSeries        | Get tv series with page   | [JSON](#getTvSeries)        |
 | GET    | /tv/getPopularTvSeries | Get tv detail with id     | [JSON](#getPopularTvSeries) |
-| GET    | /tv/searchTvShow       | Search tv show with title | [JSON](#searchTvShow)       |
+| GET    | /tv/search             | Search tv show with title | [JSON](#searchTvShow)       |
 
 ### User
-| Method | URL                            | Description                    | Link                              |
-|--------|--------------------------------|--------------------------------|-----------------------------------|
-| POST   | /user/movie/addFavouriteList   | Add favourite movie to db      | [JSON](#addMovieToFavouriteList)  |
-| GET    | /user/movie/getFavouriteMovies | Get user's favourite movies    | [JSON](#getFavouriteMovies)       |
-| POST   | /user/movie/delete             | Delete movie with id           | [JSON](#deleteMovie)              |
-| POST   | /user/tv/addFavouriteList      | Add favourite tv series to db  | [JSON](#addTvShowToFavouriteList) |
-| GET    | /user/tv/getFavouriteTvSeries  | Get user's favourite tv series | [JSON](#getFavouriteTvShows)      |
+| Method | URL                          | Description                    | Link                              |
+|--------|------------------------------|--------------------------------|-----------------------------------|
+| POST   | /user/movie/addFavouriteList | Add favourite movie to db      | [JSON](#addMovieToFavouriteList)  |
+| GET    | /user/movie/getFavouriteList | Get user's favourite movies    | [JSON](#getFavouriteMovies)       |
+| POST   | /user/movie/delete           | Delete movie with id           | [JSON](#deleteMovie)              |
+| POST   | /user/tv/addFavouriteList    | Add favourite tv series to db  | [JSON](#addTvShowToFavouriteList) |
+| GET    | /user/tv/getFavouriteList    | Get user's favourite tv series | [JSON](#getFavouriteTvShows)      |
 
 ## Sample JSON Requests
 
@@ -54,7 +51,7 @@
 	"email" : "can@gmail.com"
 }
 ```
-##### <a id="changePassword"> Change Password -> /login/changePassword
+##### <a id="changePassword"> Change Password -> /auth/changePassword
 ```json
 {
 	"username": "can",
@@ -73,7 +70,7 @@
 ```
 
 
-##### <a id="getMovieDetail"> Get Detail of Movie -> /movies/getMovie (Request param is "page")
+##### <a id="getMovieDetail"> Get Detail of Movie -> /movies/getMovie (Request param is "id")
 ```http request
     http://localhost:8080/movies/getMovie?id=69
 ```
@@ -93,7 +90,7 @@
 
 ##### <a id="getTvSeries"> Get Tv Series Page by Page -> /tv/getTvSeries (Request param is "id")
 ```http request
-    http://localhost:8080/tv/getPopularTvSeries?id=234
+    http://localhost:8080/tv/getTvSeries?id=234
 ```
 
 	
@@ -103,13 +100,13 @@
     http://localhost:8080/tv/getPopularTvSeries?page=358
 ```
 
-##### <a id="searchTvShow"> Search Tv Series with Title -> /tv/searchTvShow
+##### <a id="searchTvShow"> Search Tv Series with Title -> /tv/search
 ```json
 {
 	"title": "breaking bad"
 }
 ```
-##### <a id="addMovieToFavouriteList"> Add Movie to Favourite List -> /users/addFavouriteList (Request param is "id")
+##### <a id="addMovieToFavouriteList"> Add Movie to Favourite List -> /user/addFavouriteList (Request param is "id")
 ```http request
     http://localhost:8080/user/movie/addFavouriteList?id=536
 ```
@@ -121,7 +118,7 @@
 ```
 
 
-##### <a id="deleteMovie"> Delete movie from favourite list -> /users/movie/delete (Request param is "id")
+##### <a id="deleteMovie"> Delete movie from favourite list -> /user/movie/delete (Request param is "id")
 ```http request
     http://localhost:8080/user/movie/delete?id=3
 ```
