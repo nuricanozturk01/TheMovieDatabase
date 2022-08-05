@@ -1,5 +1,11 @@
 # Spring Boot, Hibernate, JWT, Rest API
-
+-------------------------------------------------------------------------------------------------------------------
+In this application, you can look at the popular movies, popular TV series and you can search the movie and
+TV series. Also, if you know the movie id or TV series id, you can get the movie or TV series detail. After 
+save the favourite movie or TV series, you can show the favourite list. If you want to look at tv series or 
+movies, you can see the list with page. In addition, this applicaton send email to your email address about
+popular movies and TV series. If you want to change password, we send random new password to your email address. 
+-------------------------------------------------------------------------------------------------------------------
 ### Auth
 | Method | URL                  | Description       | Link                    |
 |--------|----------------------|-------------------|-------------------------|
