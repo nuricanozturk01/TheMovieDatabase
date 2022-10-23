@@ -61,6 +61,7 @@ public class TVSeriesAPIService implements ITVSeriesAPIService
     {
         if (user.getTvShows() == null)
             user.setTvShows(new ArrayList<>());
+
         user.getTvShows().add(tvShow);
     }
 }

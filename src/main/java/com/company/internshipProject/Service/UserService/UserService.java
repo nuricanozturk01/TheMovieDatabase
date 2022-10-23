@@ -24,16 +24,14 @@ import java.util.List;
 @Service
 public class UserService  implements IUserService
 {
-    private IUserDAO userDal;
+    private final IUserDAO userDal;
     @Autowired
     private TokenManager tokenManager;
-
 
     @Autowired
     public UserService(IUserDAO userDal)
     {
         this.userDal = userDal;
-
     }
 
     private UserEntity getUser()
@@ -44,9 +42,7 @@ public class UserService  implements IUserService
     @Transactional
     public UserEntity getUserByUsername(String username)
     {
-        if (username.isBlank() || username.isEmpty())
-            return null;
-        return userDal.getUserByUsername(username);
+        return username.isBlank() || username.isEmpty() ? null : userDal.getUserByUsername(username);
     }
 
     @Override
@@ -60,7 +56,6 @@ public class UserService  implements IUserService
     @Transactional
     public UserEntity addUser(UserEntity userEntity)
     {
-
         if (userEntity.getUsername().isEmpty() || userEntity.getUsername().isBlank() ||
             userEntity.getPassword().isBlank() || userEntity.getPassword().isEmpty()
             || userEntity.getUsername() == null || userEntity.getPassword() == null)
@@ -68,6 +63,7 @@ public class UserService  implements IUserService
 
         if (isUserExists(userEntity))
             throw new UserAlreadyExistsException();
+
         return userDal.addUser(userEntity);
     }
 
@@ -76,7 +72,7 @@ public class UserService  implements IUserService
     @Override
     public boolean isUserExists(UserEntity userEntity)
     {
-        List<UserEntity> users = userDal.getAllUsers();
+        var users = userDal.getAllUsers();
 
         for (UserEntity user : users)
             if (user.getUsername().equals(userEntity.getUsername()))
@@ -95,7 +91,7 @@ public class UserService  implements IUserService
     @Override
     public Movie addMovieToFavouriteList(int id)
     {
-        UserEntity user = userDal.getUserByUsername(tokenManager.getUsernameToken(AuthController.TOKEN));
+        var user = userDal.getUserByUsername(tokenManager.getUsernameToken(AuthController.TOKEN));
 
         if (user == null)
             throw new UserNotExistsException();
@@ -110,7 +106,7 @@ public class UserService  implements IUserService
     @Override
     public List<Movie> getFavouriteMoviesByUsername()
     {
-       UserEntity user = getUser();
+       var user = getUser();
 
         if (user == null)
             throw new UserNotExistsException();
@@ -136,7 +132,7 @@ public class UserService  implements IUserService
         if (movie_id <= 0 || movie_id > Integer.MAX_VALUE)
             throw new InvalidUsernameOrPasswordException();
 
-        UserEntity userEntity = userDal.getUserByUsername(getUser().getUsername());
+        var userEntity = userDal.getUserByUsername(getUser().getUsername());
 
         if (userEntity == null)
             throw new UserNotExistsException();
@@ -148,7 +144,7 @@ public class UserService  implements IUserService
     public TVShow addTvShowToFavouriteList(int id)
     {
 
-        UserEntity user = getUser();
+        var user = getUser();
 
         if (user == null)
             throw new UserNotExistsException();
@@ -163,7 +159,7 @@ public class UserService  implements IUserService
     @Override
     public List<TVShow> getFavouriteSeriesByUsername()
     {
-        UserEntity user = getUser();
+        var user = getUser();
 
         if (user == null)
             throw new UserNotExistsException();
@@ -186,8 +182,8 @@ public class UserService  implements IUserService
     @Override
     public void changePassword(UserEntity user)
     {
-        PasswordGenerator passwordGenerator = new PasswordGenerator(PasswordGenerator.DEFAULT_PASSWORD_SIZE);
-        String newPassword = passwordGenerator.randomGenerate();
+        var passwordGenerator = new PasswordGenerator(PasswordGenerator.DEFAULT_PASSWORD_SIZE);
+        var newPassword = passwordGenerator.randomGenerate();
         Mail.sendMessage(user.getEmail(),"New Password","Your new password is: " + newPassword);;
         userDal.updateUser(user,Hash.hashing(newPassword));
     }

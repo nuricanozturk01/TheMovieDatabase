@@ -18,13 +18,10 @@ import java.util.List;
 @Component
 public class ScheduledTask
 {
-
     @Autowired
     private MovieAPIService movieService;
-
     @Autowired
     private TVSeriesAPIService tvService;
-
     @Autowired
     private IUserService userService;
 
@@ -36,13 +33,11 @@ public class ScheduledTask
 
     private String getPopularMoviesWithTitle(List<MovieObject> movies)
     {
-        List<String> popularMovies = new ArrayList<>();
+        var popularMovies = new ArrayList<String>();
 
-        movies
-                .forEach(movie -> popularMovies.add("Title: " + movie.getTitle() + "       Avg. Vote: " + movie.getVote_average() + "\n"));
+        movies.forEach(movie -> popularMovies.add("Title: " + movie.getTitle() + "       Avg. Vote: " + movie.getVote_average() + "\n"));
 
-
-        StringBuilder str = new StringBuilder();
+        var str = new StringBuilder();
 
         popularMovies.stream().map(movie -> movie + "\n").forEach(str::append);
 
@@ -51,33 +46,16 @@ public class ScheduledTask
 
     private String getPopularTvSeriesWithTitle(List<ResultOfTVSeries> tvSeries)
     {
-        List<String> popularTvSeries = new ArrayList<>();
+        var popularTvSeries = new ArrayList<String>();
 
-        tvSeries.
-                forEach(tv -> popularTvSeries.add("Title: " + tv.getOriginal_name() + "       Avg. Vote: " + tv.getVote_average() + "\n"));
+        tvSeries.forEach(tv -> popularTvSeries.add("Title: " + tv.getOriginal_name() + "       Avg. Vote: " + tv.getVote_average() + "\n"));
 
-        StringBuilder str = new StringBuilder();
+        var str = new StringBuilder();
 
         popularTvSeries.stream().map(tv -> tv + "\n").forEach(str::append);
 
         return str.toString();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @Scheduled(cron="10 59 09 * * *")
     private void sendPopularMoviesToMembers()
@@ -85,9 +63,9 @@ public class ScheduledTask
        if (userService.getAllUsers() == null)
            return;
 
-       List<MovieObject> movies = movieService.getPopularMovies(1);
+       var movies = movieService.getPopularMovies(1);
 
-       String str = getPopularMoviesWithTitle(movies);
+       var str = getPopularMoviesWithTitle(movies);
 
        userService.getAllUsers().forEach(user -> Mail.sendMessage(user.getEmail(), "Popular Movies", str));
     }
@@ -98,9 +76,9 @@ public class ScheduledTask
         if (userService.getAllUsers() == null)
             return;
 
-        List<ResultOfTVSeries> tvSeries = tvService.getPopularTvSeriesPageByPage(1);
+        var tvSeries = tvService.getPopularTvSeriesPageByPage(1);
 
-        String str = getPopularTvSeriesWithTitle(tvSeries);
+        var str = getPopularTvSeriesWithTitle(tvSeries);
 
         userService.getAllUsers().forEach(user -> Mail.sendMessage(user.getEmail(), "Popular Tv Series", str));
     }
