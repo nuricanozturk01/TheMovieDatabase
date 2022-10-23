@@ -38,12 +38,13 @@ public class ScheduledTask
     {
         List<String> popularMovies = new ArrayList<>();
 
-        for (MovieObject movie : movies)
-            popularMovies.add("Title: " + movie.getTitle() + "       Avg. Vote: " + movie.getVote_average() + "\n");
+        movies
+                .forEach(movie -> popularMovies.add("Title: " + movie.getTitle() + "       Avg. Vote: " + movie.getVote_average() + "\n"));
+
 
         StringBuilder str = new StringBuilder();
-        for (String popularMovie : popularMovies)
-            str.append(popularMovie).append("\n");
+
+        popularMovies.stream().map(movie -> movie + "\n").forEach(str::append);
 
         return str.toString();
     }
@@ -52,12 +53,12 @@ public class ScheduledTask
     {
         List<String> popularTvSeries = new ArrayList<>();
 
-        for (ResultOfTVSeries tv : tvSeries)
-            popularTvSeries.add("Title: " + tv.getOriginal_name() + "       Avg. Vote: " + tv.getVote_average() + "\n");
+        tvSeries.
+                forEach(tv -> popularTvSeries.add("Title: " + tv.getOriginal_name() + "       Avg. Vote: " + tv.getVote_average() + "\n"));
 
         StringBuilder str = new StringBuilder();
-        for (String popularMovie : popularTvSeries)
-            str.append(popularMovie).append("\n");
+
+        popularTvSeries.stream().map(tv -> tv + "\n").forEach(str::append);
 
         return str.toString();
     }
@@ -78,7 +79,7 @@ public class ScheduledTask
 
 
 
-    @Scheduled(cron="10 40 19 * * *")
+    @Scheduled(cron="10 59 09 * * *")
     private void sendPopularMoviesToMembers()
     {
        if (userService.getAllUsers() == null)
@@ -88,11 +89,10 @@ public class ScheduledTask
 
        String str = getPopularMoviesWithTitle(movies);
 
-        for (int i = 0; i < userService.getAllUsers().size(); i++)
-            Mail.sendMessage(userService.getAllUsers().get(i).getEmail(),"Popular Movies",str);
+       userService.getAllUsers().forEach(user -> Mail.sendMessage(user.getEmail(), "Popular Movies", str));
     }
 
-    @Scheduled(cron="10 43 19 * * *")
+    @Scheduled(cron="10 00 10 * * *")
     private void sendPopularTvShowsToMembers()
     {
         if (userService.getAllUsers() == null)
@@ -102,7 +102,6 @@ public class ScheduledTask
 
         String str = getPopularTvSeriesWithTitle(tvSeries);
 
-        for (int i = 0; i < userService.getAllUsers().size(); i++)
-            Mail.sendMessage(userService.getAllUsers().get(i).getEmail(),"Popular Tv Series",str);
+        userService.getAllUsers().forEach(user -> Mail.sendMessage(user.getEmail(), "Popular Tv Series", str));
     }
 }

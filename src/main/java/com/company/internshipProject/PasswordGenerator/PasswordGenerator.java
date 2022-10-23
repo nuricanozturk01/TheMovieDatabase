@@ -7,7 +7,9 @@ import com.company.internshipProject.PasswordGenerator.PGExceptions.WrongPasswor
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.stream.IntStream;
 
+@Deprecated(since = "1.0.0")
 public class PasswordGenerator implements IPasswordGenerator
 {
 
@@ -74,7 +76,6 @@ public class PasswordGenerator implements IPasswordGenerator
     }
     private void fillPassword(int[][] arr, int size)
     {
-
         for (int i = 0; i < size; i++)
         {
             int k = random.nextInt(3 - 0) + 0;

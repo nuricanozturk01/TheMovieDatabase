@@ -16,6 +16,8 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 @Repository
 public class MovieAPIDAO implements IMovieAPIDAO
@@ -33,7 +35,7 @@ public class MovieAPIDAO implements IMovieAPIDAO
     {
         try
         {
-            HttpRequest request = HttpRequest.newBuilder()
+            var request = HttpRequest.newBuilder()
                     .uri(URI.create(query))
                     .build();
 
@@ -53,18 +55,18 @@ public class MovieAPIDAO implements IMovieAPIDAO
     @Override
     public List<MovieObject> getMovies(int pageNumber)
     {
-        List<MovieObject> movies = new ArrayList<>();
+        var movies = new ArrayList<MovieObject>();
 
         try
         {
-            String query = "https://api.themoviedb.org/3/discover/movie?api_key" +
+            var query = "https://api.themoviedb.org/3/discover/movie?api_key" +
                     "=" + API_KEY + "&include_adult=true&include_video=false&page=" + pageNumber;
 
-            HttpResponse<String> response = getResponse(query);
+            var response = getResponse(query);
 
-            ObjectMapper mapper = new ObjectMapper();
+            var mapper = new ObjectMapper();
 
-            Root root = mapper.readValue(response.body(),Root.class);
+            var root = mapper.readValue(response.body(),Root.class);
 
             movies.addAll(root.getResults());
         }
@@ -81,9 +83,9 @@ public class MovieAPIDAO implements IMovieAPIDAO
     {
         try
         {
-            HttpResponse<String> response =
+            var response =
                     getResponse("https://api.themoviedb.org/3/movie/"+movie_id+"?api_key="+ API_KEY);
-            ObjectMapper mapper = new ObjectMapper();
+            var mapper = new ObjectMapper();
 
             return mapper.readValue(response.body(), MovieDetail.class);
 
@@ -100,10 +102,10 @@ public class MovieAPIDAO implements IMovieAPIDAO
         List<MovieObject> popularMovies;
         try
         {
-            HttpResponse<String> response =
+            var response =
                     getResponse("https://api.themoviedb.org/3/movie/popular?api_key="+API_KEY+"&page=" + page);
-            ObjectMapper mapper = new ObjectMapper();
-            Root result  = mapper.readValue(response.body(),Root.class);
+            var mapper = new ObjectMapper();
+            var result  = mapper.readValue(response.body(),Root.class);
             popularMovies = new ArrayList<>(result.getResults());
 
         }
@@ -121,12 +123,12 @@ public class MovieAPIDAO implements IMovieAPIDAO
         try
         {
             title = title.replaceAll(" ", "%20");
-            String str =
+            var str =
                     "https://api.themoviedb.org/3/search/movie?api_key="+API_KEY+
                             "&query="+title+"&page=1&include_adult=false";
-            HttpResponse<String> response = getResponse(str);
-            ObjectMapper mapper = new ObjectMapper();
-            Root result  = mapper.readValue(response.body(),Root.class);
+            var response = getResponse(str);
+            var mapper = new ObjectMapper();
+            var result  = mapper.readValue(response.body(),Root.class);
             popularMovies = new ArrayList<>(result.getResults());
 
         }
@@ -140,16 +142,16 @@ public class MovieAPIDAO implements IMovieAPIDAO
     @Override
     public HashMap<Integer, String> getGenres()
     {
-        HashMap<Integer, String> genres = new HashMap<>();
+        var genres = new HashMap<Integer, String>();
         try
         {
 
-            String str =
+            var str =
                 "https://api.themoviedb.org/3/genre/movie/list?api_key="+API_KEY+"&language=en-US";
-            HttpResponse<String> response = getResponse(str);
-            ObjectMapper mapper = new ObjectMapper();
+            var response = getResponse(str);
+            var mapper = new ObjectMapper();
 
-            GenreRoot result  = mapper.readValue(response.body(),GenreRoot.class);
+            var result  = mapper.readValue(response.body(),GenreRoot.class);
 
             for (int i = 0; i < result.getGenres().size(); i++)
                 genres.put(result.getGenres().get(i).getId(),

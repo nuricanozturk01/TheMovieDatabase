@@ -20,16 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Repository
 public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
 {
-
     private IMovieAPIService movieService;
     private ITVSeriesAPIService tvService;
-
-
-
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
@@ -45,16 +42,13 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
     @Transactional
     public UserEntity getUserByUsername(String username)
     {
-        try
-        {
-            List<UserEntity> list = getAllUsers();
-            for (int i = 0; i < list.size(); i++)
-                if (list.get(i).getUsername().equals(username))
-                    return list.get(i);
+        try {
+            return  getAllUsers().stream()
+                    .filter(u -> u.getUsername().equals(username))
+                    .findFirst()
+                    .orElse(null);
         }
-        catch (NoResultException e)
-        {
-
+        catch (NoResultException ignore) {
         }
         return null;
     }
@@ -63,8 +57,8 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
     @Transactional
     public List<UserEntity> getAllUsers()
     {
-        Session session = entityManager.unwrap(Session.class);
-        Query<UserEntity> theQuery = session.createQuery("from UserEntity ", UserEntity.class);
+        var session = entityManager.unwrap(Session.class);
+        var theQuery = session.createQuery("from UserEntity ", UserEntity.class);
         session.close();
         return theQuery.getResultList();
     }
@@ -73,7 +67,7 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
     @Transactional
     public UserEntity addUser(UserEntity userEntity)
     {
-        Session session = entityManager.unwrap(Session.class);
+        var session = entityManager.unwrap(Session.class);
         session.saveOrUpdate(userEntity);
         session.close();
         return userEntity;
@@ -84,8 +78,8 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
     @Transactional
     public String addToken(String token, String username)
     {
-        Session session = entityManager.unwrap(Session.class);
-        UserEntity user = getUserByUsername(username);
+        var session = entityManager.unwrap(Session.class);
+        var user = getUserByUsername(username);
         user.setToken(token);
         session.saveOrUpdate(user);
         session.close();
@@ -108,13 +102,14 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
 
     private Movie getMovieByMovieId(int movie_id)
     {
-        Session session = entityManager.unwrap(Session.class);
+        var session = entityManager.unwrap(Session.class);
 
-        Movie movie =
+        var movie =
                 (Movie) session.createQuery("FROM Movie WHERE movieId =" + movie_id).getSingleResult();
 
         if (movie == null)
             throw new MovieNotExistsException();
+
         session.close();
         return movie;
     }
@@ -123,13 +118,13 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
     @Transactional
     public Movie addMovieToFavouriteList(UserEntity user, int id)
     {
-        Session session = entityManager.unwrap(Session.class);
+        var session = entityManager.unwrap(Session.class);
 
-        Movie movie = isExistsMovie(id);
+        var movie = isExistsMovie(id);
 
         if (movie == null)
         {
-            MovieDetail movieDetail = movieService.getMovieDetail(id);
+            var movieDetail = movieService.getMovieDetail(id);
             movie = new Movie(movieDetail.getId(), movieDetail.getTitle());
             movie.setMovieDetails(new com.company.internshipProject.Entity.MovieEntity.MovieDetail(
                     movieDetail.getOverview(),
@@ -148,14 +143,14 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
     @Transactional
     public Movie deleteMovieFromFavouriteMovieList(UserEntity user, int movie_id)
     {
-        Movie movie = getMovieByMovieId(movie_id);
-        UserEntity realUser = getUserByUsername(user.getUsername());
+        var movie = getMovieByMovieId(movie_id);
+        var realUser = getUserByUsername(user.getUsername());
 
-        Session session = entityManager.unwrap(Session.class);
+        var session = entityManager.unwrap(Session.class);
 
-        String str =
+        var str =
                 "DELETE FROM movie_has_user WHERE movie_id="+movie_id+" AND user_id="+realUser.getUserId();
-        Query query = session.createSQLQuery(str);
+        var query = session.createSQLQuery(str);
 
         query.executeUpdate();
 
@@ -166,13 +161,13 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
 
     private void saveToMovieHasUser(UserEntity u, Movie movie)
     {
-        Session session = entityManager.unwrap(Session.class);
+        var session = entityManager.unwrap(Session.class);
 
-        UserEntity user = getUserByUsername(u.getUsername());
+        var user = getUserByUsername(u.getUsername());
 
-        for (int i = 0; i < user.getMovies().size(); i++)
-            if (user.getMovies().get(i).getMovieId() == movie.getMovieId())
-                return;
+        if(IntStream.range(0, user.getMovies().size()).
+                anyMatch(i -> user.getMovies().get(i).getMovieId() == movie.getMovieId()))
+            return;
 
         movieService.addMovie(user,movie);
 
@@ -184,45 +179,49 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
 
     private Movie isExistsMovie(int id)
     {
-        Session session = entityManager.unwrap(Session.class);
-        Query<Movie> theQuery =
+        var session = entityManager.unwrap(Session.class);
+        var theQuery =
                 session.createQuery("from Movie",
                         Movie.class);
-        List<Movie> movies = theQuery.getResultList();
+        var movies = theQuery.getResultList();
 
-        for (Movie movie : movies)
-            if (movie.getRealMovieId() == id)
-                return movie;
+        var result = movies.stream()
+                .filter(movie -> movie.getRealMovieId() == id)
+                .findFirst()
+                .orElse(null);
+
         session.close();
 
-        return null;
+        return result;
     }
     private TVShow isExistsTvShow(int id)
     {
-        Session session = entityManager.unwrap(Session.class);
-        Query<TVShow> theQuery =
+        var session = entityManager.unwrap(Session.class);
+        var theQuery =
                 session.createQuery("from TVShow ",
                         TVShow.class);
-        List<TVShow> tvShows = theQuery.getResultList();
+        var tvShows = theQuery.getResultList();
 
-        for (TVShow show : tvShows)
-            if (show.getRealTvShowId() == id)
-                return show;
+        var result = tvShows.stream()
+                .filter(show -> show.getRealTvShowId() == id)
+                .findFirst()
+                .orElse(null);
+
         session.close();
 
-        return null;
+        return result;
     }
     @Override
     public TVShow addTvShowToFavouriteList(UserEntity user, int id)
     {
-        Session session = entityManager.unwrap(Session.class);
-        TVShow tvShow = isExistsTvShow(id);
+        var session = entityManager.unwrap(Session.class);
+        var tvShow = isExistsTvShow(id);
 
         if (tvShow == null)
         {
-            DetailOfTV detailOfTV = tvService.getDetail(id);
+            var detailOfTV = tvService.getDetail(id);
             tvShow = new TVShow(detailOfTV.getId(),detailOfTV.getOriginal_name());
-            TVDetail detail = new TVDetail(detailOfTV.getOverview(),
+            var detail = new TVDetail(detailOfTV.getOverview(),
                     detailOfTV.getNumber_of_seasons(),
                     detailOfTV.getNumber_of_episodes());
             tvShow.setTvDetails(detail);
@@ -237,21 +236,20 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
     private void saveTvShowToUser(String username)
     {
 
-        Session session = entityManager.unwrap(Session.class);
+        var session = entityManager.unwrap(Session.class);
 
-        UserEntity userr = getUserByUsername(username);
+        var userr = getUserByUsername(username);
 
         // Get last Tv show id from database
-        TVShow show = (TVShow) session.createQuery("from TVShow ORDER BY id DESC").getResultList().get(0);
+        var show = (TVShow) session.createQuery("from TVShow ORDER BY id DESC").getResultList().get(0);
 
         if (userr.getTvShows() != null)
-            for (int i = 0; i < userr.getTvShows().size(); i++)
-                if (userr.getTvShows().get(i).getRealTvShowId() == show.getRealTvShowId())
-                    return;
+            if (userr.getTvShows().stream().anyMatch(s -> s.getRealTvShowId() == show.getRealTvShowId()))
+                return;
 
         tvService.addTvShow(userr,show);
-        UserHasTvShow userHasTv = new UserHasTvShow(show.getId(), userr.getUserId());
-        session.saveOrUpdate(userHasTv);
+
+        session.saveOrUpdate(new UserHasTvShow(show.getId(), userr.getUserId()));
         session.close();
     }
 
@@ -269,7 +267,7 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
     @Transactional
     public void updateUser(UserEntity user, String hashedPassword)
     {
-        Session session = entityManager.unwrap(Session.class);
+        var session = entityManager.unwrap(Session.class);
         user.setPassword(hashedPassword);
         session.update(user);
         session.close();

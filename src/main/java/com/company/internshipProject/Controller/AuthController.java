@@ -64,7 +64,7 @@ public class AuthController
 
             userService.addToken(TOKEN, userEntity.getUsername());
 
-            UserEntity user = userService.getUserByUsername(userEntity.getUsername());
+            var user = userService.getUserByUsername(userEntity.getUsername());
 
             if (!user.getEmail().equals(userEntity.getEmail()))
                 throw new InvalidUserException();
@@ -76,30 +76,16 @@ public class AuthController
             throw new InvalidUserException();
         }
     }
-/*
-    @PostMapping("/logout")
-    public String logout()
-    {
-        UserEntity user = userService.getUserByUsername(tokenManager.getUsernameToken(AuthController.TOKEN));
-        if (tokenManager.isExpired(user.getToken()))
-        {
-            userService.addToken(null,user.getUsername());
-            user.setToken(null);
-            AuthController.TOKEN = null;
 
-        }
-        return "logout successfully!";
-    }
-*/
     @PostMapping("/changePassword")
     public String changePassword(@RequestBody String userInfo)
     {
-        JSONObject obj = new JSONObject(userInfo);
+        var obj = new JSONObject(userInfo);
 
-        String username = obj.getString("username");
-        String email = obj.getString("email");
+        var username = obj.getString("username");
+        var email = obj.getString("email");
 
-        UserEntity user = userService.getUserByUsername(username);
+        var user = userService.getUserByUsername(username);
 
         if (user == null)
             throw new UserNotExistsException();

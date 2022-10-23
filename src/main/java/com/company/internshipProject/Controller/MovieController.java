@@ -46,9 +46,7 @@ public class MovieController
     @GetMapping("/search")
     public List<MovieObject> searchMovie(@RequestBody String title)
     {
-        JSONObject obj = new JSONObject(title);
+        var obj = new JSONObject(title);
         return apiService.searchMovie(obj.getString("title"));
     }
-
-
 }

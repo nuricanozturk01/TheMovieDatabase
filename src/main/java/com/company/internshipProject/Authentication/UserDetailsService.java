@@ -16,7 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
+public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService
+{
 
     private IUserDAO userDal;
     private List<UserEntity> userList;
@@ -28,23 +29,22 @@ public class UserDetailsService implements org.springframework.security.core.use
         this.userDal = userDal;
     }
 
-
-
     @PostConstruct
-    public void init() {
+    public void init()
+    {
         userList = new ArrayList<>();
 
     }
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+    {
+        var usr = userDal.getAllUsers().stream()
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst()
+                .orElseThrow(InvalidUserException::new);
 
-        userList = userDal.getAllUsers();
-        for (UserEntity userEntity : userList)
-            if (userEntity.getUsername().equals(username))
-                return new User(username, passwordEncoder.encode(userEntity.getPassword()), new ArrayList<>());
-
-        throw new InvalidUserException();
+        return new User(username, passwordEncoder.encode(usr.getPassword()), new ArrayList<>());
     }
 }

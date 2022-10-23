@@ -31,12 +31,12 @@ public class TokenManager {
 
     public String getUsernameToken(String token)
     {
-        Claims claims = getClaims(token);
+        var claims = getClaims(token);
         return claims.getSubject();
     }
 
     public boolean isExpired(String token) {
-        Claims claims = getClaims(token);
+        var claims = getClaims(token);
         return claims.getExpiration().after(new Date(System.currentTimeMillis()));
     }
 

@@ -41,8 +41,7 @@ public class TVSeriesController
     @GetMapping("/search")
     public List<ResultOfTVSeries> searchTvShow (@RequestBody String title)
     {
-        JSONObject obj = new JSONObject(title);
-        String s = obj.getString("title");
-        return tv.searchTvShow(s);
+        var obj = new JSONObject(title);
+        return tv.searchTvShow(obj.getString("title"));
     }
 }

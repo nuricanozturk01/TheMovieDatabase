@@ -17,11 +17,8 @@ public interface IUserDAO
     String addToken(String token, String username);
     String getToken(String username);
     Movie deleteMovieFromFavouriteMovieList(UserEntity user, int movie_id);
-
     TVShow addTvShowToFavouriteList(UserEntity user, int id);
     List<TVShow> getFavouriteSeriesByUsername(UserEntity user);
     TVShow deleteSeriesFromFavouriteMovieList(UserEntity user, int tv_show_id);
-
     void updateUser(UserEntity user, String hashedPassword);
-
 }

@@ -144,16 +144,6 @@ public class UserService  implements IUserService
         return userDal.deleteMovieFromFavouriteMovieList(getUser(),movie_id);
     }
 
-
-
-
-
-
-
-
-
-
-
     @Override
     public TVShow addTvShowToFavouriteList(int id)
     {

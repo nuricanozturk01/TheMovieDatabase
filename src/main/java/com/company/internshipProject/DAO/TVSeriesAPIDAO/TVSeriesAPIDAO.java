@@ -33,7 +33,7 @@ public class TVSeriesAPIDAO implements ITVSeriesAPIDAO{
     {
         try
         {
-            HttpRequest request = HttpRequest.newBuilder()
+            var request = HttpRequest.newBuilder()
                     .uri(URI.create(query))
                     .build();
 
@@ -51,9 +51,9 @@ public class TVSeriesAPIDAO implements ITVSeriesAPIDAO{
     {
         try
         {
-            HttpResponse<String> response =
+            var response =
                     getResponse("https://api.themoviedb.org/3/tv/"+tv_id+"?api_key="+ API_KEY);
-            ObjectMapper mapper = new ObjectMapper();
+            var mapper = new ObjectMapper();
 
             return mapper.readValue(response.body(), DetailOfTV.class);
 
@@ -68,7 +68,7 @@ public class TVSeriesAPIDAO implements ITVSeriesAPIDAO{
     @Override
     public List<ResultOfTVSeries> getTvSeriesPageByPage(int page_number)
     {
-        List<ResultOfTVSeries> series = new ArrayList<>();
+        var series = new ArrayList<ResultOfTVSeries>();
 
         try
         {
@@ -99,10 +99,10 @@ public class TVSeriesAPIDAO implements ITVSeriesAPIDAO{
         List<ResultOfTVSeries> popularTVSeries;
         try
         {
-            HttpResponse<String> response =
+            var response =
                     getResponse("https://api.themoviedb.org/3/tv/popular?api_key="+API_KEY+"&page=" + page_number);
-            ObjectMapper mapper = new ObjectMapper();
-            RootOfTVSeries result  = mapper.readValue(response.body(),RootOfTVSeries.class);
+            var mapper = new ObjectMapper();
+            var result  = mapper.readValue(response.body(),RootOfTVSeries.class);
             popularTVSeries = new ArrayList<>(result.getResults());
 
         }
@@ -119,14 +119,13 @@ public class TVSeriesAPIDAO implements ITVSeriesAPIDAO{
         try
         {
             title = title.replaceAll(" ", "%20");
-            String str =
+            var str =
                 "https://api.themoviedb.org/3/search/tv?api_key=" + API_KEY +
                         "&language=en-US&page=1&query=" + title;
-            HttpResponse<String> response = getResponse(str);
-            ObjectMapper mapper = new ObjectMapper();
-            RootOfTVSeries result  = mapper.readValue(response.body(),RootOfTVSeries.class);
+            var response = getResponse(str);
+            var mapper = new ObjectMapper();
+            var result  = mapper.readValue(response.body(),RootOfTVSeries.class);
             tvSeries = new ArrayList<>(result.getResults());
-
         }
         catch (IOException e)
         {
