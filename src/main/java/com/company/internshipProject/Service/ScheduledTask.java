@@ -18,12 +18,9 @@ import java.util.List;
 @Component
 public class ScheduledTask
 {
-    @Autowired
-    private MovieAPIService movieService;
-    @Autowired
-    private TVSeriesAPIService tvService;
-    @Autowired
-    private IUserService userService;
+    private final MovieAPIService movieService;
+    private final TVSeriesAPIService tvService;
+    private final IUserService userService;
 
     public ScheduledTask(MovieAPIService movieService, TVSeriesAPIService tvService, IUserService userService) {
         this.movieService = movieService;

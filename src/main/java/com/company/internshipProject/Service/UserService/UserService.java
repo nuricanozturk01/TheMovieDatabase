@@ -22,13 +22,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class UserService  implements IUserService
+public class UserService implements IUserService
 {
     private final IUserDAO userDal;
+
     @Autowired
     private TokenManager tokenManager;
 
-    @Autowired
+
     public UserService(IUserDAO userDal)
     {
         this.userDal = userDal;
@@ -67,8 +68,6 @@ public class UserService  implements IUserService
         return userDal.addUser(userEntity);
     }
 
-
-
     @Override
     public boolean isUserExists(UserEntity userEntity)
     {
@@ -79,14 +78,6 @@ public class UserService  implements IUserService
                 return true;
         return false;
     }
-
-
-
-
-
-
-
-
 
     @Override
     public Movie addMovieToFavouriteList(int id)
@@ -122,7 +113,6 @@ public class UserService  implements IUserService
 
     public String addToken(String token, String username)
     {
-
         return userDal.addToken(token,username);
     }
 
@@ -171,13 +161,10 @@ public class UserService  implements IUserService
             throw new JWTErrorException();
         return userDal.getFavouriteSeriesByUsername(user);
     }
-
     @Override
     public TVShow deleteSeriesFromFavouriteMovieList(UserEntity user, int tv_show_id) {
         return null;
     }
-
-
 
     @Override
     public void changePassword(UserEntity user)
@@ -187,6 +174,4 @@ public class UserService  implements IUserService
         Mail.sendMessage(user.getEmail(),"New Password","Your new password is: " + newPassword);;
         userDal.updateUser(user,Hash.hashing(newPassword));
     }
-
-
 }
