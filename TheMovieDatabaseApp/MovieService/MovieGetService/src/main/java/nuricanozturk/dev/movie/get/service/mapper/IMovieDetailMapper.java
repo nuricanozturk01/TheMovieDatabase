@@ -16,15 +16,11 @@ public interface IMovieDetailMapper
     {
 
         var dto = new MovieDetailDTO();
+        dto.id = root.id;
         dto.genres = genres.genres;
-        dto.original_language = root.original_language;
-        dto.original_title = root.original_title;;
         dto.title = root.title;
         dto.production_companies = productionCompanies.productionCompanies;
         dto.production_countries = productionCountries.productionCountries;
-        dto.release_date = root.release_date;
-        dto.vote_average = root.vote_average;
-        dto.vote_count = root.vote_count;
 
         return dto;
     }
@@ -34,15 +30,11 @@ public interface IMovieDetailMapper
     {
 
         var dto = new MovieDetailStringDTO();
+        dto.id = root.id;
         dto.genres = genres.name;
-        dto.original_language = root.original_language;
-        dto.original_title = root.original_title;;
         dto.title = root.title;
         dto.production_companies = productionCompanies.name;
         dto.production_countries = productionCountries.name;
-        dto.release_date = root.release_date;
-        dto.vote_average = root.vote_average;
-        dto.vote_count = root.vote_count;
 
         return dto;
     }
