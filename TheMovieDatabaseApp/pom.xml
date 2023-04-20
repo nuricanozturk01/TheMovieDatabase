@@ -18,6 +18,7 @@
     <modules>
         <module>MovieService</module>
         <module>TvShowService</module>
+        <module>RepositoryLib</module>
     </modules>
 
     <properties>

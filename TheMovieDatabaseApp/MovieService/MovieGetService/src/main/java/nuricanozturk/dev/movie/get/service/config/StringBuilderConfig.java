@@ -2,14 +2,13 @@ package nuricanozturk.dev.movie.get.service.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class RestTemplateConfig
+public class StringBuilderConfig
 {
     @Bean
-    public RestTemplate createRestTemplate()
+    public StringBuilder getStringBuilder()
     {
-        return new RestTemplate();
+        return new StringBuilder();
     }
 }

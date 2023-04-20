@@ -6,7 +6,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="UserRepository" />
       </profile>
       <profile name="Annotation profile for TvShowSaveService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -17,17 +16,19 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.3.Final/mapstruct-1.5.3.Final.jar" />
         </processorPath>
         <module name="MovieSaveService" />
-        <module name="TvShowSaveService" />
-        <module name="TvShowRepositoryLib" />
+        <module name="UserRepository" />
         <module name="TvShowGetService" />
         <module name="MovieRepositoryLib" />
         <module name="MovieGetService" />
+        <module name="TvShowSaveService" />
+        <module name="TvShowRepositoryLib" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="AnimalHospiatalServiceApp" target="17" />
       <module name="GenericParenProject" target="17" />
       <module name="MovieService" target="17" />
+      <module name="RepositoryLib" target="17" />
       <module name="TvShowService" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -37,6 +38,7 @@
       <module name="MovieRepositoryLib" options="-parameters" />
       <module name="MovieSaveService" options="-parameters" />
       <module name="MovieService" options="-parameters" />
+      <module name="RepositoryLib" options="-parameters" />
       <module name="TvShowGetService" options="-parameters" />
       <module name="TvShowRepositoryLib" options="-parameters" />
       <module name="TvShowSaveService" options="-parameters" />
@@ -44,6 +46,7 @@
       <module name="UserRepository" options="-parameters" />
       <module name="movie-database-app" options="-parameters" />
       <module name="movie-database-app-movie-service" options="-parameters" />
+      <module name="movie-database-app-repository-lib" options="-parameters" />
       <module name="movie-database-app-tvshow-service" options="-parameters" />
     </option>
   </component>
