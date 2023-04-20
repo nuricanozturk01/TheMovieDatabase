@@ -28,8 +28,6 @@ public class UserEntityDAO extends EntityManagerFactory implements IUserDAO
     private IMovieAPIService movieService;
     private ITVSeriesAPIService tvService;
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    @Autowired
     public UserEntityDAO(EntityManager entityManager, IMovieAPIService movieService, ITVSeriesAPIService tvService)
     {
         super(entityManager);

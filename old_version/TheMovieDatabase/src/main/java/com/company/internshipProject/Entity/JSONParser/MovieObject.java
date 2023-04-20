@@ -20,8 +20,6 @@ public class MovieObject
     public int vote_count;
 
 
-
-
     public boolean isAdult() {
         return adult;
     }
