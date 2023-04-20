@@ -11,6 +11,16 @@
         <option value="$PROJECT_DIR$/MovieGetService/pom.xml" />
         <option value="$PROJECT_DIR$/MovieRepositoryLib/pom.xml" />
         <option value="$PROJECT_DIR$/MovieSaveService/pom.xml" />
+        <option value="$PROJECT_DIR$/TvShowGetService/pom.xml" />
+        <option value="$PROJECT_DIR$/TvShowRepositoryLib/pom.xml" />
+        <option value="$PROJECT_DIR$/TvShowSaveService/pom.xml" />
+        <option value="$PROJECT_DIR$/UserRepository/pom.xml" />
+        <option value="$PROJECT_DIR$/MovieService/MovieGetService/pom.xml" />
+        <option value="$PROJECT_DIR$/MovieService/MovieRepositoryLib/pom.xml" />
+        <option value="$PROJECT_DIR$/MovieService/MovieSaveService/pom.xml" />
+        <option value="$PROJECT_DIR$/TvShowService/TvShowGetService/pom.xml" />
+        <option value="$PROJECT_DIR$/TvShowService/TvShowRepositoryLib/pom.xml" />
+        <option value="$PROJECT_DIR$/TvShowService/TvShowSaveService/pom.xml" />
       </list>
     </option>
   </component>

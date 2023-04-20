@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/MovieGetService/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/MovieGetService/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/MovieRepositoryLib/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/MovieSaveService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MovieService/MovieGetService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MovieService/MovieGetService/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MovieService/MovieRepositoryLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MovieService/MovieRepositoryLib/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MovieService/MovieSaveService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MovieService/MovieSaveService/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MovieService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MovieService/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TvShowService/TvShowGetService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TvShowService/TvShowGetService/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TvShowService/TvShowRepositoryLib/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TvShowService/TvShowRepositoryLib/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TvShowService/TvShowSaveService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TvShowService/TvShowSaveService/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TvShowService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TvShowService/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserRepository/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>

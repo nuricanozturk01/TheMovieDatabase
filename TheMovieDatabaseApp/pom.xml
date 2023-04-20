@@ -15,6 +15,10 @@
     <artifactId>movie-database-app</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
+    <modules>
+        <module>MovieService</module>
+        <module>TvShowService</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
