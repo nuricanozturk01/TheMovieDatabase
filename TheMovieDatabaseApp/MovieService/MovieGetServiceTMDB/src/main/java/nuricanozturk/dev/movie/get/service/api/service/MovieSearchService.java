@@ -1,13 +1,12 @@
 package nuricanozturk.dev.movie.get.service.api.service;
 
 import nuricanozturk.dev.movie.get.service.api.entity.MovieDetails;
-import nuricanozturk.dev.movie.get.service.api.entity.Root;
-import nuricanozturk.dev.movie.get.service.dto.MovieDTO;
+import nuricanozturk.dev.movie.get.service.api.entity.MoviesRoot;
+import nuricanozturk.dev.movie.get.service.config.MappersConfig;
+import nuricanozturk.dev.movie.get.service.config.UrlConfig;
 import nuricanozturk.dev.movie.get.service.dto.MovieDetailStringDTO;
 import nuricanozturk.dev.movie.get.service.dto.MovieWithDetailStringDTO;
 import nuricanozturk.dev.movie.get.service.dto.MoviesDTO;
-import nuricanozturk.dev.movie.get.service.mapper.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -21,101 +20,73 @@ import static java.lang.String.format;
 public class MovieSearchService
 {
     private final RestTemplate m_restTemplate;
-    private final IMovieMapper m_movieMapper;
-    private final IMovieDetailMapper m_movieDetailMapper;
-    private final IProductionCompanyMapper m_productionCompanyMapper;
-    private final IProductionCountryMapper m_productionCountryMapper;
-    private final IGenreMapper m_genreMapper;
+    private final MappersConfig m_mappersConfig;
+    private final UrlConfig m_urlConfig;
 
-
-    @Value("${tmdb.results.all.url}")
-    private String allMoviesUrl;
-
-    @Value("${tmdb.results.details.url}")
-    private String movieDetailsUrl;
-
-    @Value("${tmdb.results.popular.url}")
-    private String popularMoviesUrl;
-
-    @Value("${tmdb.results.search.url}")
-    private String searchMoviesUrl;
-
-    @Value("${tmdb.results.trending.weekly.url}")
-    private String trendingMoviesWeeklyUrl;
-
-    @Value("${tmdb.results.trending.daily.url}")
-    private String trendingMoviesDailyUrl;
-
-    @Value("${tmdb.results.top_rated.url}")
-    private String topRatedMoviesUrl;
-
-    public MovieSearchService(RestTemplate restTemplate, IMovieMapper movieMapper, IMovieDetailMapper movieDetailMapper, IProductionCompanyMapper productionCompanyMapper, IProductionCountryMapper productionCountryMapper, IGenreMapper genreMapper)
+    public MovieSearchService(RestTemplate restTemplate, MappersConfig mappersConfig, UrlConfig urlConfig)
     {
         m_restTemplate = restTemplate;
-        m_movieMapper = movieMapper;
-        m_movieDetailMapper = movieDetailMapper;
-        m_productionCompanyMapper = productionCompanyMapper;
-        m_productionCountryMapper = productionCountryMapper;
-        m_genreMapper = genreMapper;
+        m_mappersConfig = mappersConfig;
+        m_urlConfig = urlConfig;
     }
 
     public MoviesDTO getMovies(int page)
     {
-        var root = Objects.requireNonNull(m_restTemplate.<Root>getForObject(format(allMoviesUrl, page), Root.class));
+        var root = Objects.requireNonNull(m_restTemplate.<MoviesRoot>getForObject(format(m_urlConfig.allMoviesUrl, page), MoviesRoot.class));
 
-        return m_movieMapper.toMoviesDTO(m_movieMapper.toMovieDTO(root.results));
+        return m_mappersConfig.m_movieMapper.toMoviesDTO(m_mappersConfig.m_movieMapper.toMovieDTO(root.results));
     }
 
     public MovieDetailStringDTO getMovieDetails(int movieId)
     {
-        var root = m_restTemplate.getForObject(format(movieDetailsUrl, movieId), MovieDetails.class);
-        var productionCompanies = m_productionCompanyMapper.toProductionCompanyStringDTO(m_productionCompanyMapper.toProductionCompanyDTO(Objects.requireNonNull(root).production_companies));
-        var productionCountries = m_productionCountryMapper.toProductionCountryStringDTO(m_productionCountryMapper.toProductionCountryDTO(Objects.requireNonNull(root).production_countries));
-        var genres = m_genreMapper.toGenresStringDTO(m_genreMapper.toGenreDTOList(Objects.requireNonNull(root).genres));
+        var root = m_restTemplate.getForObject(format(m_urlConfig.movieDetailsUrl, movieId), MovieDetails.class);
+        var productionCompanies = m_mappersConfig.m_productionCompanyMapper.toProductionCompanyStringDTO(m_mappersConfig.m_productionCompanyMapper.toProductionCompanyDTO(Objects.requireNonNull(root).production_companies));
+        var productionCountries = m_mappersConfig.m_productionCountryMapper.toProductionCountryStringDTO(m_mappersConfig.m_productionCountryMapper.toProductionCountryDTO(Objects.requireNonNull(root).production_countries));
+        var genres = m_mappersConfig.m_genreMapper.toGenresStringDTO(m_mappersConfig.m_genreMapper.toGenreDTOList(Objects.requireNonNull(root).genres));
 
-        return m_movieDetailMapper.toMovieDetailsStringDTO(root, productionCompanies, productionCountries, genres);
+        return m_mappersConfig.m_movieDetailMapper.toMovieDetailsStringDTO(root, productionCompanies, productionCountries, genres);
     }
 
     public MoviesDTO getPopularMovies(int page)
     {
-        var root = Objects.requireNonNull(m_restTemplate.<Root>getForObject(format(popularMoviesUrl, page), Root.class));
-        return m_movieMapper.toMoviesDTO(m_movieMapper.toMovieDTO(root.results));
+        var root = Objects.requireNonNull(m_restTemplate.<MoviesRoot>getForObject(format(m_urlConfig.popularMoviesUrl, page), MoviesRoot.class));
+        return m_mappersConfig.m_movieMapper.toMoviesDTO(m_mappersConfig.m_movieMapper.toMovieDTO(root.results));
     }
 
     public MoviesDTO getMoviesByTitle(String movie)
     {
-        var root = m_restTemplate.getForObject(format(searchMoviesUrl, movie.replace(" ", "%20")), Root.class);
-        return m_movieMapper.toMoviesDTO(m_movieMapper.toMovieDTO(Objects.requireNonNull(root).results));
+        var root = m_restTemplate.getForObject(format(m_urlConfig.searchMoviesUrl, movie.replace(" ", "%20")), MoviesRoot.class);
+        return m_mappersConfig.m_movieMapper.toMoviesDTO(m_mappersConfig.m_movieMapper.toMovieDTO(Objects.requireNonNull(root).results));
     }
 
 
     public MoviesDTO getTrendingMoviesWeekly()
     {
-        var root = Objects.requireNonNull(m_restTemplate.<Root>getForObject(trendingMoviesWeeklyUrl, Root.class));
-        return m_movieMapper.toMoviesDTO(m_movieMapper.toMovieDTO(root.results));
+        var root = Objects.requireNonNull(m_restTemplate.<MoviesRoot>getForObject(m_urlConfig.trendingMoviesWeeklyUrl, MoviesRoot.class));
+        return m_mappersConfig.m_movieMapper.toMoviesDTO(m_mappersConfig.m_movieMapper.toMovieDTO(root.results));
     }
 
     public MoviesDTO getTrendingMoviesDaily()
     {
-        var root = Objects.requireNonNull(m_restTemplate.<Root>getForObject(trendingMoviesDailyUrl, Root.class));
+        var root = Objects.requireNonNull(m_restTemplate.<MoviesRoot>getForObject(m_urlConfig.trendingMoviesDailyUrl, MoviesRoot.class));
 
-        return m_movieMapper.toMoviesDTO(m_movieMapper.toMovieDTO(root.results));
+        return m_mappersConfig.m_movieMapper.toMoviesDTO(m_mappersConfig.m_movieMapper.toMovieDTO(root.results));
     }
 
     public MoviesDTO getTopRatedMovies(int page)
     {
-        var root = Objects.requireNonNull(m_restTemplate.<Root>getForObject(format(topRatedMoviesUrl, page), Root.class));
+        var root = Objects.requireNonNull(m_restTemplate.<MoviesRoot>getForObject(format(m_urlConfig.topRatedMoviesUrl, page), MoviesRoot.class));
 
-        return m_movieMapper.toMoviesDTO(m_movieMapper.toMovieDTO(root.results));
+        return m_mappersConfig.m_movieMapper.toMoviesDTO(m_mappersConfig.m_movieMapper.toMovieDTO(root.results));
     }
 
     public MovieWithDetailStringDTO getMovieWithDetails(int id)
     {
-        var root = m_restTemplate.getForObject(format(movieDetailsUrl, id), MovieDetails.class);
-        var productionCompanies = m_productionCompanyMapper.toProductionCompanyStringDTO(m_productionCompanyMapper.toProductionCompanyDTO(Objects.requireNonNull(root).production_companies));
-        var productionCountries = m_productionCountryMapper.toProductionCountryStringDTO(m_productionCountryMapper.toProductionCountryDTO(Objects.requireNonNull(root).production_countries));
-        var genres = m_genreMapper.toGenresStringDTO(m_genreMapper.toGenreDTOList(Objects.requireNonNull(root).genres));
+        var root = m_restTemplate.getForObject(format(m_urlConfig.movieDetailsUrl, id), MovieDetails.class);
+        var productionCompanies = m_mappersConfig.m_productionCompanyMapper.toProductionCompanyStringDTO(m_mappersConfig.m_productionCompanyMapper.toProductionCompanyDTO(Objects.requireNonNull(root).production_companies));
+        var productionCountries = m_mappersConfig.m_productionCountryMapper.toProductionCountryStringDTO(m_mappersConfig.m_productionCountryMapper.toProductionCountryDTO(Objects.requireNonNull(root).production_countries));
+        var genres = m_mappersConfig.m_genreMapper.toGenresStringDTO(m_mappersConfig.m_genreMapper.toGenreDTOList(Objects.requireNonNull(root).genres));
 
-        return m_movieDetailMapper.toMovieWithDetailsStringDTO(root, productionCompanies, productionCountries, genres);
+        return m_mappersConfig.m_movieDetailMapper.toMovieWithDetailsStringDTO(root, productionCompanies, productionCountries, genres);
     }
 }

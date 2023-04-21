@@ -3,7 +3,6 @@ package nuricanozturk.dev.movie.get.service.controller;
 import nuricanozturk.dev.movie.get.service.dto.*;
 import nuricanozturk.dev.movie.get.service.api.service.MovieSearchService;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
