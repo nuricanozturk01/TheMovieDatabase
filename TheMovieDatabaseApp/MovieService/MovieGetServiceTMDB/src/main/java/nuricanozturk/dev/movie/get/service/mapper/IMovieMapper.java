@@ -5,6 +5,7 @@ import nuricanozturk.dev.movie.get.service.dto.MovieDTO;
 import nuricanozturk.dev.movie.get.service.dto.MoviesDTO;
 import org.mapstruct.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(implementationName = "MovieMapperImpl", componentModel = "spring")
@@ -18,4 +19,5 @@ public interface IMovieMapper
         dto.movies = movies;
         return dto;
     }
+
 }

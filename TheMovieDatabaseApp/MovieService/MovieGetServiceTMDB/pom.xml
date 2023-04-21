@@ -9,7 +9,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>MovieGetService</artifactId>
+	<artifactId>MovieGetServiceTMDB</artifactId>
 	<version>1.0.0</version>
 	<name>MovieGetService</name>
 	<description>MovieGetService</description>

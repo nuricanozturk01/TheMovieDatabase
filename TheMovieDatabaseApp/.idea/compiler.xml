@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Annotation profile for TvShowSaveService" enabled="true">
+      <profile name="Annotation profile for MovieGetService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -19,7 +19,7 @@
         <module name="UserRepository" />
         <module name="TvShowGetService" />
         <module name="MovieRepositoryLib" />
-        <module name="MovieGetService" />
+        <module name="MovieGetServiceTMDB" />
         <module name="TvShowSaveService" />
         <module name="TvShowRepositoryLib" />
       </profile>
@@ -34,7 +34,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="MovieGetService" options="-parameters" />
+      <module name="MovieGetServiceTMDB" options="-parameters" />
       <module name="MovieRepositoryLib" options="-parameters" />
       <module name="MovieSaveService" options="-parameters" />
       <module name="MovieService" options="-parameters" />
