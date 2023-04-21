@@ -11,30 +11,34 @@ public class Movie
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(name = "movie_id", nullable = false)
     private long movie_id;
-    @Column(nullable = false)
+    @Column(name = "language", nullable = false)
     private String language;
-    @Column(nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
-    @Column(nullable = false)
+    @Column(name = "overview", nullable = false)
     private String overview;
-    @Column(nullable = false)
+    @Column(name = "popularity", nullable = false)
     private double popularity;
-    @Column(nullable = false)
+    @Column(name = "release_date", nullable = false)
     private LocalDate release_date;
-    @Column(nullable = false)
+    @Column(name = "vote_average", nullable = false)
     private double vote_average;
 
-    /*@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "movie_detail_id", referencedColumnName = "id")
-    private MovieDetails movieDetail;*/
+    @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private MovieDetails movieDetail;
 
     public Movie() {}
 
     public Movie(long movie_id, String language, String title, String overview, double popularity, LocalDate release_date, double vote_average)
     {
+        this(language,title, overview, popularity, release_date, vote_average);
         this.movie_id = movie_id;
+    }
+
+    public Movie(String language, String title, String overview, double popularity, LocalDate release_date, double vote_average)
+    {
         this.language = language;
         this.title = title;
         this.overview = overview;
@@ -111,5 +115,15 @@ public class Movie
     public void setVote_average(double vote_average)
     {
         this.vote_average = vote_average;
+    }
+
+    public MovieDetails getMovieDetail()
+    {
+        return movieDetail;
+    }
+
+    public void setMovieDetail(MovieDetails movieDetail)
+    {
+        this.movieDetail = movieDetail;
     }
 }

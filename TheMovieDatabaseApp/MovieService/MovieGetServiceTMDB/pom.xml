@@ -11,8 +11,8 @@
 
 	<artifactId>MovieGetServiceTMDB</artifactId>
 	<version>1.0.0</version>
-	<name>MovieGetService</name>
-	<description>MovieGetService</description>
+	<name>MovieGetServiceTMDB</name>
+	<description>MovieGetServiceTMDBAPI</description>
 
 	<dependencies>
 		<dependency>

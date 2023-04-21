@@ -25,7 +25,13 @@
         <option value="$PROJECT_DIR$/RepositoryLib/TvShowRepositoryLib/pom.xml" />
         <option value="$PROJECT_DIR$/RepositoryLib/UserRepository/pom.xml" />
         <option value="$PROJECT_DIR$/MovieService/MovieGetServiceTMDB/pom.xml" />
+        <option value="$PROJECT_DIR$/RepositoryLib/ExternalResourcesRepositoryLib/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/RepositoryLib/ExternalResourcesRepositoryLib/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
