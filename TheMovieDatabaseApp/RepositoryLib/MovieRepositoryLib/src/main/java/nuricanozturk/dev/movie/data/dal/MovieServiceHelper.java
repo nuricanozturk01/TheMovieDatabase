@@ -45,12 +45,6 @@ public class MovieServiceHelper
 
     public MovieWithDetails getMovieWithDetails(long id)
     {
-        var movie = getMovieById(id).orElse(null);
-        var detail = getMovieDetails(id).get();
-        var dto = new MovieWithDetails();
-        dto.movieDetails = detail;
-        dto.movie = movie;
-
-        return dto;
+        return m_movieRepository.findMovieWithDetails(id);
     }
 }
