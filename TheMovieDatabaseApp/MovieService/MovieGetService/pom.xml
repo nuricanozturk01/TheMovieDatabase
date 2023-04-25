@@ -15,7 +15,11 @@
     <description>MovieGetService</description>
 
     <dependencies>
-
+        <dependency>
+            <groupId>nuricanozturk.dev</groupId>
+            <artifactId>MovieRepositoryLib</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 

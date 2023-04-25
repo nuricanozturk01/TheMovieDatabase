@@ -1,9 +1,10 @@
 package nuricanozturk.dev.movie.data.repository;
 
 import nuricanozturk.dev.movie.data.entity.Genre;
-import nuricanozturk.dev.movie.data.entity.Movie;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface IGenreRepository extends CrudRepository<Genre, Long>
 {
 }

@@ -2,13 +2,11 @@ package nuricanozturk.dev.movie.data.dal;
 
 import nuricanozturk.dev.movie.data.entity.Movie;
 import nuricanozturk.dev.movie.data.entity.MovieDetails;
-import nuricanozturk.dev.movie.data.entity.MovieWithDetails;
 import nuricanozturk.dev.movie.data.repository.IMovieDetailsRepository;
 import nuricanozturk.dev.movie.data.repository.IMovieRepository;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -43,8 +41,8 @@ public class MovieServiceHelper
         return m_movieDetailsRepository.findById(id);
     }
 
-    public MovieWithDetails getMovieWithDetails(long id)
+    /*public MovieWithDetails getMovieWithDetails(long id)
     {
         return m_movieRepository.findMovieWithDetails(id);
-    }
+    }*/
 }
