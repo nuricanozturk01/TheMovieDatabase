@@ -1,5 +1,7 @@
 package nuricanozturk.dev.movie.get.service;
 
+import nuricanozturk.dev.dtolib.db.moviedto.MovieDbDTO;
+import nuricanozturk.dev.dtolib.db.moviedto.MoviesDbDTO;
 import nuricanozturk.dev.movie.data.dal.MovieServiceHelper;
 import nuricanozturk.dev.movie.get.mapper.IMovieDTOMapper;
 import org.springframework.stereotype.Service;
@@ -18,50 +20,50 @@ public class MovieGetDBService
         m_movieDTOMapper = movieDTOMapper;
     }
 
-    public MoviesDTO getMoviesFromDB()
+    public MoviesDbDTO getMoviesFromDB()
     {
         return m_movieDTOMapper.toMoviesDTO(StreamSupport.stream(m_movieServiceHelper.getMovies().spliterator(), false)
                         .map(m_movieDTOMapper::toMovieDTO)
                         .toList());
     }
 
-    public MovieDTO getMovieById(long id)
+    public MovieDbDTO getMovieById(long id)
     {
         throw new UnsupportedOperationException("TODO");
     }
 
-    public MovieDTO getMovieWithDetailsById(long id)
+    public MovieDbDTO getMovieWithDetailsById(long id)
     {
         throw new UnsupportedOperationException("TODO");
     }
 
-    public MovieDTO getMoviesByGenre(String genre)
+    public MovieDbDTO getMoviesByGenre(String genre)
     {
         throw new UnsupportedOperationException("TODO");
     }
 
-    public MovieDTO getMoviesByProductionCompany(String company)
+    public MovieDbDTO getMoviesByProductionCompany(String company)
     {
         throw new UnsupportedOperationException("TODO");
     }
 
 
-    public MovieDTO getMoviesByProductionCountry(String country)
+    public MovieDbDTO getMoviesByProductionCountry(String country)
     {
         throw new UnsupportedOperationException("TODO");
     }
 
-    public MovieDTO getMoviesByReleaseDate(String releaseDate)
+    public MovieDbDTO getMoviesByReleaseDate(String releaseDate)
     {
         throw new UnsupportedOperationException("TODO");
     }
 
-    public MovieDTO getMoviesByPopularity(double popularity)
+    public MovieDbDTO getMoviesByPopularity(double popularity)
     {
         throw new UnsupportedOperationException("TODO");
     }
 
-    public MovieDTO getMoviesByVote(double begin, double end)
+    public MovieDbDTO getMoviesByVote(double begin, double end)
     {
         throw new UnsupportedOperationException("TODO");
     }

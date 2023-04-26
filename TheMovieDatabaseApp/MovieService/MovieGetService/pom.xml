@@ -20,6 +20,12 @@
             <artifactId>MovieRepositoryLib</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>nuricanozturk.dev</groupId>
+            <artifactId>dto-lib</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 
