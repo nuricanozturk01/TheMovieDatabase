@@ -7,11 +7,16 @@
         <groupId>nuricanozturk.dev</groupId>
         <artifactId>movie-database-app</artifactId>
         <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>movie-database-app-repository-lib</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
+
+    <dependencies>
+
+    </dependencies>
 
 
 

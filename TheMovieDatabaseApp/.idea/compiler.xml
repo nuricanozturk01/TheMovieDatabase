@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Annotation profile for MovieRepositoryLib" enabled="true">
+      <profile name="Annotation profile for MovieGetServiceTMDB" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -15,18 +15,21 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.3.Final/mapstruct-processor-1.5.3.Final.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.3.Final/mapstruct-1.5.3.Final.jar" />
         </processorPath>
+        <module name="GenericRepository" />
         <module name="MovieSaveService" />
         <module name="UserRepository" />
+        <module name="dto-lib" />
         <module name="TvShowGetService" />
         <module name="MovieRepositoryLib" />
         <module name="MovieGetService" />
-        <module name="TvShowSaveService" />
         <module name="MovieGetServiceTMDB" />
+        <module name="TvShowSaveService" />
         <module name="TvShowRepositoryLib" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="AnimalHospiatalServiceApp" target="17" />
+      <module name="AppRunner" target="17" />
       <module name="ExternalResourcesRepositoryLib" target="17" />
       <module name="GenericParenProject" target="17" />
       <module name="MovieService" target="17" />
@@ -36,7 +39,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="AppRunner" options="-parameters" />
       <module name="ExternalResourcesRepositoryLib" options="-parameters" />
+      <module name="GenericRepository" options="-parameters" />
       <module name="MovieGetService" options="-parameters" />
       <module name="MovieGetServiceTMDB" options="-parameters" />
       <module name="MovieRepositoryLib" options="-parameters" />
@@ -48,6 +53,7 @@
       <module name="TvShowSaveService" options="-parameters" />
       <module name="TvShowService" options="-parameters" />
       <module name="UserRepository" options="-parameters" />
+      <module name="dto-lib" options="-parameters" />
       <module name="movie-database-app" options="-parameters" />
       <module name="movie-database-app-movie-service" options="-parameters" />
       <module name="movie-database-app-repository-lib" options="-parameters" />

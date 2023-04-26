@@ -15,10 +15,12 @@
     <artifactId>movie-database-app</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
+
     <modules>
         <module>MovieService</module>
         <module>TvShowService</module>
         <module>RepositoryLib</module>
+        <module>DtoLib</module>
     </modules>
 
     <properties>

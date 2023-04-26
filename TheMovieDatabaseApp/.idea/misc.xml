@@ -26,10 +26,14 @@
         <option value="$PROJECT_DIR$/RepositoryLib/UserRepository/pom.xml" />
         <option value="$PROJECT_DIR$/MovieService/MovieGetServiceTMDB/pom.xml" />
         <option value="$PROJECT_DIR$/RepositoryLib/ExternalResourcesRepositoryLib/pom.xml" />
+        <option value="$PROJECT_DIR$/DtoLib/pom.xml" />
+        <option value="$PROJECT_DIR$/RepositoryLib/GenericRepository/pom.xml" />
+        <option value="$PROJECT_DIR$/AppRunner/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/AppRunner/pom.xml" />
         <option value="$PROJECT_DIR$/RepositoryLib/ExternalResourcesRepositoryLib/pom.xml" />
       </set>
     </option>

@@ -19,18 +19,29 @@ public class MovieDetails
     @Column(name = "title", nullable = false)
     private String title;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movieDetails", cascade = CascadeType.ALL)
-    private List<ProductionCompany> companies;
+    @Column(name = "company_id", nullable = false)
+    private int company;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movieDetails", cascade = CascadeType.ALL)
-    private List<ProductionCountry> countries;
+    @Column(name = "country_id", nullable = false)
+    private int country;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movieDetails", cascade = CascadeType.ALL)
-    private List<Genre> genres;
-
+    @Column(name = "genre_id", nullable = false)
+    private int genre;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
     private Movie movie;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id")
+    private MovieGenres genres;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    private MovieProductionCompany productionCompanies;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id")
+    private MovieProductionCompany productionCountries;
     public MovieDetails() {}
 
     public MovieDetails(long movie_detail_id, long real_movie_id, String title)
@@ -74,34 +85,34 @@ public class MovieDetails
         this.title = title;
     }
 
-    public List<ProductionCompany> getCompanies()
+    public int getCompany()
     {
-        return companies;
+        return company;
     }
 
-    public void setCompanies(List<ProductionCompany> companies)
+    public void setCompany(int company)
     {
-        this.companies = companies;
+        this.company = company;
     }
 
-    public List<ProductionCountry> getCountries()
+    public int getCountry()
     {
-        return countries;
+        return country;
     }
 
-    public void setCountries(List<ProductionCountry> countries)
+    public void setCountry(int country)
     {
-        this.countries = countries;
+        this.country = country;
     }
 
-    public List<Genre> getGenres()
+    public int getGenre()
     {
-        return genres;
+        return genre;
     }
 
-    public void setGenres(List<Genre> genres)
+    public void setGenre(int genre)
     {
-        this.genres = genres;
+        this.genre = genre;
     }
 
     public Movie getMovie()
@@ -114,11 +125,42 @@ public class MovieDetails
         this.movie = movie;
     }
 
+    public MovieGenres getGenres()
+    {
+        return genres;
+    }
+
+    public void setGenres(MovieGenres genres)
+    {
+        this.genres = genres;
+    }
+
+    public MovieProductionCompany getProductionCompanies()
+    {
+        return productionCompanies;
+    }
+
+    public void setProductionCompanies(MovieProductionCompany productionCompanies)
+    {
+        this.productionCompanies = productionCompanies;
+    }
+
+    public MovieProductionCompany getProductionCountries()
+    {
+        return productionCountries;
+    }
+
+    public void setProductionCountries(MovieProductionCompany productionCountries)
+    {
+        this.productionCountries = productionCountries;
+    }
+
     @Override
     public int hashCode()
     {
-        return super.hashCode();
+        return Long.hashCode(movie_detail_id);
     }
+
 
     @Override
     public boolean equals(Object other)

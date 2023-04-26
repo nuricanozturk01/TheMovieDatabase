@@ -1,6 +1,6 @@
 package nuricanozturk.dev.movie.get.service.config;
 
-import nuricanozturk.dev.movie.get.service.mapper.*;
+import nuricanozturk.dev.dtolib.mapper.api.*;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -12,8 +12,9 @@ public class MappersConfig
     public final IProductionCountryMapper m_productionCountryMapper;
     public final IGenreMapper m_genreMapper;
 
-    public MappersConfig(IMovieMapper movieMapper, IMovieDetailMapper movieDetailMapper, IProductionCompanyMapper
-            productionCompanyMapper, IProductionCountryMapper productionCountryMapper, IGenreMapper genreMapper)
+    public MappersConfig(IMovieMapper movieMapper, IMovieDetailMapper movieDetailMapper,
+                         IProductionCompanyMapper productionCompanyMapper,
+                         IProductionCountryMapper productionCountryMapper, IGenreMapper genreMapper)
     {
         m_movieMapper = movieMapper;
         m_movieDetailMapper = movieDetailMapper;

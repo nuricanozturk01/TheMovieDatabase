@@ -1,6 +1,8 @@
 package nuricanozturk.dev.movie.get.service.controller;
 
-import nuricanozturk.dev.movie.get.service.dto.*;
+import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieDetailStringDTO;
+import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieWithDetailStringDTO;
+import nuricanozturk.dev.dtolib.api.moviedto.*;
 import nuricanozturk.dev.movie.get.service.api.service.MovieSearchService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,7 +62,6 @@ public class MovieGetServiceController
     {
         return m_service.getTrendingMoviesDaily();
     }
-
     @GetMapping("find/rates/page")
     public MoviesDTO getTopRatedMovies(@RequestParam("p") int page)
     {

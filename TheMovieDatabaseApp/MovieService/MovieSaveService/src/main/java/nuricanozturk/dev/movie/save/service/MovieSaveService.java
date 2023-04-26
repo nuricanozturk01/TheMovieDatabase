@@ -15,6 +15,4 @@ public class MovieSaveService
         m_movieServiceHelper = movieServiceHelper;
         m_movieDetailsServiceHelper = movieDetailsServiceHelper;
     }
-
-
 }

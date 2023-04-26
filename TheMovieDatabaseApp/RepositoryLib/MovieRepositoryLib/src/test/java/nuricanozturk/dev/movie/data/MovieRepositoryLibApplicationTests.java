@@ -12,7 +12,6 @@ class MovieRepositoryLibApplicationTests
     @Test
     void contextLoads()
     {
-        var sb = new StringBuilder();
 
     }
 

@@ -41,8 +41,4 @@ public class MovieServiceHelper
         return m_movieDetailsRepository.findById(id);
     }
 
-    /*public MovieWithDetails getMovieWithDetails(long id)
-    {
-        return m_movieRepository.findMovieWithDetails(id);
-    }*/
 }
