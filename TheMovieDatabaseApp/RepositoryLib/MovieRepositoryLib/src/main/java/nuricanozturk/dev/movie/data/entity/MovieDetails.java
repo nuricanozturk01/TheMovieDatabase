@@ -2,8 +2,8 @@ package nuricanozturk.dev.movie.data.entity;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Set;
+
 
 @Entity
 @Table(name = "movie_details")
@@ -19,36 +19,28 @@ public class MovieDetails
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "company_id", nullable = false)
-    private int company;
-
-    @Column(name = "country_id", nullable = false)
-    private int country;
-
-    @Column(name = "genre_id", nullable = false)
-    private int genre;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "genre_id")
-    private MovieGenres genres;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie_detail", cascade = CascadeType.ALL)
+    private Set<MovieGenres> genres;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
-    private MovieProductionCompany productionCompanies;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie_detail", cascade = CascadeType.ALL)
+    private Set<MovieProductionCompany> productionCompanies;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_id")
-    private MovieProductionCompany productionCountries;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie_detail", cascade = CascadeType.ALL)
+    private Set<MovieProductionCountry> productionCountries;
     public MovieDetails() {}
 
     public MovieDetails(long movie_detail_id, long real_movie_id, String title)
     {
-        this(real_movie_id, title);
         this.movie_detail_id = movie_detail_id;
+        this.real_movie_id = real_movie_id;
+        this.title = title;
+
     }
+
     public MovieDetails(long real_movie_id, String title)
     {
         this.real_movie_id = real_movie_id;
@@ -85,35 +77,7 @@ public class MovieDetails
         this.title = title;
     }
 
-    public int getCompany()
-    {
-        return company;
-    }
 
-    public void setCompany(int company)
-    {
-        this.company = company;
-    }
-
-    public int getCountry()
-    {
-        return country;
-    }
-
-    public void setCountry(int country)
-    {
-        this.country = country;
-    }
-
-    public int getGenre()
-    {
-        return genre;
-    }
-
-    public void setGenre(int genre)
-    {
-        this.genre = genre;
-    }
 
     public Movie getMovie()
     {
@@ -125,32 +89,32 @@ public class MovieDetails
         this.movie = movie;
     }
 
-    public MovieGenres getGenres()
+    public Set<MovieGenres> getGenres()
     {
         return genres;
     }
 
-    public void setGenres(MovieGenres genres)
+    public void setGenres(Set<MovieGenres> genres)
     {
         this.genres = genres;
     }
 
-    public MovieProductionCompany getProductionCompanies()
+    public Set<MovieProductionCompany> getProductionCompanies()
     {
         return productionCompanies;
     }
 
-    public void setProductionCompanies(MovieProductionCompany productionCompanies)
+    public void setProductionCompanies(Set<MovieProductionCompany> productionCompanies)
     {
         this.productionCompanies = productionCompanies;
     }
 
-    public MovieProductionCompany getProductionCountries()
+    public Set<MovieProductionCountry> getProductionCountries()
     {
         return productionCountries;
     }
 
-    public void setProductionCountries(MovieProductionCompany productionCountries)
+    public void setProductionCountries(Set<MovieProductionCountry> productionCountries)
     {
         this.productionCountries = productionCountries;
     }

@@ -3,19 +3,37 @@ package nuricanozturk.dev.movie.data.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "movie_companies")
+@Table(name = "movie_countries")
 public class MovieProductionCountry
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movie_country_id", nullable = false)
     private long movie_country_id;
 
-    @Column(nullable = false)
-    private long movie_details_id;
-    @Column(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_detail_id", nullable = false)
+    private MovieDetails movie_detail;
+    @Column(name = "country_id", nullable = false)
     private long country_id;
 
     public MovieProductionCountry() {}
+
+    public MovieProductionCountry(MovieDetails movie_details_id, long country_id)
+    {
+        this.movie_detail = movie_details_id;
+        this.country_id = country_id;
+    }
+
+    public MovieDetails getMovie_detail()
+    {
+        return movie_detail;
+    }
+
+    public void setMovie_detail(MovieDetails movie_detail)
+    {
+        this.movie_detail = movie_detail;
+    }
 
     public long getMovie_country_id()
     {
@@ -27,15 +45,7 @@ public class MovieProductionCountry
         this.movie_country_id = movie_country_id;
     }
 
-    public long getMovie_details_id()
-    {
-        return movie_details_id;
-    }
 
-    public void setMovie_details_id(long movie_details_id)
-    {
-        this.movie_details_id = movie_details_id;
-    }
 
     public long getCountry_id()
     {

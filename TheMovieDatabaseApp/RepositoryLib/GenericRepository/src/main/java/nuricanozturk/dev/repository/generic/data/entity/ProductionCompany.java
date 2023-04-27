@@ -12,6 +12,7 @@ public class ProductionCompany
     @Column(name = "company_name", nullable = false, unique = true)
     private String name;
 
+
     public ProductionCompany(){}
     public ProductionCompany(long company_id, String name)
     {

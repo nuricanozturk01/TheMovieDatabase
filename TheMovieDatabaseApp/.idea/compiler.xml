@@ -18,6 +18,7 @@
         <module name="GenericRepository" />
         <module name="MovieSaveService" />
         <module name="UserRepository" />
+        <module name="GenericService" />
         <module name="dto-lib" />
         <module name="TvShowGetService" />
         <module name="MovieRepositoryLib" />
@@ -42,6 +43,7 @@
       <module name="AppRunner" options="-parameters" />
       <module name="ExternalResourcesRepositoryLib" options="-parameters" />
       <module name="GenericRepository" options="-parameters" />
+      <module name="GenericService" options="-parameters" />
       <module name="MovieGetService" options="-parameters" />
       <module name="MovieGetServiceTMDB" options="-parameters" />
       <module name="MovieRepositoryLib" options="-parameters" />
