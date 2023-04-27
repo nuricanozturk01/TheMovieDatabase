@@ -16,13 +16,11 @@ public class Genre
 
     public Genre(){}
 
-    public Genre(long genre_id, String name)
+    public Genre(String name, long genre_id)
     {
-        this.genre_id = genre_id;
         this.name = name;
+        this.genre_id = genre_id;
     }
-
-
 
     public Genre(String name)
     {
@@ -48,4 +46,6 @@ public class Genre
     {
         this.name = name;
     }
+
+
 }

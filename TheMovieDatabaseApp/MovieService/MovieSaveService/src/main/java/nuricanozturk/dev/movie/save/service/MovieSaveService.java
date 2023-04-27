@@ -7,17 +7,16 @@ import nuricanozturk.dev.movie.data.dal.MovieDetailsServiceHelper;
 import nuricanozturk.dev.movie.data.dal.MovieServiceHelper;
 import nuricanozturk.dev.movie.data.entity.*;
 import nuricanozturk.dev.movie.save.configuration.ValueConfig;
+import nuricanozturk.dev.movie.save.dto.CompaniesDBDTO;
+import nuricanozturk.dev.movie.save.dto.CountriesDBDTO;
 import nuricanozturk.dev.movie.save.dto.ExistsDTO;
-import nuricanozturk.dev.repository.generic.data.entity.Genre;
-import nuricanozturk.dev.repository.generic.data.entity.ProductionCompany;
-import nuricanozturk.dev.repository.generic.data.entity.ProductionCountry;
-import org.springframework.beans.factory.annotation.Value;
+import nuricanozturk.dev.movie.save.dto.GenresDBDTO;
+import nuricanozturk.dev.movie.save.mapper.IMovieGenreMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import static java.lang.String.format;
@@ -30,6 +29,7 @@ public class MovieSaveService
 
     private final RestTemplate m_restTemplate;
     private final ValueConfig m_valueConfig;
+    private final IMovieGenreMapper m_movieMapper;
 
 
     private boolean exists(String url)
@@ -46,36 +46,17 @@ public class MovieSaveService
     {
         m_restTemplate.postForEntity(url, obj, $class);
     }
-    private int[] workWithGenres(MovieWithDetailStringDTO movieDetails)
-    {
-        var arr = movieDetails.genres.split(",");
-        var intArr = new int[arr.length];
 
-        for (int i = 0; i < arr.length; i++)
-        {
-            var genre = getObj(format(m_valueConfig.findGenreByNameUrl, arr[i]), Genre.class);
 
-            if (genre != null)
-                intArr[i] = (int) genre.getGenre_id();
-            else
-            {
-                var newGenre = new Genre(arr[i]);
-                saveObj(m_valueConfig.saveGenreUrl, Genre.class, newGenre);
-                var g = getObj(format(m_valueConfig.findGenreByNameUrl, arr[i]), Genre.class);
-                intArr[i] = (int) g.getGenre_id();
-            }
 
-        }
-
-        return intArr;
-    }
     public MovieSaveService(MovieServiceHelper movieServiceHelper, MovieDetailsServiceHelper movieDetailsServiceHelper,
-                            RestTemplate restTemplate, ValueConfig valueConfig)
+                            RestTemplate restTemplate, ValueConfig valueConfig, IMovieGenreMapper movieMapper)
     {
         m_movieServiceHelper = movieServiceHelper;
         m_movieDetailsServiceHelper = movieDetailsServiceHelper;
         m_restTemplate = restTemplate;
         m_valueConfig = valueConfig;
+        m_movieMapper = movieMapper;
     }
     public ExistsDTO saveMovieById(long id)
     {
@@ -89,28 +70,15 @@ public class MovieSaveService
 
         var movieDetails = new MovieDetails(movieWithDetail.id, movieWithDetail.title);
 
-        var genreIdx = workWithGenres(movieWithDetail);
-        Arrays.stream(genreIdx).forEach(System.out::println);
-        /*var genres = Arrays.stream(movieWithDetail.genres.split(",")).map(Genre::new).toList();
-        var companies = Arrays.stream(movieWithDetail.production_companies.split(",")).map(ProductionCompany::new).toList();
-        var countries = Arrays.stream(movieWithDetail.production_countries.split(",")).map(ProductionCountry::new).toList();
 
-        genres.forEach(g -> saveObj(m_valueConfig.saveGenreUrl, Genre.class, g));
-        companies.forEach(g -> saveObj(m_valueConfig.saveGenreUrl, ProductionCompany.class, g));
-        countries.forEach(g -> saveObj(m_valueConfig.saveGenreUrl, ProductionCountry.class, g));
+        var genres =  m_restTemplate.getForObject(format(m_valueConfig.hideGenresUrl, movieWithDetail.genres), GenresDBDTO.class);
+        var companies = m_restTemplate.getForObject(format(m_valueConfig.hideCompaniesUrl, movieWithDetail.production_companies), CompaniesDBDTO.class);
+        var countries = m_restTemplate.getForObject(format(m_valueConfig.hideCountriesUrl, movieWithDetail.production_countries), CountriesDBDTO.class);
 
-        var movieGenresTable = genres
-                .stream()
-                .map(g -> new MovieGenres(movieDetails,g.getGenre_id()))
-                .collect(Collectors.toSet());
-        var movieProductionCompaniesTable = companies
-                .stream()
-                .map(g -> new MovieProductionCompany(movieDetails, g.getCompany_id()))
-                .collect(Collectors.toSet());
-        var movieProductionCountriesTable = countries
-                .stream()
-                .map(g -> new MovieProductionCountry(movieDetails, g.getCountry_id()))
-                .collect(Collectors.toSet());
+
+        var movieGenresTable = m_movieMapper.toMovieGenres(genres, movieDetails);
+        var movieProductionCompaniesTable = m_movieMapper.toMovieProductionCompanies(companies, movieDetails);
+        var movieProductionCountriesTable = m_movieMapper.toMovieProductionCountries(countries, movieDetails);
 
 
         movieDetails.setGenres(movieGenresTable);
@@ -121,9 +89,10 @@ public class MovieSaveService
                 movieWithDetail.popularity,
                 LocalDate.parse(movieWithDetail.release_date, DateTimeFormatter.ISO_LOCAL_DATE),
                 movieWithDetail.vote_average);
+
         movie.setMovieDetail(movieDetails);
 
-        m_movieServiceHelper.saveMovie(movie);*/
+        m_movieServiceHelper.saveMovie(movie);
 
         return new ExistsDTO(false);
     }

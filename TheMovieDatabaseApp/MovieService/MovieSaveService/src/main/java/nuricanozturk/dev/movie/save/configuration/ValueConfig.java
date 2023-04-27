@@ -32,6 +32,15 @@ public class ValueConfig
 
     @Value("${generic_lib.save_country}")
     public String saveCountryUrl;
+
+    @Value("${generic_lib.hide.genres}")
+    public String hideGenresUrl;
+
+    @Value("${generic_lib.hide.companies}")
+    public String hideCompaniesUrl;
+
+    @Value("${generic_lib.hide.countries}")
+    public String hideCountriesUrl;
 //------------------------------------------------------------------------------------
     @Value("${movie.read.service.find_title.url}")
     public String movieGetUrl;

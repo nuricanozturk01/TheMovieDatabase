@@ -1,8 +1,12 @@
 package nuricanozturk.dev.service.generic.controller;
 
+import nuricanozturk.dev.dtolib.entity.api.movie.MovieDetails;
 import nuricanozturk.dev.repository.generic.data.entity.Genre;
 import nuricanozturk.dev.repository.generic.data.entity.ProductionCompany;
 import nuricanozturk.dev.repository.generic.data.entity.ProductionCountry;
+import nuricanozturk.dev.service.generic.dto.CompaniesDBDTO;
+import nuricanozturk.dev.service.generic.dto.CountriesDBDTO;
+import nuricanozturk.dev.service.generic.dto.GenresDBDTO;
 import nuricanozturk.dev.service.generic.service.GenericService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 
 @RestController
@@ -75,5 +81,23 @@ public class GenericServiceController
     public ProductionCountry saveProductionCountry(@RequestBody ProductionCountry country)
     {
         return m_genericService.saveProductionCountry(country);
+    }
+
+    @GetMapping("hide/genres")
+    public GenresDBDTO getGenres(@RequestParam("n") String genres)
+    {
+        return m_genericService.saveGenreIfNotExistsElseGetId(genres);
+    }
+
+    @GetMapping("hide/companies")
+    public CompaniesDBDTO getCompanies(@RequestParam("n") String companies)
+    {
+        return m_genericService.saveCompanyIfNotExistsElseGetId(companies);
+    }
+
+    @GetMapping("hide/countries")
+    public CountriesDBDTO getCountries(@RequestParam("n") String countries)
+    {
+        return m_genericService.saveCountryIfNotExistsElseGetId(countries);
     }
 }

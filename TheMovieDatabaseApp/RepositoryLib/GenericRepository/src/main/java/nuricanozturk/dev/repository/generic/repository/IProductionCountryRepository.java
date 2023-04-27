@@ -13,4 +13,5 @@ import java.util.Optional;
 public interface IProductionCountryRepository extends CrudRepository<ProductionCountry, Long>
 {
     Optional<ProductionCountry> findByName(String name);
+    boolean existsByName(String name);
 }
