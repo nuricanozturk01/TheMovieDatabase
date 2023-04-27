@@ -1,9 +1,11 @@
 package nuricanozturk.dev.movie.get.service.controller;
 
+import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieDetailDTO;
 import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieDetailStringDTO;
 import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieWithDetailStringDTO;
 import nuricanozturk.dev.dtolib.api.moviedto.*;
-import nuricanozturk.dev.movie.get.service.api.service.MovieSearchService;
+import nuricanozturk.dev.dtolib.entity.api.movie.MovieDetails;
+import nuricanozturk.dev.movie.get.service.api.service.MovieAPISearchService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/movies/read")
 public class MovieGetServiceController
 {
-    private final MovieSearchService m_service;
+    private final MovieAPISearchService m_service;
 
-    public MovieGetServiceController(MovieSearchService service)
+    public MovieGetServiceController(MovieAPISearchService service)
     {
         m_service = service;
     }
@@ -39,6 +41,12 @@ public class MovieGetServiceController
     public MovieDetailStringDTO getMovieDetails(@RequestParam("id") int id)
     {
         return m_service.getMovieDetails(id);
+    }
+
+    @GetMapping("hide/find/detail/id")
+    public MovieDetails getDetails(@RequestParam("id") int id)
+    {
+        return m_service._getDetails(id);
     }
     @GetMapping("find/movies/title")
     public MoviesDTO getMoviesByTitle(@RequestParam("t") String title)

@@ -16,10 +16,8 @@ public class MovieWithDetailStringDTO
     public String title;
     public double vote_average;
     public int vote_count;
-
     @JsonProperty("production_companies")
     public String production_companies;
-
     @JsonProperty("production_country")
     public String production_countries;
     @JsonProperty("genres")

@@ -4,7 +4,13 @@ import nuricanozturk.dev.repository.generic.data.entity.Genre;
 import nuricanozturk.dev.repository.generic.data.entity.ProductionCompany;
 import nuricanozturk.dev.repository.generic.data.entity.ProductionCountry;
 import nuricanozturk.dev.service.generic.service.GenericService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("api/generic_lib")

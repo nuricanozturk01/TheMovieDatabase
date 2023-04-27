@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan("nuricanozturk.dev")
-@EnableJpaRepositories(basePackages = "nuricanozturk.dev")
-@EntityScan(basePackages = "nuricanozturk.dev")
+@EnableJpaRepositories(basePackages = "nuricanozturk.dev.repository.generic")
+@EntityScan(basePackages = "nuricanozturk.dev.repository.generic")
 public class GenericServiceApplication {
 
 	public static void main(String[] args) {

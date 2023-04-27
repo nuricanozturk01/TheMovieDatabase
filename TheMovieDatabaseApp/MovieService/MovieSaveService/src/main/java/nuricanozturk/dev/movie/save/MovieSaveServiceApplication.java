@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan("nuricanozturk.dev")
-@EnableJpaRepositories("nuricanozturk.dev")
-@EntityScan("nuricanozturk.dev")
+@EnableJpaRepositories("nuricanozturk.dev.movie.data")
+@EntityScan("nuricanozturk.dev.movie.data")
 public class MovieSaveServiceApplication
 {
 

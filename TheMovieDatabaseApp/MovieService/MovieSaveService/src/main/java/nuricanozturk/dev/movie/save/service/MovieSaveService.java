@@ -6,13 +6,11 @@ import nuricanozturk.dev.dtolib.mapper.api.IMovieMapper;
 import nuricanozturk.dev.movie.data.dal.MovieDetailsServiceHelper;
 import nuricanozturk.dev.movie.data.dal.MovieServiceHelper;
 import nuricanozturk.dev.movie.data.entity.*;
+import nuricanozturk.dev.movie.save.configuration.ValueConfig;
 import nuricanozturk.dev.movie.save.dto.ExistsDTO;
 import nuricanozturk.dev.repository.generic.data.entity.Genre;
 import nuricanozturk.dev.repository.generic.data.entity.ProductionCompany;
 import nuricanozturk.dev.repository.generic.data.entity.ProductionCountry;
-import nuricanozturk.dev.repository.generic.repository.IGenreRepository;
-import nuricanozturk.dev.repository.generic.repository.IProductionCompanyRepository;
-import nuricanozturk.dev.repository.generic.repository.IProductionCountryRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -29,32 +27,55 @@ public class MovieSaveService
 {
     private final MovieServiceHelper m_movieServiceHelper;
     private final MovieDetailsServiceHelper m_movieDetailsServiceHelper;
-    private final IGenreRepository m_genreRepository;
-    private final IProductionCompanyRepository m_productionCompanyRepository;
-    private final IProductionCountryRepository m_productionCountryRepository;
-    private final IMovieMapper m_movieMapper;
-    private final RestTemplate m_restTemplate;
 
-    @Value("${movie.read.service.find_title.url}")
-    private String m_movieGetUrl;
-    @Value("${movie.tmdb_service.find_with_detail.url}")
-    private String m_movieWithDetailUrl;
+    private final RestTemplate m_restTemplate;
+    private final ValueConfig m_valueConfig;
+
+
     private boolean exists(String url)
     {
         return m_restTemplate.getForObject(url, MovieDbDTO.class) != null;
     }
+
+    private <T> T getObj(String url, Class<T> $class)
+    {
+        return m_restTemplate.getForObject(url, $class);
+    }
+
+    private <T> void saveObj(String url, Class<T> $class, T obj)
+    {
+        m_restTemplate.postForEntity(url, obj, $class);
+    }
+    private int[] workWithGenres(MovieWithDetailStringDTO movieDetails)
+    {
+        var arr = movieDetails.genres.split(",");
+        var intArr = new int[arr.length];
+
+        for (int i = 0; i < arr.length; i++)
+        {
+            var genre = getObj(format(m_valueConfig.findGenreByNameUrl, arr[i]), Genre.class);
+
+            if (genre != null)
+                intArr[i] = (int) genre.getGenre_id();
+            else
+            {
+                var newGenre = new Genre(arr[i]);
+                saveObj(m_valueConfig.saveGenreUrl, Genre.class, newGenre);
+                var g = getObj(format(m_valueConfig.findGenreByNameUrl, arr[i]), Genre.class);
+                intArr[i] = (int) g.getGenre_id();
+            }
+
+        }
+
+        return intArr;
+    }
     public MovieSaveService(MovieServiceHelper movieServiceHelper, MovieDetailsServiceHelper movieDetailsServiceHelper,
-                            IGenreRepository genreRepository, IProductionCompanyRepository productionCompanyRepository,
-                            IProductionCountryRepository productionCountryRepository, IMovieMapper movieMapper,
-                            RestTemplate restTemplate)
+                            RestTemplate restTemplate, ValueConfig valueConfig)
     {
         m_movieServiceHelper = movieServiceHelper;
         m_movieDetailsServiceHelper = movieDetailsServiceHelper;
-        m_genreRepository = genreRepository;
-        m_productionCompanyRepository = productionCompanyRepository;
-        m_productionCountryRepository = productionCountryRepository;
-        m_movieMapper = movieMapper;
         m_restTemplate = restTemplate;
+        m_valueConfig = valueConfig;
     }
     public ExistsDTO saveMovieById(long id)
     {
@@ -63,17 +84,20 @@ public class MovieSaveService
         /*if (movieFromTMDB)
             return new ExistsDTO(true);*/
 
-        var movieWithDetail = m_restTemplate.getForObject(format(m_movieWithDetailUrl,id), MovieWithDetailStringDTO.class);
+        var movieWithDetail = m_restTemplate.getForObject(format(m_valueConfig.movieWithDetailUrl,id), MovieWithDetailStringDTO.class);
         // Exception
 
         var movieDetails = new MovieDetails(movieWithDetail.id, movieWithDetail.title);
 
-        var genres = Arrays.stream(movieWithDetail.genres.split(","))
-                .map(Genre::new).toList();
-        var companies = Arrays.stream(movieWithDetail.production_companies.split(","))
-                .map(ProductionCompany::new).toList();
-        var countries = Arrays.stream(movieWithDetail.production_countries.split(","))
-                .map(ProductionCountry::new).toList();
+        var genreIdx = workWithGenres(movieWithDetail);
+        Arrays.stream(genreIdx).forEach(System.out::println);
+        /*var genres = Arrays.stream(movieWithDetail.genres.split(",")).map(Genre::new).toList();
+        var companies = Arrays.stream(movieWithDetail.production_companies.split(",")).map(ProductionCompany::new).toList();
+        var countries = Arrays.stream(movieWithDetail.production_countries.split(",")).map(ProductionCountry::new).toList();
+
+        genres.forEach(g -> saveObj(m_valueConfig.saveGenreUrl, Genre.class, g));
+        companies.forEach(g -> saveObj(m_valueConfig.saveGenreUrl, ProductionCompany.class, g));
+        countries.forEach(g -> saveObj(m_valueConfig.saveGenreUrl, ProductionCountry.class, g));
 
         var movieGenresTable = genres
                 .stream()
@@ -99,7 +123,7 @@ public class MovieSaveService
                 movieWithDetail.vote_average);
         movie.setMovieDetail(movieDetails);
 
-        m_movieServiceHelper.saveMovie(movie);
+        m_movieServiceHelper.saveMovie(movie);*/
 
         return new ExistsDTO(false);
     }

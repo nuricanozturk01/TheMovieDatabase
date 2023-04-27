@@ -1,10 +1,10 @@
 package nuricanozturk.dev.movie.get.service.api.service;
 
 
+import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieDetailDTO;
 import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieDetailStringDTO;
 import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieWithDetailStringDTO;
 import nuricanozturk.dev.dtolib.api.moviedto.MoviesDTO;
-import nuricanozturk.dev.dtolib.db.moviedto.*;
 import nuricanozturk.dev.dtolib.entity.api.movie.*;
 import nuricanozturk.dev.movie.get.service.config.MappersConfig;
 import nuricanozturk.dev.movie.get.service.config.UrlConfig;
@@ -18,13 +18,13 @@ import static java.lang.String.format;
 
 @Service
 @Scope("prototype")
-public class MovieSearchService
+public class MovieAPISearchService
 {
     private final RestTemplate m_restTemplate;
     private final MappersConfig m_mappersConfig;
     private final UrlConfig m_urlConfig;
 
-    public MovieSearchService(RestTemplate restTemplate, MappersConfig mappersConfig, UrlConfig urlConfig)
+    public MovieAPISearchService(RestTemplate restTemplate, MappersConfig mappersConfig, UrlConfig urlConfig)
     {
         m_restTemplate = restTemplate;
         m_mappersConfig = mappersConfig;
@@ -98,4 +98,12 @@ public class MovieSearchService
 
         return m_mappersConfig.m_movieDetailMapper.toMovieWithDetailsStringDTO(root, productionCompanies, productionCountries, genres);
     }
+
+    public MovieDetails _getDetails(int id)
+    {
+        return m_restTemplate.getForObject(format(m_urlConfig.movieDetailsUrl, id), MovieDetails.class);
+    }
+
+
+
 }
