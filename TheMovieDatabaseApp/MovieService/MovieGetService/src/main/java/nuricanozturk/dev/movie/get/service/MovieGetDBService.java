@@ -1,23 +1,33 @@
 package nuricanozturk.dev.movie.get.service;
 
+import nuricanozturk.dev.dtolib.db.genericdtos.ProductionCompanyDTO;
 import nuricanozturk.dev.dtolib.db.moviedto.MovieDbDTO;
 import nuricanozturk.dev.dtolib.db.moviedto.MoviesDbDTO;
 import nuricanozturk.dev.movie.data.dal.MovieServiceHelper;
 import nuricanozturk.dev.movie.get.mapper.IMovieDTOMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.stream.StreamSupport;
+
+import static java.lang.String.format;
 
 @Service
 public class MovieGetDBService
 {
     private final MovieServiceHelper m_movieServiceHelper;
     private final IMovieDTOMapper m_movieDTOMapper;
+    private final RestTemplate m_restTemplate;
 
-    public MovieGetDBService(MovieServiceHelper movieServiceHelper, IMovieDTOMapper movieDTOMapper)
+    @Value("${generic_lib.find_company_name}")
+    private String findCompanyNameUrl;
+
+    public MovieGetDBService(MovieServiceHelper movieServiceHelper, IMovieDTOMapper movieDTOMapper, RestTemplate mRestTemplate)
     {
         m_movieServiceHelper = movieServiceHelper;
         m_movieDTOMapper = movieDTOMapper;
+        m_restTemplate = mRestTemplate;
     }
 
     public MoviesDbDTO getMoviesFromDB()
@@ -42,9 +52,11 @@ public class MovieGetDBService
         throw new UnsupportedOperationException("TODO");
     }
 
-    public MovieDbDTO getMoviesByProductionCompany(String company)
+    public MoviesDbDTO getMoviesByProductionCompany(String companyName)
     {
-        throw new UnsupportedOperationException("TODO");
+        var company = m_restTemplate.getForObject(format(findCompanyNameUrl, companyName), ProductionCompanyDTO.class);
+        System.out.println(company.name + " " + company.company_id);
+        return m_movieServiceHelper.getMoviesByProductionCompany(company.company_id);
     }
 
 
@@ -58,9 +70,9 @@ public class MovieGetDBService
         throw new UnsupportedOperationException("TODO");
     }
 
-    public MovieDbDTO getMoviesByPopularity(double popularity)
+    public MoviesDbDTO getMoviesByPopularity(double begin, double end)
     {
-        throw new UnsupportedOperationException("TODO");
+        return m_movieServiceHelper.getMoviesByPopularity(begin ,end);
     }
 
     public MoviesDbDTO getMoviesByVote(double begin, double end)

@@ -1,6 +1,7 @@
 package nuricanozturk.dev.dtolib.api.moviedto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MovieDTO
@@ -11,7 +12,7 @@ public class MovieDTO
     public String overview;
     public double popularity;
 
-    @JsonProperty
+    @JsonIgnore
     public String poster_path;
     public String release_date;
     public String title;

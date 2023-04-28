@@ -2,11 +2,17 @@ package nuricanozturk.dev.movie.data.entity;
 
 
 import jakarta.persistence.*;
+import org.springframework.data.jpa.repository.query.Procedure;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "movie")
+@NamedStoredProcedureQuery(name = "Movie.getMoviesByProductionCompany",
+procedureName = "getMoviesByCompany",
+parameters = {
+        @StoredProcedureParameter(mode = ParameterMode.IN, name = "companyId", type = Long.class)
+})
 public class Movie
 {
     @Id

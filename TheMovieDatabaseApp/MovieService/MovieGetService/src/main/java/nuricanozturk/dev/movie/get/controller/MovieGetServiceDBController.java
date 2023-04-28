@@ -50,9 +50,9 @@ public class MovieGetServiceDBController
     }
 
     @GetMapping("find/movies/production_company")
-    public MovieDbDTO getMoviesByProductionCompany(@RequestParam("company") String company)
+    public MoviesDbDTO getMoviesByProductionCompany(@RequestParam("company") String company)
     {
-        throw new UnsupportedOperationException("TODO");
+        return m_service.getMoviesByProductionCompany(company);
     }
 
     @GetMapping("find/movies/production_country")
@@ -66,10 +66,10 @@ public class MovieGetServiceDBController
     {
         throw new UnsupportedOperationException("TODO");
     }
-    @GetMapping("find/movies/popularity")
-    public MovieDbDTO getMoviesByPopularity(@RequestParam("p") double popularity)
+    @GetMapping("find/movies/popularity/between")
+    public MoviesDbDTO getMoviesByPopularity(@RequestParam("b") double begin, @RequestParam("e") double end)
     {
-        throw new UnsupportedOperationException("TODO");
+        return m_service.getMoviesByPopularity(begin, end);
     }
     @GetMapping("find/movies/vote/between")
     public MoviesDbDTO getMoviesByVote(@RequestParam("b") double begin, @RequestParam("e") double end)
