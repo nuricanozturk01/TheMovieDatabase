@@ -7,10 +7,8 @@ import nuricanozturk.dev.movie.data.entity.MovieProductionCountry;
 import nuricanozturk.dev.movie.save.dto.CompaniesDBDTO;
 import nuricanozturk.dev.movie.save.dto.CountriesDBDTO;
 import nuricanozturk.dev.movie.save.dto.GenresDBDTO;
-import nuricanozturk.dev.repository.generic.data.entity.Genre;
 import org.mapstruct.Mapper;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 

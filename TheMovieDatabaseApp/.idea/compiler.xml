@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Annotation profile for MovieGetService" enabled="true">
+      <profile name="Annotation profile for UserService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -21,8 +21,9 @@
         <module name="GenericService" />
         <module name="dto-lib" />
         <module name="TvShowGetService" />
-        <module name="MovieGetService" />
         <module name="MovieRepositoryLib" />
+        <module name="MovieGetService" />
+        <module name="user-service" />
         <module name="TvShowSaveService" />
         <module name="MovieGetServiceTMDB" />
         <module name="TvShowRepositoryLib" />
@@ -60,6 +61,7 @@
       <module name="movie-database-app-movie-service" options="-parameters" />
       <module name="movie-database-app-repository-lib" options="-parameters" />
       <module name="movie-database-app-tvshow-service" options="-parameters" />
+      <module name="user-service" options="-parameters" />
     </option>
   </component>
 </project>

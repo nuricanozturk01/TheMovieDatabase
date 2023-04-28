@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/movies/db")
-public class MovieGetServiceController
+@RequestMapping("api/movies/db/read")
+public class MovieGetServiceDBController
 {
     private final MovieGetDBService m_service;
 
-    public MovieGetServiceController(MovieGetDBService service)
+    public MovieGetServiceDBController(MovieGetDBService service)
     {
         m_service = service;
     }
@@ -72,8 +72,8 @@ public class MovieGetServiceController
         throw new UnsupportedOperationException("TODO");
     }
     @GetMapping("find/movies/vote/between")
-    public MovieDbDTO getMoviesByVote(@RequestParam("b") double begin, @RequestParam("e") double end)
+    public MoviesDbDTO getMoviesByVote(@RequestParam("b") double begin, @RequestParam("e") double end)
     {
-        throw new UnsupportedOperationException("TODO");
+        return m_service.getMoviesByVote(begin, end);
     }
 }

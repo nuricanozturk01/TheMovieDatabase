@@ -1,15 +1,13 @@
-package nuricanozturk.dev.user;
+package nuricanozturk.dev.service.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UserRepositoryApplicationTests
-{
+class UserServiceApplicationTests {
 
-    @Test
-    void contextLoads()
-    {
-    }
+	@Test
+	void contextLoads() {
+	}
 
 }

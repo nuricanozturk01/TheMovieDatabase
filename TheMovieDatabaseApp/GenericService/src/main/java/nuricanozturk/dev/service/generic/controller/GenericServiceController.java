@@ -1,6 +1,5 @@
 package nuricanozturk.dev.service.generic.controller;
 
-import nuricanozturk.dev.dtolib.entity.api.movie.MovieDetails;
 import nuricanozturk.dev.repository.generic.data.entity.Genre;
 import nuricanozturk.dev.repository.generic.data.entity.ProductionCompany;
 import nuricanozturk.dev.repository.generic.data.entity.ProductionCountry;
@@ -14,9 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.List;
-
 
 @RestController
 @RequestMapping("api/generic_lib")
@@ -94,6 +90,7 @@ public class GenericServiceController
     {
         return m_genericService.saveCompanyIfNotExistsElseGetId(companies);
     }
+
 
     @GetMapping("hide/countries")
     public CountriesDBDTO getCountries(@RequestParam("n") String countries)

@@ -1,6 +1,5 @@
 package nuricanozturk.dev.movie.get.service.controller;
 
-import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieDetailDTO;
 import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieDetailStringDTO;
 import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieWithDetailStringDTO;
 import nuricanozturk.dev.dtolib.api.moviedto.*;
@@ -16,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Scope("prototype")
 @RequestMapping("api/movies/read")
-public class MovieGetServiceController
+public class MovieGetServiceAPIController
 {
     private final MovieAPISearchService m_service;
 
-    public MovieGetServiceController(MovieAPISearchService service)
+    public MovieGetServiceAPIController(MovieAPISearchService service)
     {
         m_service = service;
     }

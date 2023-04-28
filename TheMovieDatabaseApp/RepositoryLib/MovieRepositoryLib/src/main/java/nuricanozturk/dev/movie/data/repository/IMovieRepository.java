@@ -11,5 +11,7 @@ import org.springframework.stereotype.Repository;
 @Lazy
 public interface IMovieRepository extends CrudRepository<Movie, Long>
 {
+    @Query("from Movie where vote_average between :begin and :end")
+    Iterable<Movie> findByVote_averageBetween(@Param("begin") double begin, @Param("end") double end);
 
 }

@@ -63,8 +63,8 @@ public class MovieGetDBService
         throw new UnsupportedOperationException("TODO");
     }
 
-    public MovieDbDTO getMoviesByVote(double begin, double end)
+    public MoviesDbDTO getMoviesByVote(double begin, double end)
     {
-        throw new UnsupportedOperationException("TODO");
+        return m_movieServiceHelper.getMoviesByVote(begin, end);
     }
 }

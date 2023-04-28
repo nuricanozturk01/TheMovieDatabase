@@ -4,7 +4,7 @@ import nuricanozturk.dev.movie.data.repository.*;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RepoConfig
+public class MoviesDBRepoConfig
 {
     public final IMovieRepository m_movieRepository;
     public final IMovieDetailsRepository m_movieDetailsRepository;
@@ -12,10 +12,10 @@ public class RepoConfig
     public final IMovieProductionCountryRepository m_movieProductionCountryRepository;
     public final IMovieGenresRepository m_movieGenresRepository;
 
-    public RepoConfig(IMovieRepository movieRepository, IMovieDetailsRepository movieDetailsRepository,
-                      IMovieProductionCompanyRepository movieProductionCompanyRepository,
-                      IMovieProductionCountryRepository movieProductionCountryRepository,
-                      IMovieGenresRepository movieGenresRepository)
+    public MoviesDBRepoConfig(IMovieRepository movieRepository, IMovieDetailsRepository movieDetailsRepository,
+                              IMovieProductionCompanyRepository movieProductionCompanyRepository,
+                              IMovieProductionCountryRepository movieProductionCountryRepository,
+                              IMovieGenresRepository movieGenresRepository)
     {
         m_movieRepository = movieRepository;
         m_movieDetailsRepository = movieDetailsRepository;
