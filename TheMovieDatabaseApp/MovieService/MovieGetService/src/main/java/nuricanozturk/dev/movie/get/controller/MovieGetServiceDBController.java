@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("api/movies/db/read")
 public class MovieGetServiceDBController
@@ -28,25 +30,13 @@ public class MovieGetServiceDBController
     @GetMapping("find/id")
     public MovieDbDTO getMovieById(@RequestParam("id") long id)
     {
-        throw new UnsupportedOperationException("TODO");
-    }
-
-    @GetMapping("find/movie_detail/id")
-    public MovieDbDTO getMovieWithDetailsById(@RequestParam("id") long id)
-    {
-        throw new UnsupportedOperationException("TODO");
+        return m_service.getMovieById(id);
     }
 
     @GetMapping("find/title")
-    public MovieDbDTO getMovieByTitle(@RequestParam("t") String movieTitle)
+    public MoviesDbDTO getMovieByTitle(@RequestParam("t") String movieTitle)
     {
-        throw new UnsupportedOperationException("TODO");
-    }
-
-    @GetMapping("find/movies/genre")
-    public MovieDbDTO getMoviesByGenre(@RequestParam("g") String genre)
-    {
-        throw new UnsupportedOperationException("TODO");
+        return m_service.getMoviesByTitle(movieTitle);
     }
 
     @GetMapping("find/movies/production_company")
@@ -55,16 +45,15 @@ public class MovieGetServiceDBController
         return m_service.getMoviesByProductionCompany(company);
     }
 
-    @GetMapping("find/movies/production_country")
-    public MovieDbDTO getMoviesByProductionCountry(@RequestParam("country") String country)
+    @GetMapping("find/movies/release_date/between")
+    public MoviesDbDTO getMoviesByReleaseDateBetween(@RequestParam("b") LocalDate b, @RequestParam("e") LocalDate e)
     {
-        throw new UnsupportedOperationException("TODO");
+        return m_service.getMoviesByReleaseDate(b, e);
     }
-
     @GetMapping("find/movies/release_date")
-    public MovieDbDTO getMoviesByReleaseDate(@RequestParam("date") String releaseDate)
+    public MoviesDbDTO getMoviesByReleaseDate(@RequestParam("d") LocalDate releaseDate)
     {
-        throw new UnsupportedOperationException("TODO");
+        return m_service.getMoviesByReleaseDate(releaseDate);
     }
     @GetMapping("find/movies/popularity/between")
     public MoviesDbDTO getMoviesByPopularity(@RequestParam("b") double begin, @RequestParam("e") double end)
@@ -75,5 +64,24 @@ public class MovieGetServiceDBController
     public MoviesDbDTO getMoviesByVote(@RequestParam("b") double begin, @RequestParam("e") double end)
     {
         return m_service.getMoviesByVote(begin, end);
+    }
+    //---------------------------------------------------------
+
+    @GetMapping("find/movies/production_country")
+    public MovieDbDTO getMoviesByProductionCountry(@RequestParam("country") String country)
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    @GetMapping("find/movies/genre")
+    public MovieDbDTO getMoviesByGenre(@RequestParam("g") String genre)
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    @GetMapping("find/movie_detail/id")
+    public MovieDbDTO getMovieWithDetailsById(@RequestParam("id") long id)
+    {
+        throw new UnsupportedOperationException("TODO");
     }
 }

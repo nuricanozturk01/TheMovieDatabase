@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
 import java.util.stream.StreamSupport;
 
 import static java.lang.String.format;
@@ -36,38 +37,29 @@ public class MovieGetDBService
                         .map(m_movieDTOMapper::toMovieDTO)
                         .toList());
     }
-
+    public MoviesDbDTO getMoviesByTitle(String title)
+    {
+        return m_movieServiceHelper.getMoviesByTitle(title);
+    }
     public MovieDbDTO getMovieById(long id)
     {
-        throw new UnsupportedOperationException("TODO");
-    }
-
-    public MovieDbDTO getMovieWithDetailsById(long id)
-    {
-        throw new UnsupportedOperationException("TODO");
-    }
-
-    public MovieDbDTO getMoviesByGenre(String genre)
-    {
-        throw new UnsupportedOperationException("TODO");
+        return m_movieDTOMapper.toMovieDTO(m_movieServiceHelper.getMovieById(id).get());
     }
 
     public MoviesDbDTO getMoviesByProductionCompany(String companyName)
     {
         var company = m_restTemplate.getForObject(format(findCompanyNameUrl, companyName), ProductionCompanyDTO.class);
-        System.out.println(company.name + " " + company.company_id);
         return m_movieServiceHelper.getMoviesByProductionCompany(company.company_id);
     }
 
-
-    public MovieDbDTO getMoviesByProductionCountry(String country)
+    public MoviesDbDTO getMoviesByReleaseDate(LocalDate releaseDate)
     {
-        throw new UnsupportedOperationException("TODO");
+        return m_movieServiceHelper.getMoviesByReleaseDate(releaseDate);
     }
 
-    public MovieDbDTO getMoviesByReleaseDate(String releaseDate)
+    public MoviesDbDTO getMoviesByReleaseDate(LocalDate begin, LocalDate end)
     {
-        throw new UnsupportedOperationException("TODO");
+        return m_movieServiceHelper.getMoviesByReleaseDateBetween(begin, end);
     }
 
     public MoviesDbDTO getMoviesByPopularity(double begin, double end)
@@ -78,5 +70,20 @@ public class MovieGetDBService
     public MoviesDbDTO getMoviesByVote(double begin, double end)
     {
         return m_movieServiceHelper.getMoviesByVote(begin, end);
+    }
+
+//---------------------------------------------------------------------------------
+    public MovieDbDTO getMovieWithDetailsById(long id)
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+
+    public MovieDbDTO getMoviesByGenre(String genre)
+    {
+        throw new UnsupportedOperationException("TODO");
+    }
+    public MovieDbDTO getMoviesByProductionCountry(String country)
+    {
+        throw new UnsupportedOperationException("TODO");
     }
 }
