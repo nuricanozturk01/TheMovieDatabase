@@ -1,5 +1,6 @@
 package nuricanozturk.dev.movie.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -21,6 +22,7 @@ public class MovieDetails
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
+    @JsonIgnore
     private Movie movie;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie_detail", cascade = CascadeType.ALL)

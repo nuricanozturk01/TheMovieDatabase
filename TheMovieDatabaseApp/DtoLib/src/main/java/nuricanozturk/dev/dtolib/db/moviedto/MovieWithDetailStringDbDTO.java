@@ -5,15 +5,26 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 
-public class MovieDbDTO
+public class MovieWithDetailStringDbDTO
 {
     @JsonIgnore
     public long movie_id;
-    public String language;
+    @JsonIgnore
+    public long movie_detail_id;
+    @JsonIgnore
+    public long real_movie_id;
     public String title;
     public String overview;
-    public double popularity;
     @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
     public LocalDate release_date;
+    public String language;
+    public double popularity;
     public double vote_average;
+    public String genres;
+    public String production_companies;
+    public String production_countries;
+
+
+
+
 }

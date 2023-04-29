@@ -1,4 +1,4 @@
-package nuricanozturk.dev.movie.data.dal;
+package nuricanozturk.dev.movie.data.config;
 
 import nuricanozturk.dev.movie.data.repository.*;
 import org.springframework.stereotype.Component;

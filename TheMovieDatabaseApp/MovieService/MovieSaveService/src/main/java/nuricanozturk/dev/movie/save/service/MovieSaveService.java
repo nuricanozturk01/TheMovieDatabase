@@ -25,45 +25,31 @@ import static java.lang.String.format;
 public class MovieSaveService
 {
     private final MovieServiceHelper m_movieServiceHelper;
-    private final MovieDetailsServiceHelper m_movieDetailsServiceHelper;
-
     private final RestTemplate m_restTemplate;
     private final ValueConfig m_valueConfig;
     private final IMovieGenreMapper m_movieMapper;
 
-
     private boolean exists(String url)
     {
-        return m_restTemplate.getForObject(url, MovieDbDTO.class) != null;
+        var m = m_restTemplate.getForObject(url, MovieDetails.class);
+
+        return  m != null;
     }
 
-    private <T> T getObj(String url, Class<T> $class)
-    {
-        return m_restTemplate.getForObject(url, $class);
-    }
-
-    private <T> void saveObj(String url, Class<T> $class, T obj)
-    {
-        m_restTemplate.postForEntity(url, obj, $class);
-    }
-
-
-
-    public MovieSaveService(MovieServiceHelper movieServiceHelper, MovieDetailsServiceHelper movieDetailsServiceHelper,
-                            RestTemplate restTemplate, ValueConfig valueConfig, IMovieGenreMapper movieMapper)
+    public MovieSaveService(MovieServiceHelper movieServiceHelper, RestTemplate restTemplate,
+                            ValueConfig valueConfig, IMovieGenreMapper movieMapper)
     {
         m_movieServiceHelper = movieServiceHelper;
-        m_movieDetailsServiceHelper = movieDetailsServiceHelper;
         m_restTemplate = restTemplate;
         m_valueConfig = valueConfig;
         m_movieMapper = movieMapper;
     }
-    public ExistsDTO saveMovieById(long id)
+    public ExistsDTO saveMovieById(long id) // TMDB id
     {
-        //var movieFromTMDB = exists(format(m_movieGetUrl,id));
+        /*var movieFromDB = exists(format(m_valueConfig.movieDetailsUrl, id));
 
-        /*if (movieFromTMDB)
-            return new ExistsDTO(true);*/
+        if (movieFromDB)
+            return new ExistsDTO(true, false);*/
 
         var movieWithDetail = m_restTemplate.getForObject(format(m_valueConfig.movieWithDetailUrl,id), MovieWithDetailStringDTO.class);
         // Exception
@@ -89,11 +75,11 @@ public class MovieSaveService
                 movieWithDetail.popularity,
                 LocalDate.parse(movieWithDetail.release_date, DateTimeFormatter.ISO_LOCAL_DATE),
                 movieWithDetail.vote_average);
-
+        movieDetails.setMovie(movie);
         movie.setMovieDetail(movieDetails);
 
         m_movieServiceHelper.saveMovie(movie);
 
-        return new ExistsDTO(false);
+        return new ExistsDTO(false, true);
     }
 }

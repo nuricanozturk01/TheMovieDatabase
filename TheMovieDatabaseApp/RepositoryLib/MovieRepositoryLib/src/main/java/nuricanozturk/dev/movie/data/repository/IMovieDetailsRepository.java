@@ -8,9 +8,16 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 @Lazy
 public interface IMovieDetailsRepository extends CrudRepository<MovieDetails, Long>
 {
+    @Query("from MovieDetails where real_movie_id = :id")
+    Optional<MovieDetails> findByReal_movie_id(@Param("id") long id);
+
+
 
 }

@@ -94,7 +94,9 @@ public class MovieAPISearchService
         var productionCountries = m_mappersConfig.m_productionCountryMapper
                 .toProductionCountryStringDTO
                         (m_mappersConfig.m_productionCountryMapper.toProductionCountryDTO(Objects.requireNonNull(root).production_countries));
-        var genres = m_mappersConfig.m_genreMapper.toGenresStringDTO(m_mappersConfig.m_genreMapper.toGenreDTOList(Objects.requireNonNull(root).genres));
+        var genres = m_mappersConfig
+                .m_genreMapper
+                .toGenresStringDTO(m_mappersConfig.m_genreMapper.toGenreDTOList(Objects.requireNonNull(root).genres));
 
         return m_mappersConfig.m_movieDetailMapper.toMovieWithDetailsStringDTO(root, productionCompanies, productionCountries, genres);
     }

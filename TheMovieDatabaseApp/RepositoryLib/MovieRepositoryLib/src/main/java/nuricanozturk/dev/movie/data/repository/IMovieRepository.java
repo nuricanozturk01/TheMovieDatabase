@@ -29,7 +29,7 @@ public interface IMovieRepository extends CrudRepository<Movie, Long>
     
         """)*/
     // TODO: implement this
-    Iterable<Movie> findByProductionCompany(@Param("companyId") long companyId);
+    //Iterable<Movie> findByProductionCompany(@Param("companyId") long companyId);
 
 
 }

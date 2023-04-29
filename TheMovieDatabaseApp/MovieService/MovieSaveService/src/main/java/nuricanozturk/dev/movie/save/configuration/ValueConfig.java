@@ -42,9 +42,11 @@ public class ValueConfig
     @Value("${generic_lib.hide.countries}")
     public String hideCountriesUrl;
 //------------------------------------------------------------------------------------
-    @Value("${movie.read.service.find_title.url}")
+    @Value("${movie.read.service.find_id.url}")
     public String movieGetUrl;
 
     @Value("${movie.tmdb_service.find_with_detail.url}")
     public String movieWithDetailUrl;
+    @Value("${movie.db.get_service.find_real_id.url}")
+    public String movieDetailsUrl;
 }

@@ -31,6 +31,14 @@ public class GenericServiceController
         return m_genericService.findGenreById(id);
     }
 
+    @GetMapping("find/company/id")
+    public ProductionCompany findCompanyById(@RequestParam("id") long id)
+    {
+        return m_genericService.findProductionCompanyById(id);
+    }
+
+
+
     @GetMapping("find/genre/name")
     public Genre findGenreByName(@RequestParam("n") String name)
     {
@@ -43,11 +51,7 @@ public class GenericServiceController
     }
 
 
-    @GetMapping("find/company/id")
-    public ProductionCompany findProductionCompanyById(@RequestParam("id") long id)
-    {
-        return m_genericService.findProductionCompanyById(id);
-    }
+
 
     @GetMapping("find/company/name")
     public ProductionCompany findProductionCompanyByName(@RequestParam("n") String name)

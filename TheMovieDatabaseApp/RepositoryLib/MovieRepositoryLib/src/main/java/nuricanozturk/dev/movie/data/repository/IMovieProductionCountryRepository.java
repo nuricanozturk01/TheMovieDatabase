@@ -2,6 +2,7 @@ package nuricanozturk.dev.movie.data.repository;
 
 import nuricanozturk.dev.movie.data.entity.MovieProductionCountry;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +10,6 @@ import org.springframework.stereotype.Repository;
 @Lazy
 public interface IMovieProductionCountryRepository extends CrudRepository<MovieProductionCountry, Long>
 {
+    //@Query("from MovieProductionCompany where movie_detail")
+
 }
