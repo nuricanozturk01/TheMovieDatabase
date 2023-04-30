@@ -1,6 +1,5 @@
 package nuricanozturk.dev.movie.save.controller;
 
-import nuricanozturk.dev.dtolib.db.moviedto.MovieDbDTO;
 import nuricanozturk.dev.movie.save.dto.ExistsDTO;
 import nuricanozturk.dev.movie.save.service.MovieSaveService;
 import org.springframework.web.bind.annotation.PostMapping;

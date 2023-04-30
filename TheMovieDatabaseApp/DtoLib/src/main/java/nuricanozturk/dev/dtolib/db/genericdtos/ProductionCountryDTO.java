@@ -3,12 +3,14 @@ package nuricanozturk.dev.dtolib.db.genericdtos;
 
 public class ProductionCountryDTO
 {
-
     private long country_id;
 
     private String name;
 
-    public ProductionCountryDTO(){}
+    public ProductionCountryDTO()
+    {
+    }
+
     public ProductionCountryDTO(String name)
     {
         this.name = name;
@@ -19,6 +21,7 @@ public class ProductionCountryDTO
         this.country_id = country_id;
         this.name = name;
     }
+
     public long getCountry_id()
     {
         return country_id;

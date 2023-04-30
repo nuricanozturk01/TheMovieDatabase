@@ -1,9 +1,9 @@
 package nuricanozturk.dev.dtolib.api.moviedetaildto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import nuricanozturk.dev.dtolib.api.genredto.GenreDTO;
 import nuricanozturk.dev.dtolib.api.productioncompanydto.ProductionCompanyDTO;
 import nuricanozturk.dev.dtolib.api.productioncountrydto.ProductionCountryDTO;
-import nuricanozturk.dev.dtolib.api.genredto.GenreDTO;
 
 import java.util.List;
 

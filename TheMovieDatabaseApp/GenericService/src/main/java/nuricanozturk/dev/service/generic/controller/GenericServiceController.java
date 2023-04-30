@@ -7,12 +7,7 @@ import nuricanozturk.dev.service.generic.dto.CompaniesDBDTO;
 import nuricanozturk.dev.service.generic.dto.CountriesDBDTO;
 import nuricanozturk.dev.service.generic.dto.GenresDBDTO;
 import nuricanozturk.dev.service.generic.service.GenericService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/generic_lib")
@@ -38,12 +33,12 @@ public class GenericServiceController
     }
 
 
-
     @GetMapping("find/genre/name")
     public Genre findGenreByName(@RequestParam("n") String name)
     {
         return m_genericService.findGenreByName(name);
     }
+
     @PostMapping("save/genre")
     public Genre saveGenre(@RequestBody Genre genre)
     {
@@ -51,13 +46,12 @@ public class GenericServiceController
     }
 
 
-
-
     @GetMapping("find/company/name")
     public ProductionCompany findProductionCompanyByName(@RequestParam("n") String name)
     {
         return m_genericService.findProductionCompanyByName(name);
     }
+
     @PostMapping("save/company")
     public ProductionCompany saveProductionCompany(@RequestBody ProductionCompany company)
     {

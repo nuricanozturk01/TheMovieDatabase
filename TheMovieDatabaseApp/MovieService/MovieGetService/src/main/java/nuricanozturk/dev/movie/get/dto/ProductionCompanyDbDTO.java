@@ -1,10 +1,13 @@
 package nuricanozturk.dev.movie.get.dto;
+
 public class ProductionCompanyDbDTO
 {
     private long company_id;
     private String name;
 
-    public ProductionCompanyDbDTO() {}
+    public ProductionCompanyDbDTO()
+    {
+    }
 
     public ProductionCompanyDbDTO(long company_id, String name)
     {

@@ -1,6 +1,7 @@
 package nuricanozturk.dev.dtolib.entity.api.movie;
 
-public class ProductionCompany{
+public class ProductionCompany
+{
     public int id;
     public String logo_path;
     public String name;

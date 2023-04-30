@@ -1,10 +1,13 @@
 package nuricanozturk.dev.movie.get.dto;
+
 public class ProductionCountryDbDTO
 {
     private long country_id;
     private String name;
 
-    public ProductionCountryDbDTO() {}
+    public ProductionCountryDbDTO()
+    {
+    }
 
     public ProductionCountryDbDTO(long country_id, String name)
     {

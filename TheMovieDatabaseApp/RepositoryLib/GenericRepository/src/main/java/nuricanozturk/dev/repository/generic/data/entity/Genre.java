@@ -14,7 +14,9 @@ public class Genre
     private String name;
 
 
-    public Genre(){}
+    public Genre()
+    {
+    }
 
     public Genre(String name, long genre_id)
     {

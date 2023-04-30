@@ -3,13 +3,14 @@ package nuricanozturk.dev.dtolib.db.genericdtos;
 
 public class GenreDTO
 {
-
     private long genre_id;
 
     private String name;
 
 
-    public GenreDTO(){}
+    public GenreDTO()
+    {
+    }
 
     public GenreDTO(String name, long genre_id)
     {
@@ -41,6 +42,4 @@ public class GenreDTO
     {
         this.name = name;
     }
-
-
 }

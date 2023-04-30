@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -27,10 +26,12 @@ public class MovieServiceHelper
         this.movieDbMapper = movieDbMapper;
     }
 
+
     public Movie saveMovie(Movie movie)
     {
         return repositories.m_movieRepository.save(movie);
     }
+
     public Iterable<Movie> getMovies()
     {
         return repositories.m_movieRepository.findAll();
@@ -91,17 +92,18 @@ public class MovieServiceHelper
 
     public MoviesDbDTO getMoviesByPopularity(double begin, double end)
     {
-        var movies = StreamSupport.stream(repositories.m_movieRepository.findByPopularityBetween(begin ,end).spliterator(), false).toList();
+        var movies = StreamSupport.stream(repositories.m_movieRepository.findByPopularityBetween(begin, end).spliterator(), false).toList();
 
         return movieDbMapper.toMoviesDbDTO(movieDbMapper.toMovieDbDTO(movies));
     }
 
     public MoviesDbDTO getMoviesByVote(double begin, double end)
     {
-        var movies = StreamSupport.stream(repositories.m_movieRepository.findByVote_averageBetween(begin ,end).spliterator(), false).toList();
+        var movies = StreamSupport.stream(repositories.m_movieRepository.findByVote_averageBetween(begin, end).spliterator(), false).toList();
 
         return movieDbMapper.toMoviesDbDTO(movieDbMapper.toMovieDbDTO(movies));
     }
+
     public MovieDetails getMovieDetailsByRealMovieId(long id)
     {
         return repositories.m_movieDetailsRepository.findByReal_movie_id(id).orElse(null);
@@ -109,10 +111,11 @@ public class MovieServiceHelper
 
     public List<MovieGenres> getMovieGenresByMovieDbId(long id)
     {
-        var details =  repositories.m_movieDetailsRepository.findById(id);
+        var details = repositories.m_movieDetailsRepository.findById(id);
 
         return details.map(movieDetails -> movieDetails.getGenres().stream().toList()).orElse(null);
     }
+
     public MovieDetails findByMovieDetailId(long id)
     {
         return repositories.m_movieDetailsRepository.findById(id).orElse(null);
@@ -120,14 +123,14 @@ public class MovieServiceHelper
 
     public List<MovieProductionCompany> getMovieProductionCompaniesByMovieDbId(long movieId)
     {
-        var details =  repositories.m_movieDetailsRepository.findById(movieId);
+        var details = repositories.m_movieDetailsRepository.findById(movieId);
 
         return details.map(movieDetails -> movieDetails.getProductionCompanies().stream().toList()).orElse(null);
     }
 
     public List<MovieProductionCountry> getMovieProductionCountryByMovieDbId(long movieId)
     {
-        var details =  repositories.m_movieDetailsRepository.findById(movieId);
+        var details = repositories.m_movieDetailsRepository.findById(movieId);
 
         return details.map(movieDetails -> movieDetails.getProductionCountries().stream().toList()).orElse(null);
     }

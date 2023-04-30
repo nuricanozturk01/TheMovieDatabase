@@ -10,15 +10,15 @@ public class MovieGenres
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_genres_id", nullable = false)
     private long movie_genres_id;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_detail_id", nullable = false)
     private MovieDetails movie_detail;
     @Column(name = "movie_genre_id", nullable = false)
     private long movie_genre_id;
 
-    public MovieGenres() {}
-
+    public MovieGenres()
+    {
+    }
 
     public MovieGenres(MovieDetails movie_detail, long movie_genre_id)
     {

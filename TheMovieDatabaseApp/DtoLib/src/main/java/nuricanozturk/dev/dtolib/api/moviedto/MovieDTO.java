@@ -2,7 +2,6 @@ package nuricanozturk.dev.dtolib.api.moviedto;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MovieDTO
 {

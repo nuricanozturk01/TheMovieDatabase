@@ -10,14 +10,15 @@ public class MovieProductionCompany
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_company_id", nullable = false)
     private long movie_company_id;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_detail_id", nullable = false)
     private MovieDetails movie_detail;
     @Column(name = "company_id", nullable = false)
     private long company_id;
 
-    public MovieProductionCompany() {}
+    public MovieProductionCompany()
+    {
+    }
 
     public MovieProductionCompany(MovieDetails movie_details_id, long company_id)
     {
@@ -44,8 +45,6 @@ public class MovieProductionCompany
     {
         this.movie_company_id = movie_company_id;
     }
-
-
 
     public long getCompany_id()
     {

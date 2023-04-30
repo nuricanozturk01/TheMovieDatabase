@@ -1,18 +1,11 @@
 package nuricanozturk.dev.movie.data.entity;
 
-
 import jakarta.persistence.*;
-import org.springframework.data.jpa.repository.query.Procedure;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "movie")
-@NamedStoredProcedureQuery(name = "Movie.getMoviesByProductionCompany",
-procedureName = "getMoviesByCompany",
-parameters = {
-        @StoredProcedureParameter(mode = ParameterMode.IN, name = "companyId", type = Long.class)
-})
 public class Movie
 {
     @Id
@@ -35,10 +28,11 @@ public class Movie
     @JoinColumn(name = "movie_id")
     private MovieDetails movieDetail;
 
-    public Movie() {}
+    public Movie()
+    {
+    }
 
-    public Movie(String language, String title, String overview,
-                 double popularity, LocalDate release_date, double vote_average)
+    public Movie(String language, String title, String overview, double popularity, LocalDate release_date, double vote_average)
     {
         this.language = language;
         this.title = title;

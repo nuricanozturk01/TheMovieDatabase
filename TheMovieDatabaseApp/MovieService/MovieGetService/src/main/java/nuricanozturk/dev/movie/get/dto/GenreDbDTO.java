@@ -1,10 +1,13 @@
 package nuricanozturk.dev.movie.get.dto;
+
 public class GenreDbDTO
 {
     private long genre_id;
     private String name;
 
-    public GenreDbDTO() {}
+    public GenreDbDTO()
+    {
+    }
 
     public GenreDbDTO(long genre_id, String name)
     {

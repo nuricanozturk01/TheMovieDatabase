@@ -25,6 +25,4 @@ public class MovieWithDetailStringDbDTO
     public String production_countries;
 
 
-
-
 }

@@ -37,6 +37,7 @@ public class GenericService
         m_companyDbMapper = companyDbMapper;
         m_countryDbMapper = countryDbMapper;
     }
+
     public Genre findGenreById(long id)
     {
         return m_genreRepository.findById(id).orElse(null);
@@ -76,29 +77,28 @@ public class GenericService
     {
         return m_productionCountryRepository.findByName(name).orElse(null);
     }
+
     public ProductionCountry saveProductionCountry(ProductionCountry country)
     {
         return m_productionCountryRepository.save(country);
     }
+
     private boolean isExists(String name)
     {
         return m_genreRepository.existsGenreByName(name);
     }
+
     public GenresDBDTO saveGenreIfNotExistsElseGetId(String genresStr)
     {
         var list = new ArrayList<Genre>();
         var genres = genresStr.split(",");
 
-        for (String genre : genres)
-        {
+        for (String genre : genres) {
             var g_genre = findGenreByName(genre);
 
-            if (g_genre != null)
-            {
+            if (g_genre != null) {
                 list.add(g_genre);
-            }
-            else
-            {
+            } else {
                 var g = saveGenre(new Genre(genre));
 
                 list.add(g);

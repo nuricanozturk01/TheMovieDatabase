@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 
 import java.util.Set;
 
-
 @Entity
 @Table(name = "movie_details")
 public class MovieDetails
@@ -14,33 +13,31 @@ public class MovieDetails
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_detail_id", nullable = false)
     private long movie_detail_id;
-
     @Column(name = "real_movie_id", nullable = false, unique = true)
     private long real_movie_id;
     @Column(name = "title", nullable = false)
     private String title;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
     @JsonIgnore
     private Movie movie;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie_detail", cascade = CascadeType.ALL)
     private Set<MovieGenres> genres;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie_detail", cascade = CascadeType.ALL)
     private Set<MovieProductionCompany> productionCompanies;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie_detail", cascade = CascadeType.ALL)
     private Set<MovieProductionCountry> productionCountries;
-    public MovieDetails() {}
+
+
+    public MovieDetails()
+    {
+    }
 
     public MovieDetails(long movie_detail_id, long real_movie_id, String title)
     {
         this.movie_detail_id = movie_detail_id;
         this.real_movie_id = real_movie_id;
         this.title = title;
-
     }
 
     public MovieDetails(long real_movie_id, String title)
@@ -48,6 +45,7 @@ public class MovieDetails
         this.real_movie_id = real_movie_id;
         this.title = title;
     }
+
 
     public long getMovie_detail_id()
     {
@@ -78,8 +76,6 @@ public class MovieDetails
     {
         this.title = title;
     }
-
-
 
     public Movie getMovie()
     {
@@ -126,7 +122,6 @@ public class MovieDetails
     {
         return Long.hashCode(movie_detail_id);
     }
-
 
     @Override
     public boolean equals(Object other)

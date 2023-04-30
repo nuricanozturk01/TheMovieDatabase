@@ -1,6 +1,7 @@
 package nuricanozturk.dev.dtolib.entity.api.movie;
 
-public class SpokenLanguage{
+public class SpokenLanguage
+{
     public String english_name;
     public String iso_639_1;
     public String name;

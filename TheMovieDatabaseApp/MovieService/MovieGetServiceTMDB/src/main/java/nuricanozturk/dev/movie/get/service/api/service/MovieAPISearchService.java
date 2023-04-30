@@ -1,11 +1,11 @@
 package nuricanozturk.dev.movie.get.service.api.service;
 
 
-import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieDetailDTO;
 import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieDetailStringDTO;
 import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieWithDetailStringDTO;
 import nuricanozturk.dev.dtolib.api.moviedto.MoviesDTO;
-import nuricanozturk.dev.dtolib.entity.api.movie.*;
+import nuricanozturk.dev.dtolib.entity.api.movie.MovieDetails;
+import nuricanozturk.dev.dtolib.entity.api.movie.MoviesRoot;
 import nuricanozturk.dev.movie.get.service.config.MappersConfig;
 import nuricanozturk.dev.movie.get.service.config.UrlConfig;
 import org.springframework.context.annotation.Scope;
@@ -85,6 +85,7 @@ public class MovieAPISearchService
     {
         return m_restTemplate.getForObject(format(m_urlConfig.movieDetailsUrl, id), MovieDetails.class);
     }
+
     public MovieWithDetailStringDTO getMovieWithDetails(int id)
     {
         var root = toMoMovieDetailStringDTO(id);
@@ -105,7 +106,4 @@ public class MovieAPISearchService
     {
         return m_restTemplate.getForObject(format(m_urlConfig.movieDetailsUrl, id), MovieDetails.class);
     }
-
-
-
 }

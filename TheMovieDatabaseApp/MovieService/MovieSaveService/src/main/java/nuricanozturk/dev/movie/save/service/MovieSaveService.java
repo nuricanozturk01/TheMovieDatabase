@@ -1,11 +1,9 @@
 package nuricanozturk.dev.movie.save.service;
 
 import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieWithDetailStringDTO;
-import nuricanozturk.dev.dtolib.db.moviedto.MovieDbDTO;
-import nuricanozturk.dev.dtolib.mapper.api.IMovieMapper;
-import nuricanozturk.dev.movie.data.dal.MovieDetailsServiceHelper;
 import nuricanozturk.dev.movie.data.dal.MovieServiceHelper;
-import nuricanozturk.dev.movie.data.entity.*;
+import nuricanozturk.dev.movie.data.entity.Movie;
+import nuricanozturk.dev.movie.data.entity.MovieDetails;
 import nuricanozturk.dev.movie.save.configuration.ValueConfig;
 import nuricanozturk.dev.movie.save.dto.CompaniesDBDTO;
 import nuricanozturk.dev.movie.save.dto.CountriesDBDTO;
@@ -17,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -33,7 +30,7 @@ public class MovieSaveService
     {
         var m = m_restTemplate.getForObject(url, MovieDetails.class);
 
-        return  m != null;
+        return m != null;
     }
 
     public MovieSaveService(MovieServiceHelper movieServiceHelper, RestTemplate restTemplate,
@@ -44,6 +41,7 @@ public class MovieSaveService
         m_valueConfig = valueConfig;
         m_movieMapper = movieMapper;
     }
+
     public ExistsDTO saveMovieById(long id) // TMDB id
     {
         /*var movieFromDB = exists(format(m_valueConfig.movieDetailsUrl, id));
@@ -51,13 +49,13 @@ public class MovieSaveService
         if (movieFromDB)
             return new ExistsDTO(true, false);*/
 
-        var movieWithDetail = m_restTemplate.getForObject(format(m_valueConfig.movieWithDetailUrl,id), MovieWithDetailStringDTO.class);
+        var movieWithDetail = m_restTemplate.getForObject(format(m_valueConfig.movieWithDetailUrl, id), MovieWithDetailStringDTO.class);
         // Exception
 
         var movieDetails = new MovieDetails(movieWithDetail.id, movieWithDetail.title);
 
 
-        var genres =  m_restTemplate.getForObject(format(m_valueConfig.hideGenresUrl, movieWithDetail.genres), GenresDBDTO.class);
+        var genres = m_restTemplate.getForObject(format(m_valueConfig.hideGenresUrl, movieWithDetail.genres), GenresDBDTO.class);
         var companies = m_restTemplate.getForObject(format(m_valueConfig.hideCompaniesUrl, movieWithDetail.production_companies), CompaniesDBDTO.class);
         var countries = m_restTemplate.getForObject(format(m_valueConfig.hideCountriesUrl, movieWithDetail.production_countries), CountriesDBDTO.class);
 

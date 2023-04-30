@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper(implementationName = "MovieMapperImpl", componentModel = "spring")
 public interface IMovieMapper
 {
-    List<MovieDTO> toMovieDTO (List<Result> results);
+    List<MovieDTO> toMovieDTO(List<Result> results);
 
     default MoviesDTO toMoviesDTO(List<MovieDTO> movies)
     {

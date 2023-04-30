@@ -1,4 +1,5 @@
 package nuricanozturk.dev.repository.generic.data.entity;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,7 +14,10 @@ public class ProductionCompany
     private String name;
 
 
-    public ProductionCompany(){}
+    public ProductionCompany()
+    {
+    }
+
     public ProductionCompany(long company_id, String name)
     {
         this(name);

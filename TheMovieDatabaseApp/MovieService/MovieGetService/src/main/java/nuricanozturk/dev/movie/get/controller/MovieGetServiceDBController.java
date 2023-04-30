@@ -1,8 +1,10 @@
 package nuricanozturk.dev.movie.get.controller;
 
-import nuricanozturk.dev.dtolib.db.moviedto.*;
+import nuricanozturk.dev.dtolib.db.moviedto.MovieDbDTO;
+import nuricanozturk.dev.dtolib.db.moviedto.MovieDetailDbDTO;
+import nuricanozturk.dev.dtolib.db.moviedto.MovieWithDetailStringDbDTO;
+import nuricanozturk.dev.dtolib.db.moviedto.MoviesDbDTO;
 import nuricanozturk.dev.movie.data.entity.MovieDetails;
-import nuricanozturk.dev.movie.data.entity.MovieGenres;
 import nuricanozturk.dev.movie.get.service.MovieGetDBService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/movies/db/read")
@@ -52,38 +53,44 @@ public class MovieGetServiceDBController
     {
         return m_service.getMoviesByReleaseDate(b, e);
     }
+
     @GetMapping("find/movies/release_date")
     public MoviesDbDTO getMoviesByReleaseDate(@RequestParam("d") LocalDate releaseDate)
     {
         return m_service.getMoviesByReleaseDate(releaseDate);
     }
+
     @GetMapping("find/movies/moviedetail/id")
     public MovieWithDetailStringDbDTO getMovieWithDetailString(@RequestParam("id") long id)
     {
         return m_service.getMovieWithDetailString(id);
     }
+
     @GetMapping("find/movies/popularity/between")
     public MoviesDbDTO getMoviesByPopularity(@RequestParam("b") double begin, @RequestParam("e") double end)
     {
         return m_service.getMoviesByPopularity(begin, end);
     }
+
     @GetMapping("find/movies/vote/between")
     public MoviesDbDTO getMoviesByVote(@RequestParam("b") double begin, @RequestParam("e") double end)
     {
         return m_service.getMoviesByVote(begin, end);
     }
+
     @GetMapping("find/movie_detail/id/real")
     public MovieDetailDbDTO getMovieDetailsByRealMovieId(@RequestParam("id") long id)
     {
         return m_service.getMovieDetailsByRealMovieId(id);
     }
+
     @GetMapping("find/movie_detail/id")
     public MovieDetails findByMovieDetailId(@RequestParam("id") long id)
     {
         throw new UnsupportedOperationException("TODO");
     }
 
-        @GetMapping("find/moviegenres/id")
+    @GetMapping("find/moviegenres/id")
     public MovieDetailDbDTO getMg(@RequestParam("id") long id)
     {
         return m_service.getMovieDetailsByRealMovieId(id);
@@ -101,6 +108,4 @@ public class MovieGetServiceDBController
     {
         throw new UnsupportedOperationException("TODO");
     }
-
-
 }

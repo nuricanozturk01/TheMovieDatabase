@@ -1,8 +1,6 @@
 package nuricanozturk.dev.repository.generic.data.entity;
+
 import jakarta.persistence.*;
-
-
-import java.util.Set;
 
 @Entity
 @Table(name = "production_country")
@@ -15,7 +13,10 @@ public class ProductionCountry
     @Column(name = "country_name", nullable = false, unique = true)
     private String name;
 
-    public ProductionCountry(){}
+    public ProductionCountry()
+    {
+    }
+
     public ProductionCountry(String name)
     {
         this.name = name;
@@ -26,6 +27,7 @@ public class ProductionCountry
         this.country_id = country_id;
         this.name = name;
     }
+
     public long getCountry_id()
     {
         return country_id;

@@ -17,7 +17,7 @@ public interface IMovieGenreMapper
 {
     default Set<MovieGenres> toMovieGenres(GenresDBDTO genresDBDTO, MovieDetails movieDetails)
     {
-        return genresDBDTO.genres.stream().map(g -> new MovieGenres(movieDetails,g.getGenre_id())).collect(Collectors.toSet());
+        return genresDBDTO.genres.stream().map(g -> new MovieGenres(movieDetails, g.getGenre_id())).collect(Collectors.toSet());
     }
 
     default Set<MovieProductionCompany> toMovieProductionCompanies(CompaniesDBDTO companiesDBDTO, MovieDetails movieDetails)

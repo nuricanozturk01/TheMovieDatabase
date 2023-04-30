@@ -1,6 +1,9 @@
 package nuricanozturk.dev.movie.get.service;
 
-import nuricanozturk.dev.dtolib.db.moviedto.*;
+import nuricanozturk.dev.dtolib.db.moviedto.MovieDbDTO;
+import nuricanozturk.dev.dtolib.db.moviedto.MovieDetailDbDTO;
+import nuricanozturk.dev.dtolib.db.moviedto.MovieWithDetailStringDbDTO;
+import nuricanozturk.dev.dtolib.db.moviedto.MoviesDbDTO;
 import nuricanozturk.dev.dtolib.mapper.db.mapper.MovieWithDetailStringDTOMapper;
 import nuricanozturk.dev.movie.data.dal.MovieServiceHelper;
 import nuricanozturk.dev.movie.get.dto.GenreDbDTO;
@@ -36,9 +39,7 @@ public class MovieGetDBService
     @Value("${generic_lib.find_country_id}")
     private String getProductionCountryByIdUrl;
 
-    public MovieGetDBService(MovieServiceHelper movieServiceHelper, IMovieDTOMapper movieDTOMapper,
-                             IMovieDetailsDTOMapper movieDetailsDTOMapper,
-                             MovieWithDetailStringDTOMapper movieWithDetailStringDTOMapper, RestTemplate mRestTemplate)
+    public MovieGetDBService(MovieServiceHelper movieServiceHelper, IMovieDTOMapper movieDTOMapper, IMovieDetailsDTOMapper movieDetailsDTOMapper, MovieWithDetailStringDTOMapper movieWithDetailStringDTOMapper, RestTemplate mRestTemplate)
     {
         m_movieServiceHelper = movieServiceHelper;
         m_movieDTOMapper = movieDTOMapper;
@@ -49,14 +50,14 @@ public class MovieGetDBService
 
     public MoviesDbDTO getMoviesFromDB()
     {
-        return m_movieDTOMapper.toMoviesDTO(StreamSupport.stream(m_movieServiceHelper.getMovies().spliterator(), false)
-                        .map(m_movieDTOMapper::toMovieDTO)
-                        .toList());
+        return m_movieDTOMapper.toMoviesDTO(StreamSupport.stream(m_movieServiceHelper.getMovies().spliterator(), false).map(m_movieDTOMapper::toMovieDTO).toList());
     }
+
     public MoviesDbDTO getMoviesByTitle(String title)
     {
         return m_movieServiceHelper.getMoviesByTitle(title);
     }
+
     public MovieDbDTO getMovieById(long id)
     {
         return m_movieDTOMapper.toMovieDTO(m_movieServiceHelper.getMovieById(id).orElse(null));
@@ -82,7 +83,7 @@ public class MovieGetDBService
 
     public MoviesDbDTO getMoviesByPopularity(double begin, double end)
     {
-        return m_movieServiceHelper.getMoviesByPopularity(begin ,end);
+        return m_movieServiceHelper.getMoviesByPopularity(begin, end);
     }
 
     public MoviesDbDTO getMoviesByVote(double begin, double end)
@@ -112,35 +113,18 @@ public class MovieGetDBService
 
     private String getCountriesStr(MovieDbDTO movie)
     {
-        return m_movieServiceHelper.getMovieProductionCountryByMovieDbId(movie.movie_id)
-                .stream()
-                .map(mc -> m_restTemplate.getForObject(format(getProductionCountryByIdUrl, mc.getCountry_id()), ProductionCountryDbDTO.class))
-                .map(mc -> mc.getName())
-                .collect(Collectors.joining(","));
+        return m_movieServiceHelper.getMovieProductionCountryByMovieDbId(movie.movie_id).stream().map(mc -> m_restTemplate.getForObject(format(getProductionCountryByIdUrl, mc.getCountry_id()), ProductionCountryDbDTO.class)).map(mc -> mc.getName()).collect(Collectors.joining(","));
     }
 
     private String getCompaniesStr(MovieDbDTO movie)
     {
-        return m_movieServiceHelper.getMovieProductionCompaniesByMovieDbId(movie.movie_id)
-                .stream()
-                .map(mc -> m_restTemplate.getForObject(format(getProductionCompaniesByIdUrl, mc.getCompany_id()), ProductionCompanyDbDTO.class))
-                .map(mc -> mc.getName())
-                .collect(Collectors.joining(","));
+        return m_movieServiceHelper.getMovieProductionCompaniesByMovieDbId(movie.movie_id).stream().map(mc -> m_restTemplate.getForObject(format(getProductionCompaniesByIdUrl, mc.getCompany_id()), ProductionCompanyDbDTO.class)).map(mc -> mc.getName()).collect(Collectors.joining(","));
     }
 
     private String getGenresStr(MovieDbDTO movie)
     {
-        return m_movieServiceHelper.getMovieGenresByMovieDbId(movie.movie_id)
-                .stream()
-                .map(mg -> m_restTemplate.getForObject(format(getGenresByIdUrl, mg.getGenre_id()), GenreDbDTO.class))
-                .map(mg -> mg.getName())
-                .collect(Collectors.joining(","));
+        return m_movieServiceHelper.getMovieGenresByMovieDbId(movie.movie_id).stream().map(mg -> m_restTemplate.getForObject(format(getGenresByIdUrl, mg.getGenre_id()), GenreDbDTO.class)).map(mg -> mg.getName()).collect(Collectors.joining(","));
     }
-
-    /*public List<MovieGenres> getMovieGenres(long id)
-    {
-        return m_movieServiceHelper.getMovieGenresByMovieDbId(id);
-    }*/
 
     //---------------------------------------------------------------------------------
     public MovieDbDTO getMovieWithDetailsById(long id)
@@ -152,6 +136,7 @@ public class MovieGetDBService
     {
         throw new UnsupportedOperationException("TODO");
     }
+
     public MovieDbDTO getMoviesByProductionCountry(String country)
     {
         throw new UnsupportedOperationException("TODO");
