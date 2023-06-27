@@ -11,6 +11,7 @@ import java.util.List;
 public interface IMovieDbMapper
 {
     List<MovieDbDTO> toMovieDbDTO(List<Movie> movies);
+
     default MoviesDbDTO toMoviesDbDTO(List<MovieDbDTO> movieDbDTOS)
     {
         var dto = new MoviesDbDTO();

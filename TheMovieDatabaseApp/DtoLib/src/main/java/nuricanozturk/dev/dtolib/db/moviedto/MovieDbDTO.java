@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public class MovieDbDTO
 {
-    @JsonIgnore
+    //@JsonIgnore
     public long movie_id;
     public String language;
     public String title;

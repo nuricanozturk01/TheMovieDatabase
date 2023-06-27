@@ -49,4 +49,9 @@ public class ValueConfig
     public String movieWithDetailUrl;
     @Value("${movie.db.get_service.find_real_id.url}")
     public String movieDetailsUrl;
+    @Value("${movie.tmdb_service.movie_detail.full}")
+    public String movieFullDetailsUrl;
+
+    @Value("${movie.poster.path.prefix}")
+    public String moviePosterPrefix;
 }

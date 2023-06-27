@@ -18,6 +18,8 @@ public interface IMovieDetailsRepository extends CrudRepository<MovieDetails, Lo
     @Query("from MovieDetails where real_movie_id = :id")
     Optional<MovieDetails> findByReal_movie_id(@Param("id") long id);
 
+    @Query("select poster_path from MovieDetails where real_movie_id = :id")
+    String findPosterPathById(long id);
 
 
 }

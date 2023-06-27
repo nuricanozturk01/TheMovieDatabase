@@ -28,6 +28,8 @@ public class MovieDetails
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie_detail", cascade = CascadeType.ALL)
     private Set<MovieProductionCountry> productionCountries;
 
+    @Column(name = "image_path")
+    private String poster_path;
 
     public MovieDetails()
     {
@@ -115,6 +117,16 @@ public class MovieDetails
     public void setProductionCountries(Set<MovieProductionCountry> productionCountries)
     {
         this.productionCountries = productionCountries;
+    }
+
+    public String getPosterPath()
+    {
+        return poster_path;
+    }
+
+    public void setPosterPath(String poster_path)
+    {
+        this.poster_path = poster_path;
     }
 
     @Override

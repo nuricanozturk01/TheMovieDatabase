@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan("nuricanozturk.dev")
 @EnableJpaRepositories(basePackages = "nuricanozturk.dev.repository.generic")
 @EntityScan(basePackages = "nuricanozturk.dev.repository.generic")
+
 public class GenericServiceApplication {
 
 	public static void main(String[] args) {

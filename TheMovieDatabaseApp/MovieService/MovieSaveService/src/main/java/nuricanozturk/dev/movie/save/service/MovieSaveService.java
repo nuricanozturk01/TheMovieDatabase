@@ -1,6 +1,7 @@
 package nuricanozturk.dev.movie.save.service;
 
 import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieWithDetailStringDTO;
+import nuricanozturk.dev.dtolib.db.moviedto.MovieDbDTO;
 import nuricanozturk.dev.movie.data.dal.MovieServiceHelper;
 import nuricanozturk.dev.movie.data.entity.Movie;
 import nuricanozturk.dev.movie.data.entity.MovieDetails;
@@ -48,10 +49,11 @@ public class MovieSaveService
 
         if (movieFromDB)
             return new ExistsDTO(true, false);*/
-
+        <
         var movieWithDetail = m_restTemplate.getForObject(format(m_valueConfig.movieWithDetailUrl, id), MovieWithDetailStringDTO.class);
+        var movieWithFullDetail = m_restTemplate.getForObject(format(m_valueConfig.movieFullDetailsUrl, id), nuricanozturk.dev.dtolib.entity.api.movie.MovieDetails.class);
         // Exception
-
+       // System.out.println(movieWithDetail.title);
         var movieDetails = new MovieDetails(movieWithDetail.id, movieWithDetail.title);
 
 
@@ -68,6 +70,7 @@ public class MovieSaveService
         movieDetails.setGenres(movieGenresTable);
         movieDetails.setProductionCompanies(movieProductionCompaniesTable);
         movieDetails.setProductionCountries(movieProductionCountriesTable);
+        movieDetails.setPosterPath(m_valueConfig.moviePosterPrefix + movieWithFullDetail.poster_path);
 
         var movie = new Movie(movieWithDetail.original_language, movieWithDetail.title, movieWithDetail.overview,
                 movieWithDetail.popularity,
@@ -79,5 +82,15 @@ public class MovieSaveService
         m_movieServiceHelper.saveMovie(movie);
 
         return new ExistsDTO(false, true);
+    }
+
+    public ExistsDTO removeById(long id)
+    {
+        var movie = m_restTemplate.getForObject(format(m_valueConfig.movieDetailsUrl, id), MovieDbDTO.class);
+        if (movie != null){
+            m_movieServiceHelper.deleteMovie(movie.movie_id);
+            return new ExistsDTO(true, false);
+        }
+        return new ExistsDTO(false, false);
     }
 }

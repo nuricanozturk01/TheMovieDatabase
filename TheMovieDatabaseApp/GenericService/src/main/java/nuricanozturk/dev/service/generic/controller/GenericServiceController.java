@@ -84,15 +84,14 @@ public class GenericServiceController
     }
 
     @GetMapping("hide/companies")
-    public CompaniesDBDTO getCompanies(@RequestParam("n") String companies)
+    public CompaniesDBDTO getCompanies(@RequestParam("n") String company)
     {
-        return m_genericService.saveCompanyIfNotExistsElseGetId(companies);
+        return m_genericService.saveCompanyIfNotExistsElseGetId(company);
     }
 
-
     @GetMapping("hide/countries")
-    public CountriesDBDTO getCountries(@RequestParam("n") String countries)
+    public CountriesDBDTO getCountries(@RequestParam("n") String country)
     {
-        return m_genericService.saveCountryIfNotExistsElseGetId(countries);
+        return m_genericService.saveCountryIfNotExistsElseGetId(country);
     }
 }

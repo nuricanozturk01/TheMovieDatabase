@@ -13,4 +13,5 @@ public class MovieDetailStringDTO
     public String production_countries;
     @JsonProperty("genres")
     public String genres;
+    public String poster_path;
 }

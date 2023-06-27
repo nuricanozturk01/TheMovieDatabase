@@ -1,9 +1,13 @@
 package nuricanozturk.dev.dtolib.mapper.db.mapper;
 
+import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieWithDetailStringDTO;
 import nuricanozturk.dev.dtolib.db.moviedto.MovieDbDTO;
 import nuricanozturk.dev.dtolib.db.moviedto.MovieDetailDbDTO;
 import nuricanozturk.dev.dtolib.db.moviedto.MovieWithDetailStringDbDTO;
+import nuricanozturk.dev.dtolib.db.moviedto.MovieWithDetailsStringDbDTO;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class MovieWithDetailStringDTOMapper
@@ -23,7 +27,14 @@ public class MovieWithDetailStringDTOMapper
         dto.release_date = movieDbDTO.release_date;
         dto.vote_average = movieDbDTO.vote_average;
         dto.title = movieDbDTO.title;
+        dto.poster_path = movieDetailDbDTO.poster_path;
 
+        return dto;
+    }
+
+    public MovieWithDetailsStringDbDTO toMovieWithDetailsStringDTO(List<MovieWithDetailStringDbDTO> movies) {
+        var dto = new MovieWithDetailsStringDbDTO();
+        dto.movies_with_details = movies;
         return dto;
     }
 }

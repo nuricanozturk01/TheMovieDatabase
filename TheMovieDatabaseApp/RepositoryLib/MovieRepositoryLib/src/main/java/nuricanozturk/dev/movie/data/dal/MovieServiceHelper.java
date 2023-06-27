@@ -1,31 +1,24 @@
 package nuricanozturk.dev.movie.data.dal;
 
-import nuricanozturk.dev.dtolib.db.moviedto.MovieDbDTO;
-import nuricanozturk.dev.dtolib.db.moviedto.MoviesDbDTO;
 import nuricanozturk.dev.movie.data.config.MoviesDBRepoConfig;
 import nuricanozturk.dev.movie.data.entity.*;
-import nuricanozturk.dev.movie.data.mapper.IMovieDbMapper;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 @Component
 @Lazy
 public class MovieServiceHelper
 {
     private final MoviesDBRepoConfig repositories;
-    private final IMovieDbMapper movieDbMapper;
 
-    public MovieServiceHelper(MoviesDBRepoConfig moviesDBRepoConfig, IMovieDbMapper movieDbMapper)
+    public MovieServiceHelper(MoviesDBRepoConfig moviesDBRepoConfig)
     {
         repositories = moviesDBRepoConfig;
-        this.movieDbMapper = movieDbMapper;
     }
-
 
     public Movie saveMovie(Movie movie)
     {
@@ -47,73 +40,41 @@ public class MovieServiceHelper
         return repositories.m_movieDetailsRepository.findById(id);
     }
 
-    public MovieDbDTO getMovieWithDetailsById(long id)
+    public Iterable<Movie> getMoviesByProductionCompany(long companyId)
     {
-        throw new UnsupportedOperationException("TODO");
+        return repositories.m_movieRepository.findByProductionCompany(companyId);
     }
 
-    public MovieDbDTO getMoviesByGenre(String genre)
+    public Iterable<Movie> getMoviesByTitle(String title)
     {
-        throw new UnsupportedOperationException("TODO");
+        return repositories.m_movieRepository.findByTitle(title);
     }
 
-    public MoviesDbDTO getMoviesByProductionCompany(long companyId)
+    public Iterable<Movie> getMoviesByReleaseDate(LocalDate releaseDate)
     {
-
-        throw new UnsupportedOperationException("TODO");
-
+        return repositories.m_movieRepository.findByRelease_date(releaseDate);
     }
 
-    public MoviesDbDTO getMoviesByProductionCountry(String country)
+    public Iterable<Movie> getMoviesByReleaseDateBetween(LocalDate begin, LocalDate end)
     {
-        throw new UnsupportedOperationException("TODO");
+        return repositories.m_movieRepository.findByRelease_dateBetween(begin, end);
     }
 
-
-    public MoviesDbDTO getMoviesByTitle(String title)
+    public Iterable<Movie> getMoviesByPopularity(double begin, double end)
     {
-        var movies = StreamSupport.stream(repositories.m_movieRepository.findByTitle(title).spliterator(), false).toList();
-        return movieDbMapper.toMoviesDbDTO(movieDbMapper.toMovieDbDTO(movies));
+        return repositories.m_movieRepository.findByPopularityBetween(begin, end);
     }
 
-    public MoviesDbDTO getMoviesByReleaseDate(LocalDate releaseDate)
+    public Iterable<Movie> getMoviesByVote(double begin, double end)
     {
-        var movies = StreamSupport.stream(repositories.m_movieRepository.findByRelease_date(releaseDate).spliterator(), false).toList();
-
-        return movieDbMapper.toMoviesDbDTO(movieDbMapper.toMovieDbDTO(movies));
-    }
-
-    public MoviesDbDTO getMoviesByReleaseDateBetween(LocalDate begin, LocalDate end)
-    {
-        var movies = StreamSupport.stream(repositories.m_movieRepository.findByRelease_dateBetween(begin, end).spliterator(), false).toList();
-
-        return movieDbMapper.toMoviesDbDTO(movieDbMapper.toMovieDbDTO(movies));
-    }
-
-    public MoviesDbDTO getMoviesByPopularity(double begin, double end)
-    {
-        var movies = StreamSupport.stream(repositories.m_movieRepository.findByPopularityBetween(begin, end).spliterator(), false).toList();
-
-        return movieDbMapper.toMoviesDbDTO(movieDbMapper.toMovieDbDTO(movies));
-    }
-
-    public MoviesDbDTO getMoviesByVote(double begin, double end)
-    {
-        var movies = StreamSupport.stream(repositories.m_movieRepository.findByVote_averageBetween(begin, end).spliterator(), false).toList();
-
-        return movieDbMapper.toMoviesDbDTO(movieDbMapper.toMovieDbDTO(movies));
-    }
-
-    public MovieDetails getMovieDetailsByRealMovieId(long id)
-    {
-        return repositories.m_movieDetailsRepository.findByReal_movie_id(id).orElse(null);
+        return repositories.m_movieRepository.findByVote_averageBetween(begin, end);
     }
 
     public List<MovieGenres> getMovieGenresByMovieDbId(long id)
     {
-        var details = repositories.m_movieDetailsRepository.findById(id);
-
-        return details.map(movieDetails -> movieDetails.getGenres().stream().toList()).orElse(null);
+        return repositories.m_movieDetailsRepository.findById(id)
+                .map(movieDetails -> movieDetails.getGenres().stream().toList())
+                .orElse(null);
     }
 
     public MovieDetails findByMovieDetailId(long id)
@@ -123,15 +84,30 @@ public class MovieServiceHelper
 
     public List<MovieProductionCompany> getMovieProductionCompaniesByMovieDbId(long movieId)
     {
-        var details = repositories.m_movieDetailsRepository.findById(movieId);
-
-        return details.map(movieDetails -> movieDetails.getProductionCompanies().stream().toList()).orElse(null);
+        return repositories.m_movieDetailsRepository.findById(movieId)
+                .map(movieDetails -> movieDetails.getProductionCompanies().stream().toList())
+                .orElse(null);
     }
 
     public List<MovieProductionCountry> getMovieProductionCountryByMovieDbId(long movieId)
     {
-        var details = repositories.m_movieDetailsRepository.findById(movieId);
+        return repositories.m_movieDetailsRepository.findById(movieId)
+                .map(movieDetails -> movieDetails.getProductionCountries().stream().toList())
+                .orElse(null);
+    }
 
-        return details.map(movieDetails -> movieDetails.getProductionCountries().stream().toList()).orElse(null);
+    public Iterable<Movie> getMoviesByGenre(long genreId)
+    {
+        return repositories.m_movieRepository.findByGenre(genreId);
+    }
+
+    public Iterable<Movie> getMoviesByProductionCountry(long countryId)
+    {
+        return repositories.m_movieRepository.findByProductionCountry(countryId);
+    }
+
+    public void deleteMovie(long id)
+    {
+        repositories.m_movieRepository.deleteById(id);
     }
 }

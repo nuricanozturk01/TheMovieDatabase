@@ -2,13 +2,10 @@ package nuricanozturk.dev.movie.save.controller;
 
 import nuricanozturk.dev.movie.save.dto.ExistsDTO;
 import nuricanozturk.dev.movie.save.service.MovieSaveService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/movies/db/save")
+@RequestMapping("api/movies/db/post")
 public class MovieSaveServiceController
 {
     private final MovieSaveService m_movieSaveService;
@@ -18,9 +15,15 @@ public class MovieSaveServiceController
         m_movieSaveService = movieSaveService;
     }
 
-    @PostMapping("id")
+    @PostMapping("save/id")
     public ExistsDTO saveMovieById(@RequestParam("id") long id)
     {
         return m_movieSaveService.saveMovieById(id);
+    }
+
+    @DeleteMapping("remove/id")
+    public ExistsDTO removeMovieById(@RequestParam("id") long id)
+    {
+        return m_movieSaveService.removeById(id);
     }
 }

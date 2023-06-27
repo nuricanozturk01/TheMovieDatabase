@@ -1,10 +1,11 @@
 package nuricanozturk.dev.movie.get.controller;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import nuricanozturk.dev.dtolib.db.moviedto.MovieDbDTO;
-import nuricanozturk.dev.dtolib.db.moviedto.MovieDetailDbDTO;
 import nuricanozturk.dev.dtolib.db.moviedto.MovieWithDetailStringDbDTO;
+import nuricanozturk.dev.dtolib.db.moviedto.MovieWithDetailsStringDbDTO;
 import nuricanozturk.dev.dtolib.db.moviedto.MoviesDbDTO;
-import nuricanozturk.dev.movie.data.entity.MovieDetails;
 import nuricanozturk.dev.movie.get.service.MovieGetDBService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,7 @@ public class MovieGetServiceDBController
         return m_service.getMoviesFromDB();
     }
 
-    @GetMapping("find/id")
+    @GetMapping("find/movie/id")
     public MovieDbDTO getMovieById(@RequestParam("id") int id)
     {
         return m_service.getMovieById(id);
@@ -42,70 +43,74 @@ public class MovieGetServiceDBController
         return m_service.getMoviesByTitle(movieTitle);
     }
 
-    @GetMapping("find/movies/production_company")
-    public MoviesDbDTO getMoviesByProductionCompany(@RequestParam("company") String company)
-    {
-        return m_service.getMoviesByProductionCompany(company);
-    }
-
-    @GetMapping("find/movies/release_date/between")
+    @GetMapping("find/movies/date/between")
     public MoviesDbDTO getMoviesByReleaseDateBetween(@RequestParam("b") LocalDate b, @RequestParam("e") LocalDate e)
     {
         return m_service.getMoviesByReleaseDate(b, e);
     }
 
-    @GetMapping("find/movies/release_date")
+    @GetMapping("find/movies/date")
     public MoviesDbDTO getMoviesByReleaseDate(@RequestParam("d") LocalDate releaseDate)
     {
         return m_service.getMoviesByReleaseDate(releaseDate);
     }
 
-    @GetMapping("find/movies/moviedetail/id")
+    @GetMapping("find/movies/movie_with_detail/id")
     public MovieWithDetailStringDbDTO getMovieWithDetailString(@RequestParam("id") long id)
     {
         return m_service.getMovieWithDetailString(id);
     }
+    @GetMapping("find/movies/movie_with_detail/all")
+    public MovieWithDetailsStringDbDTO getMovieWithDetailString()
+    {
+        return m_service.getMovieWithDetailAll();
+    }
 
     @GetMapping("find/movies/popularity/between")
-    public MoviesDbDTO getMoviesByPopularity(@RequestParam("b") double begin, @RequestParam("e") double end)
+    public MoviesDbDTO getMoviesByPopularity(@RequestParam("b") @Min(0) double begin, @RequestParam("e") double end)
     {
         return m_service.getMoviesByPopularity(begin, end);
     }
 
     @GetMapping("find/movies/vote/between")
-    public MoviesDbDTO getMoviesByVote(@RequestParam("b") double begin, @RequestParam("e") double end)
+    public MoviesDbDTO getMoviesByVote(@RequestParam("b") @Min(0) double begin, @RequestParam("e") @Max(10) double end)
     {
         return m_service.getMoviesByVote(begin, end);
     }
 
-    @GetMapping("find/movie_detail/id/real")
-    public MovieDetailDbDTO getMovieDetailsByRealMovieId(@RequestParam("id") long id)
+    @GetMapping("find/movies/company")
+    public MoviesDbDTO getMoviesByProductionCompany(@RequestParam("company") String company)
     {
-        return m_service.getMovieDetailsByRealMovieId(id);
+        return m_service.getMoviesByProductionCompany(company);
     }
 
-    @GetMapping("find/movie_detail/id")
-    public MovieDetails findByMovieDetailId(@RequestParam("id") long id)
+    @GetMapping("find/movies/country")
+    public MoviesDbDTO getMoviesByProductionCountry(@RequestParam("country") String country)
     {
-        throw new UnsupportedOperationException("TODO");
-    }
-
-    @GetMapping("find/moviegenres/id")
-    public MovieDetailDbDTO getMg(@RequestParam("id") long id)
-    {
-        return m_service.getMovieDetailsByRealMovieId(id);
-    }
-    //---------------------------------------------------------
-
-    @GetMapping("find/movies/production_country")
-    public MovieDbDTO getMoviesByProductionCountry(@RequestParam("country") String country)
-    {
-        throw new UnsupportedOperationException("TODO");
+       return m_service.getMoviesByProductionCountry(country);
     }
 
     @GetMapping("find/movies/genre")
-    public MovieDbDTO getMoviesByGenre(@RequestParam("g") String genre)
+    public MoviesDbDTO getMoviesByGenre(@RequestParam("genre") String genre)
     {
-        throw new UnsupportedOperationException("TODO");
+        return m_service.getMoviesByGenre(genre);
+    }
+
+    @GetMapping("find/movies_with_detail/company")
+    public MovieWithDetailsStringDbDTO getMoviesWithDetailByProductionCompany(@RequestParam("company") String company)
+    {
+        return m_service.getMoviesWithDetailByProductionCompany(company);
+    }
+
+    @GetMapping("find/movies_with_detail/country")
+    public MovieWithDetailsStringDbDTO getMoviesWithDetailByProductionCountry(@RequestParam("country") String country)
+    {
+        return m_service.getMoviesWithDetailByProductionCountry(country);
+    }
+
+    @GetMapping("find/movies_with_detail/genre")
+    public MovieWithDetailsStringDbDTO getMoviesWithDetailByGenre(@RequestParam("genre") String genre)
+    {
+        return m_service.getMoviesWithDetailByGenre(genre);
     }
 }

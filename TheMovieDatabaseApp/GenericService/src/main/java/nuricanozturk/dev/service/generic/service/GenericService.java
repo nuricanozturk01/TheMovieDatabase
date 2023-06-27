@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class GenericService
 {
     private final IGenreRepository m_genreRepository;
+
     private final IProductionCountryRepository m_productionCountryRepository;
     private final IProductionCompanyRepository m_productionCompanyRepository;
     private final IGenreDbMapper m_genreDbMapper;
@@ -83,11 +84,6 @@ public class GenericService
         return m_productionCountryRepository.save(country);
     }
 
-    private boolean isExists(String name)
-    {
-        return m_genreRepository.existsGenreByName(name);
-    }
-
     public GenresDBDTO saveGenreIfNotExistsElseGetId(String genresStr)
     {
         var list = new ArrayList<Genre>();
@@ -143,5 +139,4 @@ public class GenericService
         }
         return m_countryDbMapper.toCountryDbDTO(list);
     }
-
 }

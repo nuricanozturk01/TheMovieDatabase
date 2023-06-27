@@ -23,6 +23,7 @@ public interface IMovieDetailMapper
         dto.title = root.title;
         dto.production_companies = productionCompanies.name;
         dto.production_countries = productionCountries.name;
+        dto.poster_path = root.poster_path;
 
         return dto;
     }
@@ -41,12 +42,12 @@ public interface IMovieDetailMapper
         dto.original_title = root.original_title;
         dto.overview = root.overview;
         dto.popularity = root.popularity;
-        ;
+
         dto.poster_path = root.poster_path;
         dto.release_date = root.release_date;
         dto.vote_average = root.vote_average;
         dto.vote_count = root.vote_count;
-        ;
+
 
         return dto;
     }

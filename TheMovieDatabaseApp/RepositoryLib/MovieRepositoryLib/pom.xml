@@ -21,6 +21,8 @@
             <version>42.5.4</version>
             <scope>runtime</scope>
         </dependency>
+
+
         <dependency>
             <groupId>nuricanozturk.dev</groupId>
             <artifactId>dto-lib</artifactId>

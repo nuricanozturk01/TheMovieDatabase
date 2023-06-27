@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 public class MovieWithDetailStringDbDTO
 {
-    @JsonIgnore
     public long movie_id;
     @JsonIgnore
     public long movie_detail_id;
@@ -23,6 +22,23 @@ public class MovieWithDetailStringDbDTO
     public String genres;
     public String production_companies;
     public String production_countries;
+    public String poster_path;
 
+    public MovieWithDetailStringDbDTO()
+    {
+    }
 
+    public MovieWithDetailStringDbDTO(long movie_id, String title, String overview, LocalDate release_date,
+                                      String language, double popularity, double vote_average,
+                                      String poster_path)
+    {
+        this.movie_id = movie_id;
+        this.title = title;
+        this.overview = overview;
+        this.release_date = release_date;
+        this.language = language;
+        this.popularity = popularity;
+        this.vote_average = vote_average;
+        this.poster_path = poster_path;
+    }
 }

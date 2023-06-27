@@ -23,6 +23,4 @@ public class MoviesDBRepoConfig
         m_movieProductionCountryRepository = movieProductionCountryRepository;
         m_movieGenresRepository = movieGenresRepository;
     }
-
-
 }
