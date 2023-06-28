@@ -1,6 +1,9 @@
 package nuricanozturk.dev.tv.data.repository;
 
-public interface ITvShowRepository
-{
+import nuricanozturk.dev.dtolib.db.tvshowdto.DbTvShowWithDetailsDTO;
+import nuricanozturk.dev.tv.data.entity.TvShow;
 
+public interface ITvShowRepository extends ICrudRepository<TvShow, Long>
+{
+    Iterable<DbTvShowWithDetailsDTO> findAllWithDetails(long id);
 }

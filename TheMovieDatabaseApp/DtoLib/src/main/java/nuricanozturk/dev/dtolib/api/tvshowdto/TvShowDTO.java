@@ -1,8 +1,7 @@
 package nuricanozturk.dev.dtolib.api.tvshowdto;
 
-import java.util.ArrayList;
-
-public class TvShowDTO {
+public class TvShowDTO
+{
     public int id;
     public String name;
     public String original_language;

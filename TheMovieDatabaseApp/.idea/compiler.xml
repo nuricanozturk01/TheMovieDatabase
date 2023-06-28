@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Annotation profile for TvShowGetServiceTMDB" enabled="true">
+      <profile name="Annotation profile for TvShowGetService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -21,8 +21,8 @@
         <module name="TvShowGetService" />
         <module name="MovieRepositoryLib" />
         <module name="MovieGetService" />
-        <module name="user-service" />
         <module name="TvShowSaveService" />
+        <module name="user-service" />
         <module name="TvShowGetServiceTMDB" />
         <module name="GenericRepository" />
         <module name="UserRepository" />
