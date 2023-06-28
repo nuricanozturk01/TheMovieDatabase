@@ -31,6 +31,7 @@
         <option value="$PROJECT_DIR$/AppRunner/pom.xml" />
         <option value="$PROJECT_DIR$/GenericService/pom.xml" />
         <option value="$PROJECT_DIR$/UserService/pom.xml" />
+        <option value="$PROJECT_DIR$/TvShowService/TvShowGetServiceTMDB/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

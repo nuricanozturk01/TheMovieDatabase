@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Annotation profile for UserService" enabled="true">
+      <profile name="Annotation profile for TvShowGetServiceTMDB" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -15,9 +15,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.3.Final/mapstruct-processor-1.5.3.Final.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.3.Final/mapstruct-1.5.3.Final.jar" />
         </processorPath>
-        <module name="GenericRepository" />
         <module name="MovieSaveService" />
-        <module name="UserRepository" />
         <module name="GenericService" />
         <module name="dto-lib" />
         <module name="TvShowGetService" />
@@ -25,6 +23,9 @@
         <module name="MovieGetService" />
         <module name="user-service" />
         <module name="TvShowSaveService" />
+        <module name="TvShowGetServiceTMDB" />
+        <module name="GenericRepository" />
+        <module name="UserRepository" />
         <module name="MovieGetServiceTMDB" />
         <module name="TvShowRepositoryLib" />
       </profile>
@@ -52,6 +53,7 @@
       <module name="MovieService" options="-parameters" />
       <module name="RepositoryLib" options="-parameters" />
       <module name="TvShowGetService" options="-parameters" />
+      <module name="TvShowGetServiceTMDB" options="-parameters" />
       <module name="TvShowRepositoryLib" options="-parameters" />
       <module name="TvShowSaveService" options="-parameters" />
       <module name="TvShowService" options="-parameters" />

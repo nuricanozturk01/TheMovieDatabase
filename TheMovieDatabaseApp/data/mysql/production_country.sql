@@ -1,0 +1,18 @@
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (14, 'Algeria');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (8, 'Belgium');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (5, 'France');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (1, 'Germany');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (18, 'Ireland');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (6, 'Italy');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (10, 'Japan');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (2, 'Mexico');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (15, 'Morocco');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (11, 'Netherlands');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (3, 'Peru');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (7, 'Portugal');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (9, 'Romania');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (17, 'Russia');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (13, 'South Korea');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (12, 'Turkey');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (16, 'United Kingdom');
+INSERT INTO movieapp_generic_lib.production_country (country_id, country_name) VALUES (4, 'United States of America');

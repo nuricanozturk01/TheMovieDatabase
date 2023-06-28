@@ -49,7 +49,7 @@ public class MovieSaveService
 
         if (movieFromDB)
             return new ExistsDTO(true, false);*/
-        <
+
         var movieWithDetail = m_restTemplate.getForObject(format(m_valueConfig.movieWithDetailUrl, id), MovieWithDetailStringDTO.class);
         var movieWithFullDetail = m_restTemplate.getForObject(format(m_valueConfig.movieFullDetailsUrl, id), nuricanozturk.dev.dtolib.entity.api.movie.MovieDetails.class);
         // Exception
