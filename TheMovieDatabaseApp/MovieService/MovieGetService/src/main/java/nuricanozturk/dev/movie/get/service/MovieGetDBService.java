@@ -39,12 +39,6 @@ public class MovieGetDBService
     @Value("${generic_lib.find_country_id}")
     private String getProductionCountryByIdUrl;
 
-    @Value("${tmdb.movie.detail.full}")
-    private String getFullDetailByRealId;
-
-    @Value("${movie.poster.path.prefix}")
-    private String getPathImagePrefix;
-
     @Value("${generic_lib.find_company_name}")
     private String findCompanyNameUrl;
 

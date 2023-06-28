@@ -36,6 +36,18 @@ public class TvShow
         this.vote_count = vote_count;
     }
 
+    public TvShow(long tv_show_id, long real_tv_show_id, String name, String language, String overview, double popularity, double vote_average, int vote_count)
+    {
+        this.tv_show_id = tv_show_id;
+        this.real_tv_show_id = real_tv_show_id;
+        this.name = name;
+        this.language = language;
+        this.overview = overview;
+        this.popularity = popularity;
+        this.vote_average = vote_average;
+        this.vote_count = vote_count;
+    }
+
     public long getTv_show_id()
     {
         return tv_show_id;

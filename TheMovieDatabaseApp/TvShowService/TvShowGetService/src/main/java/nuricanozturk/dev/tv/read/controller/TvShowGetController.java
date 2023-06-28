@@ -24,4 +24,41 @@ public class TvShowGetController
     {
         return m_service.findTvShowWithDetailsById(id);
     }
+
+    // Comma problem
+    @GetMapping("find/company/name")
+    public Iterable<DbTvShowWithDetailsDTO> findByCompany(@RequestParam("n") String companyName)
+    {
+        return m_service.findByCompany(companyName);
+    }
+    @GetMapping("find/country/name")
+    public Iterable<DbTvShowWithDetailsDTO> findByCountry(@RequestParam("n") String countryName)
+    {
+        return m_service.findByCountry(countryName);
+    }
+    @GetMapping("find/genre/name")
+    public Iterable<DbTvShowWithDetailsDTO> findByGenre(@RequestParam("n") String genreName)
+    {
+        return m_service.findByGenre(genreName);
+    }
+    @GetMapping("find/vote/between")
+    public Iterable<DbTvShowWithDetailsDTO> findByVoteAverageBetween(@RequestParam("b") double start, @RequestParam("e") double end)
+    {
+        return m_service.findByVoteAverageBetween(start, end);
+    }
+    @GetMapping("find/all")
+    public Iterable<DbTvShowWithDetailsDTO> findAllWithDetails()
+    {
+        return m_service.findAllWithDetails();
+    }
+    @GetMapping("exists/id")
+    public boolean existsById(@RequestParam("id") long id)
+    {
+        return m_service.existsById(id);
+    }
+    @GetMapping("count")
+    public long count()
+    {
+        return m_service.count();
+    }
 }
