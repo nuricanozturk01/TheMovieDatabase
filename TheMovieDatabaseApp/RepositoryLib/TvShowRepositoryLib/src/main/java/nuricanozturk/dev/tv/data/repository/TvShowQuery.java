@@ -11,7 +11,11 @@ public enum TvShowQuery
     FIND_BY_ID_QUERY("call findById(:id)"),
     FIND_ALL_QUERY("select * from all_info"),
     FIND_BY_REAL_ID_QUERY("call findByRealTvShowId(:id)"),
-    SAVE_QUERY("call insertTvShow(:realId, :p_name, :p_lng, :p_overview, :p_popularity, :p_vote_average, :p_vote_count)"),
+    SAVE_TV_SHOW_QUERY("call insertTvShow(:realId, :name, :language, :overview, :popularity, :vote_average, :vote_count)"),
+    SAVE_TV_SHOW_DETAIL_QUERY("call insertTvShowDetail(:tvshow_id, :episodes_count, :season_count, :poster_path)"),
+    SAVE_GENRE_QUERY("call insertGenre(:p_dbId, :p_detailId)"),
+    SAVE_COMPANY_QUERY("call insertProductionCompany(:p_dbId, :p_detailId)"),
+    SAVE_COUNTRY_QUERY("call insertProductionCountry(:p_dbId, :p_detailId)"),
     REMOVE_QUERY("call removeTvShowById(:id)");
 
     private final String m_query;

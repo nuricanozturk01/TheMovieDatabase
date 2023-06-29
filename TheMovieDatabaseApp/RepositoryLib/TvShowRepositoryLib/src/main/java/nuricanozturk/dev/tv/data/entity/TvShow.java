@@ -13,7 +13,7 @@ tvshow_id      int            not null primary key auto_increment,
 public class TvShow
 {
     private long tv_show_id;
-    private long real_tv_show_id;
+    private long realId;
     private String name;
     private String language;
     private String overview;
@@ -25,9 +25,9 @@ public class TvShow
     {
     }
 
-    public TvShow(long real_tv_show_id, String name, String language, String overview, double popularity, double vote_average, int vote_count)
+    public TvShow(long realId, String name, String language, String overview, double popularity, double vote_average, int vote_count)
     {
-        this.real_tv_show_id = real_tv_show_id;
+        this.realId = realId;
         this.name = name;
         this.language = language;
         this.overview = overview;
@@ -39,7 +39,7 @@ public class TvShow
     public TvShow(long tv_show_id, long real_tv_show_id, String name, String language, String overview, double popularity, double vote_average, int vote_count)
     {
         this.tv_show_id = tv_show_id;
-        this.real_tv_show_id = real_tv_show_id;
+        this.realId = real_tv_show_id;
         this.name = name;
         this.language = language;
         this.overview = overview;
@@ -58,14 +58,14 @@ public class TvShow
         this.tv_show_id = tv_show_id;
     }
 
-    public long getReal_tv_show_id()
+    public long getRealId()
     {
-        return real_tv_show_id;
+        return realId;
     }
 
-    public void setReal_tv_show_id(long real_tv_show_id)
+    public void setRealId(long realId)
     {
-        this.real_tv_show_id = real_tv_show_id;
+        this.realId = realId;
     }
 
     public String getName()

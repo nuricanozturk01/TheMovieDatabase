@@ -1,7 +1,7 @@
 package nuricanozturk.dev.tv.data.repository;
 
 import nuricanozturk.dev.dtolib.db.tvshowdto.DbTvShowWithDetailDTO;
-import nuricanozturk.dev.tv.data.entity.TvShow;
+import nuricanozturk.dev.tv.data.entity.*;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -45,14 +45,14 @@ public class TvShowRepository implements ITvShowRepository
 
         var parameters = new BeanPropertySqlParameterSource(entity);
         parameters.registerSqlType("realId", Types.BIGINT);
-        parameters.registerSqlType("p_name", Types.VARCHAR);
-        parameters.registerSqlType("p_lng", Types.VARCHAR);
-        parameters.registerSqlType("p_overview", Types.VARCHAR);
-        parameters.registerSqlType("p_popularity", Types.DECIMAL);
-        parameters.registerSqlType("p_vote_average", Types.DECIMAL);
-        parameters.registerSqlType("p_vote_count", Types.INTEGER);
+        parameters.registerSqlType("name", Types.VARCHAR);
+        parameters.registerSqlType("language", Types.VARCHAR);
+        parameters.registerSqlType("overview", Types.VARCHAR);
+        parameters.registerSqlType("popularity", Types.DECIMAL);
+        parameters.registerSqlType("vote_average", Types.DECIMAL);
+        parameters.registerSqlType("vote_count", Types.INTEGER);
 
-        m_jdbcTemplate.update(TvShowQuery.SAVE_QUERY.getQuery(), parameters);
+        m_jdbcTemplate.update(TvShowQuery.SAVE_TV_SHOW_QUERY.getQuery(), parameters);
 
         return entity;
     }
@@ -128,6 +128,60 @@ public class TvShowRepository implements ITvShowRepository
         m_jdbcTemplate.query(TvShowQuery.FIND_BY_VOTE_BETWEEN_QUERY.getQuery(), paramMap, (ResultSet rs) -> fillTvShowList(rs, tvShows));
 
         return tvShows;
+    }
+
+    @Override
+    public void saveTvShowDetail(TvShowDetails details)
+    {
+        var count = count();
+        details.setTv_show_detail_id((int) (count + 1));
+
+        var parameters = new BeanPropertySqlParameterSource(details);
+        parameters.registerSqlType("tvshow_id", Types.BIGINT);
+        parameters.registerSqlType("episodes_count", Types.BIGINT);
+        parameters.registerSqlType("season_count", Types.BIGINT);
+        parameters.registerSqlType("poster_path", Types.VARCHAR);
+
+        m_jdbcTemplate.update(TvShowQuery.SAVE_TV_SHOW_DETAIL_QUERY.getQuery(), parameters);
+    }
+
+    @Override
+    public void saveGenre(TvShowGenre genre)
+    {
+        var count = count();
+        genre.setGenre_id((int) (count + 1));
+
+        var parameters = new BeanPropertySqlParameterSource(genre);
+        parameters.registerSqlType("p_dbId", Types.BIGINT);
+        parameters.registerSqlType("p_detailId", Types.BIGINT);
+
+        m_jdbcTemplate.update(TvShowQuery.SAVE_GENRE_QUERY.getQuery(), parameters);
+    }
+
+    @Override
+    public void saveCompany(TvShowProductionCompany company)
+    {
+        var count = count();
+        company.setCompany_id((int) (count + 1));
+
+        var parameters = new BeanPropertySqlParameterSource(company);
+        parameters.registerSqlType("p_dbId", Types.BIGINT);
+        parameters.registerSqlType("p_detailId", Types.BIGINT);
+
+        m_jdbcTemplate.update(TvShowQuery.SAVE_COMPANY_QUERY.getQuery(), parameters);
+    }
+
+    @Override
+    public void saveCountry(TvShowProductionCountry country)
+    {
+        var count = count();
+        country.setCountry_id((int) (count + 1));
+
+        var parameters = new BeanPropertySqlParameterSource(country);
+        parameters.registerSqlType("p_dbId", Types.BIGINT);
+        parameters.registerSqlType("p_detailId", Types.BIGINT);
+
+        m_jdbcTemplate.update(TvShowQuery.SAVE_COUNTRY_QUERY.getQuery(), parameters);
     }
 
     @Override

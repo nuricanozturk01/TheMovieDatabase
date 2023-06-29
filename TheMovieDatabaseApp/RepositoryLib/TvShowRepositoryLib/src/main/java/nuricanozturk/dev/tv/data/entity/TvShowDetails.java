@@ -10,7 +10,7 @@ tvshow_detail_id int not null primary key auto_increment,
  */
 public class TvShowDetails
 {
-    private int tv_show_id;
+    private int tvshow_id;
     private int tv_show_detail_id;
     private int episodes_count;
     private int season_count;
@@ -28,14 +28,14 @@ public class TvShowDetails
         this.poster_path = poster_path;
     }
 
-    public int getTv_show_id()
+    public int getTvshow_id()
     {
-        return tv_show_id;
+        return tvshow_id;
     }
 
-    public void setTv_show_id(int tv_show_id)
+    public void setTvshow_id(int tvshow_id)
     {
-        this.tv_show_id = tv_show_id;
+        this.tvshow_id = tvshow_id;
     }
 
     public int getTv_show_detail_id()

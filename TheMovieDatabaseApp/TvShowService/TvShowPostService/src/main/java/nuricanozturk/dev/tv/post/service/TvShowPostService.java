@@ -1,19 +1,12 @@
 package nuricanozturk.dev.tv.post.service;
 
-import nuricanozturk.dev.dtolib.api.moviedetaildto.MovieWithDetailStringDTO;
-import nuricanozturk.dev.dtolib.db.moviedto.MovieDbDTO;
+import nuricanozturk.dev.dtolib.api.tvshowdto.TvShowWithDetailDTO;
 import nuricanozturk.dev.tv.data.dal.TvShowRepositoryHelper;
-import nuricanozturk.dev.tv.data.dto.CompaniesDBDTO;
-import nuricanozturk.dev.tv.data.dto.CountriesDBDTO;
 import nuricanozturk.dev.tv.data.dto.ExistsDTO;
-import nuricanozturk.dev.tv.data.dto.GenresDBDTO;
-import nuricanozturk.dev.tv.data.entity.TvShowDetails;
+import nuricanozturk.dev.tv.data.entity.*;
 import nuricanozturk.dev.tv.post.config.ValueConfig;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import static java.lang.String.format;
 
@@ -33,45 +26,29 @@ public class TvShowPostService
 
     public ExistsDTO saveTvShowById(long id) // TMDB id
     {
-       /* *//*var movieFromDB = exists(format(m_valueConfig.movieDetailsUrl, id));
+        var tvShowWithDetailTMDB = m_restTemplate.getForObject(format(m_valueConfig.getTvWithDetails, id), TvShowWithDetailDTO.class);
 
-        if (movieFromDB)
-            return new ExistsDTO(true, false);*//*
+        var tvShow = new TvShow(tvShowWithDetailTMDB.getId(), tvShowWithDetailTMDB.name, tvShowWithDetailTMDB.original_language,
+                tvShowWithDetailTMDB.overview, tvShowWithDetailTMDB.popularity, tvShowWithDetailTMDB.vote_average,
+                tvShowWithDetailTMDB.vote_count);
 
-        var movieWithDetail = m_restTemplate.getForObject(format(m_valueConfig.movieWithDetailUrl, id), MovieWithDetailStringDTO.class);
-        var movieWithFullDetail = m_restTemplate.getForObject(format(m_valueConfig.movieFullDetailsUrl, id), nuricanozturk.dev.dtolib.entity.api.movie.MovieDetails.class);
-        // Exception
-        // System.out.println(movieWithDetail.title);
-        var movieDetails = new TvShowDetails(movieWithDetail.id, movieWithDetail.title);
+        var savedTvShow = m_tvShowRepositoryHelper.saveTvShow(tvShow);
 
-
-        var genres = m_restTemplate.getForObject(format(m_valueConfig.hideGenresUrl, movieWithDetail.genres), GenresDBDTO.class);
-        var companies = m_restTemplate.getForObject(format(m_valueConfig.hideCompaniesUrl, movieWithDetail.production_companies), CompaniesDBDTO.class);
-        var countries = m_restTemplate.getForObject(format(m_valueConfig.hideCountriesUrl, movieWithDetail.production_countries), CountriesDBDTO.class);
+        System.out.println(savedTvShow.getTv_show_id());
+        var tvShowDetails = new TvShowDetails(Math.toIntExact(savedTvShow.getTv_show_id()), tvShowWithDetailTMDB.number_of_episodes, tvShowWithDetailTMDB.number_of_seasons, tvShowWithDetailTMDB.poster_path);
+        m_tvShowRepositoryHelper.saveTvShowDetail(tvShowDetails);
 
 
-        var movieGenresTable = m_movieMapper.toMovieGenres(genres, movieDetails);
-        var movieProductionCompaniesTable = m_movieMapper.toMovieProductionCompanies(companies, movieDetails);
-        var movieProductionCountriesTable = m_movieMapper.toMovieProductionCountries(countries, movieDetails);
+        var genres = tvShowWithDetailTMDB.genres;
+        genres.stream().map(g -> new TvShowGenre(g.name, tvShowDetails.getTvshow_id())).forEach(m_tvShowRepositoryHelper::saveGenre);
+        var companies = tvShowWithDetailTMDB.production_companies;
+        companies.stream().map(c -> new TvShowProductionCompany(c.name, tvShowDetails.getTvshow_id())).forEach(m_tvShowRepositoryHelper::saveCompany);
+        var countries = tvShowWithDetailTMDB.production_countries;
+        countries.stream().map(c -> new TvShowProductionCountry(c.name, tvShowDetails.getTvshow_id())).forEach(m_tvShowRepositoryHelper::saveCountry);
 
+        return new ExistsDTO(false, true);
 
-        movieDetails.setGenres(movieGenresTable);
-        movieDetails.setProductionCompanies(movieProductionCompaniesTable);
-        movieDetails.setProductionCountries(movieProductionCountriesTable);
-        movieDetails.setPosterPath(m_valueConfig.moviePosterPrefix + movieWithFullDetail.poster_path);
-
-        var movie = new Movie(movieWithDetail.original_language, movieWithDetail.title, movieWithDetail.overview,
-                movieWithDetail.popularity,
-                LocalDate.parse(movieWithDetail.release_date, DateTimeFormatter.ISO_LOCAL_DATE),
-                movieWithDetail.vote_average);
-        movieDetails.setMovie(movie);
-        movie.setMovieDetail(movieDetails);
-
-        m_movieServiceHelper.saveMovie(movie);
-
-        return new ExistsDTO(false, true);*/
-
-        throw new UnsupportedOperationException("NOT IMPLEMENTED YET!");
+        //throw new UnsupportedOperationException("NOT IMPLEMENTED YET!");
     }
 
     public ExistsDTO removeById(long id)

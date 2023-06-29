@@ -1,7 +1,7 @@
 package nuricanozturk.dev.tv.data.dal;
 
 import nuricanozturk.dev.dtolib.db.tvshowdto.DbTvShowWithDetailDTO;
-import nuricanozturk.dev.tv.data.entity.TvShow;
+import nuricanozturk.dev.tv.data.entity.*;
 import nuricanozturk.dev.tv.data.repository.ITvShowRepository;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -70,5 +70,25 @@ public class TvShowRepositoryHelper
     public Iterable<DbTvShowWithDetailDTO> findByVoteAverageBetween(double start, double end)
     {
         return m_tvShowRepository.findByVoteAverageBetween(start, end);
+    }
+
+   public void saveTvShowDetail(TvShowDetails details)
+    {
+        m_tvShowRepository.saveTvShowDetail(details);
+    }
+
+    public void saveGenre(TvShowGenre genre)
+    {
+        m_tvShowRepository.saveGenre(genre);
+    }
+
+    public void saveCompany(TvShowProductionCompany company)
+    {
+        m_tvShowRepository.saveCompany(company);
+    }
+
+    public void saveCountry(TvShowProductionCountry country)
+    {
+        m_tvShowRepository.saveCountry(country);
     }
 }
