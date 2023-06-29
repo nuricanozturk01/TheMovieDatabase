@@ -17,8 +17,22 @@
     <dependencies>
         <dependency>
             <groupId>nuricanozturk.dev</groupId>
+            <artifactId>GenericRepository</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>nuricanozturk.dev</groupId>
+            <artifactId>dto-lib</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>nuricanozturk.dev</groupId>
             <artifactId>TvShowRepositoryLib</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
         </dependency>
     </dependencies>
 

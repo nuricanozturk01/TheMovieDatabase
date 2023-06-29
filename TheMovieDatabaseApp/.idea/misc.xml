@@ -32,6 +32,7 @@
         <option value="$PROJECT_DIR$/GenericService/pom.xml" />
         <option value="$PROJECT_DIR$/UserService/pom.xml" />
         <option value="$PROJECT_DIR$/TvShowService/TvShowGetServiceTMDB/pom.xml" />
+        <option value="$PROJECT_DIR$/TvShowService/TvShowPostService/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
