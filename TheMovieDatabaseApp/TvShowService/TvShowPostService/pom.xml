@@ -9,10 +9,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>TvShowSaveService</artifactId>
+    <artifactId>TvShowPostService</artifactId>
     <version>1.0.0</version>
-    <name>TvShowSaveService</name>
-    <description>TvShowSaveService</description>
+    <name>TvShowPostService</name>
+    <description>TvShowPostService</description>
 
     <dependencies>
         <dependency>
