@@ -1,6 +1,6 @@
 package nuricanozturk.dev.tv.data.repository;
 
-import nuricanozturk.dev.dtolib.db.tvshowdto.DbTvShowWithDetailsDTO;
+import nuricanozturk.dev.dtolib.db.tvshowdto.DbTvShowWithDetailDTO;
 import nuricanozturk.dev.tv.data.entity.TvShow;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -66,14 +66,15 @@ public class TvShowRepository implements ITvShowRepository
     @Override
     public boolean existById(Long id)
     {
-        return finById(id).isPresent();
+        var dto = finById(id);
+        return dto.isPresent();
     }
 
 
     @Override
-    public Iterable<DbTvShowWithDetailsDTO> findAllWithDetails()
+    public Iterable<DbTvShowWithDetailDTO> findAllWithDetails()
     {
-        var tvShows = new ArrayList<DbTvShowWithDetailsDTO>();
+        var tvShows = new ArrayList<DbTvShowWithDetailDTO>();
 
         m_jdbcTemplate.query(TvShowQuery.FIND_ALL_QUERY.getQuery(), (ResultSet rs) -> fillTvShowList(rs, tvShows));
 
@@ -81,11 +82,11 @@ public class TvShowRepository implements ITvShowRepository
     }
 
     @Override
-    public Iterable<DbTvShowWithDetailsDTO> findByGenre(String name)
+    public Iterable<DbTvShowWithDetailDTO> findByGenre(long id)
     {
-        var tvShows = new ArrayList<DbTvShowWithDetailsDTO>();
-        var paramMap = new HashMap<String, String>();
-        paramMap.put("name", name);
+        var tvShows = new ArrayList<DbTvShowWithDetailDTO>();
+        var paramMap = new HashMap<String, Long>();
+        paramMap.put("id", id);
 
         m_jdbcTemplate.query(TvShowQuery.FIND_BY_GENRE_QUERY.getQuery(), paramMap, (ResultSet rs) -> fillTvShowList(rs, tvShows));
 
@@ -93,11 +94,11 @@ public class TvShowRepository implements ITvShowRepository
     }
 
     @Override
-    public Iterable<DbTvShowWithDetailsDTO> findByCompany(String name)
+    public Iterable<DbTvShowWithDetailDTO> findByCompany(long id)
     {
-        var tvShows = new ArrayList<DbTvShowWithDetailsDTO>();
-        var paramMap = new HashMap<String, String>();
-        paramMap.put("name", name);
+        var tvShows = new ArrayList<DbTvShowWithDetailDTO>();
+        var paramMap = new HashMap<String, Long>();
+        paramMap.put("id", id);
 
         m_jdbcTemplate.query(TvShowQuery.FIND_BY_COMPANY_QUERY.getQuery(), paramMap, (ResultSet rs) -> fillTvShowList(rs, tvShows));
 
@@ -105,11 +106,11 @@ public class TvShowRepository implements ITvShowRepository
     }
 
     @Override
-    public Iterable<DbTvShowWithDetailsDTO> findByCountry(String name)
+    public Iterable<DbTvShowWithDetailDTO> findByCountry(long id)
     {
-        var tvShows = new ArrayList<DbTvShowWithDetailsDTO>();
-        var paramMap = new HashMap<String, String>();
-        paramMap.put("name", name);
+        var tvShows = new ArrayList<DbTvShowWithDetailDTO>();
+        var paramMap = new HashMap<String, Long>();
+        paramMap.put("id", id);
 
         m_jdbcTemplate.query(TvShowQuery.FIND_BY_COUNTRY_QUERY.getQuery(), paramMap, (ResultSet rs) -> fillTvShowList(rs, tvShows));
 
@@ -117,9 +118,9 @@ public class TvShowRepository implements ITvShowRepository
     }
 
     @Override
-    public Iterable<DbTvShowWithDetailsDTO> findByVoteAverageBetween(double start, double end)
+    public Iterable<DbTvShowWithDetailDTO> findByVoteAverageBetween(double start, double end)
     {
-        var tvShows = new ArrayList<DbTvShowWithDetailsDTO>();
+        var tvShows = new ArrayList<DbTvShowWithDetailDTO>();
         var paramMap = new HashMap<String, Double>();
         paramMap.put("start", start);
         paramMap.put("end", end);
@@ -138,9 +139,9 @@ public class TvShowRepository implements ITvShowRepository
     }
 
     @Override
-    public Iterable<DbTvShowWithDetailsDTO> findWithDetails(long id)
+    public Iterable<DbTvShowWithDetailDTO> findWithDetails(long id)
     {
-        var tvShows = new ArrayList<DbTvShowWithDetailsDTO>();
+        var tvShows = new ArrayList<DbTvShowWithDetailDTO>();
         var paramMap = new HashMap<String, Long>();
         paramMap.put("id", id);
 
@@ -149,14 +150,14 @@ public class TvShowRepository implements ITvShowRepository
         return tvShows;
     }
 
-    private void fillTvShowList(ResultSet rs, ArrayList<DbTvShowWithDetailsDTO> tvShows) throws SQLException
+    private void fillTvShowList(ResultSet rs, ArrayList<DbTvShowWithDetailDTO> tvShows) throws SQLException
     {
         do
             tvShows.add(getTvShow(rs));
         while (rs.next());
     }
 
-    private DbTvShowWithDetailsDTO getTvShow(ResultSet rs) throws SQLException
+    private DbTvShowWithDetailDTO getTvShow(ResultSet rs) throws SQLException
     {
         var id = rs.getInt(1);
         var name = rs.getString(2);
@@ -172,7 +173,7 @@ public class TvShowRepository implements ITvShowRepository
         var companies = rs.getString(12);
         var countries = rs.getString(13);
 
-        return new DbTvShowWithDetailsDTO(id, name, language, overview, posterPath, genres, companies, countries,
+        return new DbTvShowWithDetailDTO(id, name, language, overview, posterPath, genres, companies, countries,
                 popularity, voteAverage, voteCount, episodesCount, seasonCount);
     }
 
@@ -246,6 +247,4 @@ public class TvShowRepository implements ITvShowRepository
     {
         throw new UnsupportedOperationException("NOT SUPPORTED!");
     }
-
-
 }

@@ -1,13 +1,12 @@
 package nuricanozturk.dev.movie.get.service;
 
-import nuricanozturk.dev.dtolib.db.genericdtos.GenreDTO;
+import nuricanozturk.dev.dtolib.db.genericdtos.GenreDbDTO;
 import nuricanozturk.dev.dtolib.db.genericdtos.ProductionCompanyDTO;
 import nuricanozturk.dev.dtolib.db.genericdtos.ProductionCountryDTO;
 import nuricanozturk.dev.dtolib.db.moviedto.*;
 import nuricanozturk.dev.dtolib.mapper.db.mapper.MovieWithDetailStringDTOMapper;
 import nuricanozturk.dev.movie.data.dal.MovieServiceHelper;
 import nuricanozturk.dev.movie.data.mapper.IMovieDbMapper;
-import nuricanozturk.dev.movie.get.dto.GenreDbDTO;
 import nuricanozturk.dev.movie.get.dto.ProductionCompanyDbDTO;
 import nuricanozturk.dev.movie.get.dto.ProductionCountryDbDTO;
 import nuricanozturk.dev.movie.get.mapper.IMovieDTOMapper;
@@ -147,13 +146,13 @@ public class MovieGetDBService
     private String getGenresStr(long id)
     {
         return m_movieServiceHelper.getMovieGenresByMovieDbId(id).stream()
-                .map(mg -> m_restTemplate.getForObject(format(getGenresByIdUrl, mg.getGenre_id()), GenreDbDTO.class))
+                .map(mg -> m_restTemplate.getForObject(format(getGenresByIdUrl, mg.getGenre_id()), nuricanozturk.dev.movie.get.dto.GenreDbDTO.class))
                 .map(mg -> mg.getName()).collect(Collectors.joining(","));
     }
 
     public MoviesDbDTO getMoviesByGenre(String genre)
     {
-        var company = m_restTemplate.getForObject(format(findGenreNameUrl, genre), GenreDTO.class);
+        var company = m_restTemplate.getForObject(format(findGenreNameUrl, genre), GenreDbDTO.class);
         var movies = StreamSupport.stream(m_movieServiceHelper.getMoviesByGenre(company.getGenre_id()).spliterator(), false).toList();
 
         return m_movieDbMapper.toMoviesDbDTO(m_movieDbMapper.toMovieDbDTO(movies));

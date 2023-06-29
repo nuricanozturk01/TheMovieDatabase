@@ -1,24 +1,24 @@
 package nuricanozturk.dev.dtolib.db.genericdtos;
 
 
-public class GenreDTO
+public class GenreDbDTO
 {
     private long genre_id;
 
     private String name;
 
 
-    public GenreDTO()
+    public GenreDbDTO()
     {
     }
 
-    public GenreDTO(String name, long genre_id)
+    public GenreDbDTO(String name, long genre_id)
     {
         this.name = name;
         this.genre_id = genre_id;
     }
 
-    public GenreDTO(String name)
+    public GenreDbDTO(String name)
     {
         this.name = name;
     }

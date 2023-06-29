@@ -1,5 +1,8 @@
 package nuricanozturk.dev.service.generic.controller;
 
+import nuricanozturk.dev.dtolib.db.genericdtos.GenresDbDTO;
+import nuricanozturk.dev.dtolib.db.genericdtos.ProductionCompaniesDTO;
+import nuricanozturk.dev.dtolib.db.genericdtos.ProductionCountriesDTO;
 import nuricanozturk.dev.repository.generic.data.entity.Genre;
 import nuricanozturk.dev.repository.generic.data.entity.ProductionCompany;
 import nuricanozturk.dev.repository.generic.data.entity.ProductionCountry;
@@ -8,6 +11,8 @@ import nuricanozturk.dev.service.generic.dto.CountriesDBDTO;
 import nuricanozturk.dev.service.generic.dto.GenresDBDTO;
 import nuricanozturk.dev.service.generic.service.GenericService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/generic_lib")
@@ -64,6 +69,23 @@ public class GenericServiceController
         return m_genericService.findProductionCountryById(id);
     }
 
+    @GetMapping("find/all/genre")
+    public GenresDbDTO getAllGenres(@RequestParam("ids") List<Long> ids)
+    {
+        return m_genericService.getAllGenresByIds(ids);
+    }
+
+    @GetMapping("find/all/company")
+    public ProductionCompaniesDTO getAllCompanies(@RequestParam("ids") List<Long> ids)
+    {
+        return m_genericService.getAllCompanies(ids);
+    }
+
+    @GetMapping("find/all/country")
+    public ProductionCountriesDTO getAllCountries(@RequestParam("ids") List<Long> ids)
+    {
+        return m_genericService.getAllCountries(ids);
+    }
 
     @GetMapping("find/country/name")
     public ProductionCountry findProductionCountryByName(@RequestParam("n") String name)

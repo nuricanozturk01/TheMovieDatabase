@@ -1,6 +1,6 @@
 package nuricanozturk.dev.tv.data.dal;
 
-import nuricanozturk.dev.dtolib.db.tvshowdto.DbTvShowWithDetailsDTO;
+import nuricanozturk.dev.dtolib.db.tvshowdto.DbTvShowWithDetailDTO;
 import nuricanozturk.dev.tv.data.entity.TvShow;
 import nuricanozturk.dev.tv.data.repository.ITvShowRepository;
 import org.springframework.context.annotation.Lazy;
@@ -17,7 +17,7 @@ public class TvShowRepositoryHelper
         m_tvShowRepository = tvShowRepository;
     }
 
-    public Iterable<DbTvShowWithDetailsDTO> findTvShowWithDetailsById(long id)
+    public Iterable<DbTvShowWithDetailDTO> findTvShowWithDetailsById(long id)
     {
         return m_tvShowRepository.findWithDetails(id);
     }
@@ -32,7 +32,7 @@ public class TvShowRepositoryHelper
         return m_tvShowRepository.save(tvShow);
     }
 
-    public Iterable<DbTvShowWithDetailsDTO> findAllWithDetails()
+    public Iterable<DbTvShowWithDetailDTO> findAllWithDetails()
     {
         return m_tvShowRepository.findAllWithDetails();
     }
@@ -52,22 +52,22 @@ public class TvShowRepositoryHelper
         return m_tvShowRepository.count();
     }
 
-    public Iterable<DbTvShowWithDetailsDTO> findByGenre(String name)
+    public Iterable<DbTvShowWithDetailDTO> findByGenre(long id)
     {
-        return m_tvShowRepository.findByGenre(name);
+        return m_tvShowRepository.findByGenre(id);
     }
 
-    public Iterable<DbTvShowWithDetailsDTO> findByCompany(String name)
+    public Iterable<DbTvShowWithDetailDTO> findByCompany(long id)
     {
-        return m_tvShowRepository.findByCompany(name);
+        return m_tvShowRepository.findByCompany(id);
     }
 
-    public Iterable<DbTvShowWithDetailsDTO> findByCountry(String name)
+    public Iterable<DbTvShowWithDetailDTO> findByCountry(long id)
     {
-        return m_tvShowRepository.findByCountry(name);
+        return m_tvShowRepository.findByCountry(id);
     }
 
-    public Iterable<DbTvShowWithDetailsDTO> findByVoteAverageBetween(double start, double end)
+    public Iterable<DbTvShowWithDetailDTO> findByVoteAverageBetween(double start, double end)
     {
         return m_tvShowRepository.findByVoteAverageBetween(start, end);
     }

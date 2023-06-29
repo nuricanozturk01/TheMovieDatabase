@@ -1,20 +1,23 @@
 package nuricanozturk.dev.service.generic.service;
 
+import nuricanozturk.dev.dtolib.db.genericdtos.GenresDbDTO;
+import nuricanozturk.dev.dtolib.db.genericdtos.ProductionCompaniesDTO;
+import nuricanozturk.dev.dtolib.db.genericdtos.ProductionCountriesDTO;
 import nuricanozturk.dev.repository.generic.data.entity.Genre;
 import nuricanozturk.dev.repository.generic.data.entity.ProductionCompany;
 import nuricanozturk.dev.repository.generic.data.entity.ProductionCountry;
 import nuricanozturk.dev.repository.generic.repository.IGenreRepository;
 import nuricanozturk.dev.repository.generic.repository.IProductionCompanyRepository;
 import nuricanozturk.dev.repository.generic.repository.IProductionCountryRepository;
+import nuricanozturk.dev.service.generic.config.MapperConfig;
 import nuricanozturk.dev.service.generic.dto.CompaniesDBDTO;
 import nuricanozturk.dev.service.generic.dto.CountriesDBDTO;
 import nuricanozturk.dev.service.generic.dto.GenresDBDTO;
-import nuricanozturk.dev.service.generic.mapper.ICompanyDbMapper;
-import nuricanozturk.dev.service.generic.mapper.ICountryDbMapper;
-import nuricanozturk.dev.service.generic.mapper.IGenreDbMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+
+import static java.util.stream.StreamSupport.stream;
 
 @Service
 public class GenericService
@@ -23,20 +26,16 @@ public class GenericService
 
     private final IProductionCountryRepository m_productionCountryRepository;
     private final IProductionCompanyRepository m_productionCompanyRepository;
-    private final IGenreDbMapper m_genreDbMapper;
-    private final ICompanyDbMapper m_companyDbMapper;
-    private final ICountryDbMapper m_countryDbMapper;
+
+    private final MapperConfig m_mapperConfig;
 
     public GenericService(IGenreRepository genreRepository, IProductionCountryRepository productionCountryRepository,
-                          IProductionCompanyRepository productionCompanyRepository, IGenreDbMapper genreDbMapper,
-                          ICompanyDbMapper companyDbMapper, ICountryDbMapper countryDbMapper)
+                          IProductionCompanyRepository productionCompanyRepository, MapperConfig mapperConfig)
     {
         m_genreRepository = genreRepository;
         m_productionCountryRepository = productionCountryRepository;
         m_productionCompanyRepository = productionCompanyRepository;
-        m_genreDbMapper = genreDbMapper;
-        m_companyDbMapper = companyDbMapper;
-        m_countryDbMapper = countryDbMapper;
+        m_mapperConfig = mapperConfig;
     }
 
     public Genre findGenreById(long id)
@@ -52,6 +51,30 @@ public class GenericService
     public Genre saveGenre(Genre genre)
     {
         return m_genreRepository.save(genre);
+    }
+
+    public GenresDbDTO getAllGenres()
+    {
+        return m_mapperConfig.m_dbGenreMapper.toGenresDbDTO(stream(m_genreRepository.findAll().spliterator(), false)
+                .map(m_mapperConfig.m_dbGenreMapper::toGenreDbDTO).toList());
+    }
+
+    public GenresDbDTO getAllGenresByIds(Iterable<Long> ids)
+    {
+        return m_mapperConfig.m_dbGenreMapper.toGenresDbDTO(stream(m_genreRepository.findAllById(ids).spliterator(), false)
+                .map(m_mapperConfig.m_dbGenreMapper::toGenreDbDTO).toList());
+    }
+
+    public ProductionCompaniesDTO getAllCompanies(Iterable<Long> ids)
+    {
+        return m_mapperConfig.m_dbCompanyMapper.toProductionCompaniesDTO(stream(m_productionCompanyRepository.findAllById(ids).spliterator(), false)
+                .map(m_mapperConfig.m_dbCompanyMapper::toProductionCompanyDTO).toList());
+    }
+
+    public ProductionCountriesDTO getAllCountries(Iterable<Long> ids)
+    {
+        return m_mapperConfig.m_dbCountryMapper.toProductionCountriesDTO(stream(m_productionCountryRepository.findAllById(ids).spliterator(), false)
+                .map(m_mapperConfig.m_dbCountryMapper::toProductionCountryDTO).toList());
     }
 
     public ProductionCompany findProductionCompanyById(long id)
@@ -101,7 +124,7 @@ public class GenericService
             }
         }
 
-        return m_genreDbMapper.toGenresDbDTO(list);
+        return m_mapperConfig.m_genreDbMapper.toGenresDbDTO(list);
     }
 
     public CompaniesDBDTO saveCompanyIfNotExistsElseGetId(String companiesStr)
@@ -119,7 +142,7 @@ public class GenericService
                 list.add(g);
             }
         }
-        return m_companyDbMapper.toCompanyDbDTO(list);
+        return m_mapperConfig.m_companyDbMapper.toCompanyDbDTO(list);
     }
 
     public CountriesDBDTO saveCountryIfNotExistsElseGetId(String country)
@@ -137,6 +160,6 @@ public class GenericService
                 list.add(g);
             }
         }
-        return m_countryDbMapper.toCountryDbDTO(list);
+        return m_mapperConfig.m_countryDbMapper.toCountryDbDTO(list);
     }
 }
