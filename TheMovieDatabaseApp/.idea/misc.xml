@@ -33,11 +33,13 @@
         <option value="$PROJECT_DIR$/UserService/pom.xml" />
         <option value="$PROJECT_DIR$/TvShowService/TvShowGetServiceTMDB/pom.xml" />
         <option value="$PROJECT_DIR$/TvShowService/TvShowPostService/pom.xml" />
+        <option value="$PROJECT_DIR$/MovieService/MoviePostService/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/AppRunner/pom.xml" />
+        <option value="$PROJECT_DIR$/MovieService/MovieSaveService/pom.xml" />
         <option value="$PROJECT_DIR$/RepositoryLib/ExternalResourcesRepositoryLib/pom.xml" />
       </set>
     </option>

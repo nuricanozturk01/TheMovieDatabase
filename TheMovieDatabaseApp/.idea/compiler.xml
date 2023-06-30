@@ -7,7 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Annotation profile for TvShowPostService" enabled="true">
+      <profile name="Annotation profile for UserService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -35,6 +35,8 @@
       <module name="AppRunner" target="17" />
       <module name="ExternalResourcesRepositoryLib" target="17" />
       <module name="GenericParenProject" target="17" />
+      <module name="MovieSaveService (1)" target="17" />
+      <module name="MovieSaveService (2)" target="17" />
       <module name="MovieService" target="17" />
       <module name="RepositoryLib" target="17" />
       <module name="TvShowService" target="17" />
@@ -50,6 +52,8 @@
       <module name="MovieGetServiceTMDB" options="-parameters" />
       <module name="MovieRepositoryLib" options="-parameters" />
       <module name="MovieSaveService" options="-parameters" />
+      <module name="MovieSaveService (1)" options="-parameters" />
+      <module name="MovieSaveService (2)" options="-parameters" />
       <module name="MovieService" options="-parameters" />
       <module name="RepositoryLib" options="-parameters" />
       <module name="TvShowGetService" options="-parameters" />

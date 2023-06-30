@@ -10,12 +10,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan("nuricanozturk.dev")
 @EnableJpaRepositories("nuricanozturk.dev.movie.data")
 @EntityScan("nuricanozturk.dev.movie.data")
-public class MovieSaveServiceApplication
+public class MoviePostServiceApplication
 {
 
     public static void main(String[] args)
     {
-        SpringApplication.run(MovieSaveServiceApplication.class, args);
+        SpringApplication.run(MoviePostServiceApplication.class, args);
     }
 
 }
