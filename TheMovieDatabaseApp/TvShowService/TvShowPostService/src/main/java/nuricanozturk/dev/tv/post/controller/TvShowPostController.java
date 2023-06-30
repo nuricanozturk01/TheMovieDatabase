@@ -2,10 +2,7 @@ package nuricanozturk.dev.tv.post.controller;
 
 import nuricanozturk.dev.tv.data.dto.ExistsDTO;
 import nuricanozturk.dev.tv.post.service.TvShowPostService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/tv/post")
@@ -22,5 +19,11 @@ public class TvShowPostController
     public ExistsDTO saveTvShow(@RequestParam("id") long id)
     {
         return m_tvShowPostService.saveTvShowById(id);
+    }
+
+    @DeleteMapping("remove/id")
+    public ExistsDTO removeTvShow(@RequestParam("id") long id)
+    {
+        return m_tvShowPostService.removeById(id);
     }
 }

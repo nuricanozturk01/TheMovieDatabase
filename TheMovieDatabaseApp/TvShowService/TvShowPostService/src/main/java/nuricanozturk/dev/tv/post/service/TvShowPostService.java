@@ -41,7 +41,7 @@ public class TvShowPostService
 
 
         var tvShowDetails = new TvShowDetails((int) savedTvShow.getTvshow_id(), tvShowWithDetailTMDB.number_of_episodes,
-                tvShowWithDetailTMDB.number_of_seasons, tvShowWithDetailTMDB.poster_path);
+                tvShowWithDetailTMDB.number_of_seasons, m_valueConfig.tvPosterPrefix + tvShowWithDetailTMDB.poster_path);
         m_tvShowRepositoryHelper.saveTvShowDetail(tvShowDetails);
 
         saveGenres(tvShowWithDetailTMDB, savedTvShow);
