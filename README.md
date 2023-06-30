@@ -6,4 +6,5 @@
     - I will add unit tests and exception handling
 ## Development Diagram
 
-![2 drawio](https://github.com/nuricanozturk01/TheMovieDatabase/assets/62218588/8b0f86a0-702b-4022-9120-41513e4b323a)
+![Updated drawio](https://github.com/nuricanozturk01/TheMovieDatabase/assets/62218588/85f1c888-9f82-4283-ace6-197cab8afcc5)
+
