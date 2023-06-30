@@ -51,4 +51,13 @@ public class ValueConfig
 
     @Value("${tv.poster.path.prefix}")
     public String tvPosterPrefix;
+
+    @Value("${generic_lib.find.all.genre}")
+    public String allGenresByIds;
+
+    @Value("${generic_lib.find.all.company}")
+    public String allCompaniesByIds;
+
+    @Value("${generic_lib.find.all.country}")
+    public String allCountriesByIds;
 }

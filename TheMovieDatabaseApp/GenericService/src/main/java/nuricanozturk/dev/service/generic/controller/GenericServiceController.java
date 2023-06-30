@@ -37,7 +37,6 @@ public class GenericServiceController
         return m_genericService.findProductionCompanyById(id);
     }
 
-
     @GetMapping("find/genre/name")
     public Genre findGenreByName(@RequestParam("n") String name)
     {

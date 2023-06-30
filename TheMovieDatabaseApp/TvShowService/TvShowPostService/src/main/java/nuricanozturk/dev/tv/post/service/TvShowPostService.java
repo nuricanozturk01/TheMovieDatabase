@@ -2,11 +2,16 @@ package nuricanozturk.dev.tv.post.service;
 
 import nuricanozturk.dev.dtolib.api.tvshowdto.TvShowWithDetailDTO;
 import nuricanozturk.dev.tv.data.dal.TvShowRepositoryHelper;
+import nuricanozturk.dev.tv.data.dto.CompaniesDBDTO;
+import nuricanozturk.dev.tv.data.dto.CountriesDBDTO;
 import nuricanozturk.dev.tv.data.dto.ExistsDTO;
+import nuricanozturk.dev.tv.data.dto.GenresDBDTO;
 import nuricanozturk.dev.tv.data.entity.*;
 import nuricanozturk.dev.tv.post.config.ValueConfig;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -24,7 +29,7 @@ public class TvShowPostService
         m_valueConfig = valueConfig;
     }
 
-    public ExistsDTO saveTvShowById(long id) // TMDB id
+    public ExistsDTO saveTvShowById(long id)
     {
         var tvShowWithDetailTMDB = m_restTemplate.getForObject(format(m_valueConfig.getTvWithDetails, id), TvShowWithDetailDTO.class);
 
@@ -34,31 +39,64 @@ public class TvShowPostService
 
         var savedTvShow = m_tvShowRepositoryHelper.saveTvShow(tvShow);
 
-        System.out.println(savedTvShow.getTv_show_id());
-        var tvShowDetails = new TvShowDetails(Math.toIntExact(savedTvShow.getTv_show_id()), tvShowWithDetailTMDB.number_of_episodes, tvShowWithDetailTMDB.number_of_seasons, tvShowWithDetailTMDB.poster_path);
+
+        var tvShowDetails = new TvShowDetails((int) savedTvShow.getTvshow_id(), tvShowWithDetailTMDB.number_of_episodes,
+                tvShowWithDetailTMDB.number_of_seasons, tvShowWithDetailTMDB.poster_path);
         m_tvShowRepositoryHelper.saveTvShowDetail(tvShowDetails);
 
-
-        var genres = tvShowWithDetailTMDB.genres;
-        genres.stream().map(g -> new TvShowGenre(g.name, tvShowDetails.getTvshow_id())).forEach(m_tvShowRepositoryHelper::saveGenre);
-        var companies = tvShowWithDetailTMDB.production_companies;
-        companies.stream().map(c -> new TvShowProductionCompany(c.name, tvShowDetails.getTvshow_id())).forEach(m_tvShowRepositoryHelper::saveCompany);
-        var countries = tvShowWithDetailTMDB.production_countries;
-        countries.stream().map(c -> new TvShowProductionCountry(c.name, tvShowDetails.getTvshow_id())).forEach(m_tvShowRepositoryHelper::saveCountry);
+        saveGenres(tvShowWithDetailTMDB, savedTvShow);
+        saveCompanies(tvShowWithDetailTMDB, savedTvShow);
+        saveCountries(tvShowWithDetailTMDB, savedTvShow);
 
         return new ExistsDTO(false, true);
-
-        //throw new UnsupportedOperationException("NOT IMPLEMENTED YET!");
     }
+
+    private void saveCountries(TvShowWithDetailDTO tvShowWithDetailTMDB, TvShow savedTvShow)
+    {
+        var countryStr = tvShowWithDetailTMDB.production_countries.stream().map(g -> g.name).collect(Collectors.joining(","));
+
+
+        var countries = m_restTemplate.getForObject(format(m_valueConfig.hideCountriesUrl, countryStr), CountriesDBDTO.class);
+
+
+        if (countries != null && countries.countries != null)
+            countries.countries.stream()
+                    .map(g -> new TvShowProductionCountry((int) g.getCountry_id(), (int) savedTvShow.getTvshow_id()))
+                    .forEach(m_tvShowRepositoryHelper::saveCountry);
+    }
+
+    private void saveCompanies(TvShowWithDetailDTO tvShowWithDetailTMDB, TvShow savedTvShow)
+    {
+        var companyStr = tvShowWithDetailTMDB.production_companies.stream()
+                .map(g -> g.name)
+                .collect(Collectors.joining(","));
+        var companies = m_restTemplate.getForObject(format(m_valueConfig.hideCompaniesUrl, companyStr), CompaniesDBDTO.class);
+
+        if (companies != null && companies.companies != null)
+            companies.companies.stream()
+                    .map(g -> new TvShowProductionCompany((int) g.getCompany_id(), (int) savedTvShow.getTvshow_id()))
+                    .forEach(m_tvShowRepositoryHelper::saveCompany);
+    }
+
+    private void saveGenres(TvShowWithDetailDTO tvShowWithDetailTMDB, TvShow savedTvShow)
+    {
+        var genreStr = tvShowWithDetailTMDB.genres.stream().map(g -> g.name).collect(Collectors.joining(","));
+        var genres = m_restTemplate.getForObject(format(m_valueConfig.hideGenresUrl, genreStr), GenresDBDTO.class);
+        if (genres != null && genres.genres != null)
+            genres.genres.stream()
+                    .map(g -> new TvShowGenre((int) g.getGenre_id(), (int) savedTvShow.getTvshow_id()))
+                    .forEach(m_tvShowRepositoryHelper::saveGenre);
+    }
+
 
     public ExistsDTO removeById(long id)
     {
-        /*var movie = m_restTemplate.getForObject(format(m_valueConfig.movieDetailsUrl, id), MovieDbDTO.class);
-        if (movie != null){
-            m_movieServiceHelper.deleteMovie(movie.movie_id);
+        var tvShow = m_restTemplate.getForObject(format(m_valueConfig.getTvWithDetails, id), TvShowWithDetailDTO.class);
+        if (tvShow != null)
+        {
+            m_tvShowRepositoryHelper.deleteTvShowById(tvShow.getId());
             return new ExistsDTO(true, false);
         }
-        return new ExistsDTO(false, false);*/
-        throw new UnsupportedOperationException("NOT IMPLEMENTED YET!");
+        return new ExistsDTO(false, false);
     }
 }

@@ -7,16 +7,17 @@ company_id       int         not null auto_increment primary key,
 public class TvShowProductionCompany
 {
     private int company_id;
-    private String company_name;
+    private int company_db_id;
+
     private int tvshow_detail_id;
 
     public TvShowProductionCompany()
     {
     }
 
-    public TvShowProductionCompany(String company_name, int tvshow_detail_id)
+    public TvShowProductionCompany(int company_db_id, int tvshow_detail_id)
     {
-        this.company_name = company_name;
+        this.company_db_id = company_db_id;
         this.tvshow_detail_id = tvshow_detail_id;
     }
 
@@ -30,14 +31,14 @@ public class TvShowProductionCompany
         this.company_id = company_id;
     }
 
-    public String getCompany_name()
+    public int getCompany_db_id()
     {
-        return company_name;
+        return company_db_id;
     }
 
-    public void setCompany_name(String company_name)
+    public void setCompany_db_id(int company_db_id)
     {
-        this.company_name = company_name;
+        this.company_db_id = company_db_id;
     }
 
     public int getTvshow_detail_id()

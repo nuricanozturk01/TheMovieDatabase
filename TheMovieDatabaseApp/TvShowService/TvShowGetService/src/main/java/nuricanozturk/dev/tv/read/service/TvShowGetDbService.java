@@ -87,6 +87,7 @@ public class TvShowGetDbService
         var companyIds = new HashSet<Long>();
         var countryIds = new HashSet<Long>();
 
+        //GENRE NULL
         for (DbTvShowWithDetailDTO show : tvShows) {
             genreIds.addAll(stream(show.genres.split(",")).map(Long::parseLong).toList());
             companyIds.addAll(stream(show.companies.split(",")).map(Long::parseLong).toList());

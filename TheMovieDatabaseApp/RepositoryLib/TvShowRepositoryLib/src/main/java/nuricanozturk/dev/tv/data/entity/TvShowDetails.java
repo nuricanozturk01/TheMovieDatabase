@@ -20,21 +20,19 @@ public class TvShowDetails
     {
     }
 
-    public TvShowDetails(int tv_show_detail_id, int episodes_count, int season_count, String poster_path)
+    public TvShowDetails(int tvshow_id, int episodes_count, int season_count, String poster_path)
     {
-        this.tv_show_detail_id = tv_show_detail_id;
+        this.tvshow_id = tvshow_id;
         this.episodes_count = episodes_count;
         this.season_count = season_count;
         this.poster_path = poster_path;
     }
 
-    public int getTvshow_id()
-    {
+    public int getTvshow_id() {
         return tvshow_id;
     }
 
-    public void setTvshow_id(int tvshow_id)
-    {
+    public void setTvshow_id(int tvshow_id) {
         this.tvshow_id = tvshow_id;
     }
 

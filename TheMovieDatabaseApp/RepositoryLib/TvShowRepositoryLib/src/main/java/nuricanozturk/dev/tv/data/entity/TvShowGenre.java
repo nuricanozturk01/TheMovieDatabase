@@ -7,17 +7,22 @@ package nuricanozturk.dev.tv.data.entity;
 public class TvShowGenre
 {
     private int genre_id;
-    private String genre_name;
+    private int genre_db_id;
     private int tvshow_detail_id;
 
     public TvShowGenre()
     {
     }
 
-    public TvShowGenre(String genre_name, int tvshow_detail_id)
+
+    public int getGenre_db_id()
     {
-        this.genre_name = genre_name;
-        this.tvshow_detail_id = tvshow_detail_id;
+        return genre_db_id;
+    }
+
+    public void setGenre_db_id(int genre_db_id)
+    {
+        this.genre_db_id = genre_db_id;
     }
 
     public int getGenre_id()
@@ -30,14 +35,10 @@ public class TvShowGenre
         this.genre_id = genre_id;
     }
 
-    public String getGenre_name()
+    public TvShowGenre(int genre_db_id, int tvshow_detail_id)
     {
-        return genre_name;
-    }
-
-    public void setGenre_name(String genre_name)
-    {
-        this.genre_name = genre_name;
+        this.genre_db_id = genre_db_id;
+        this.tvshow_detail_id = tvshow_detail_id;
     }
 
     public int getTvshow_detail_id()

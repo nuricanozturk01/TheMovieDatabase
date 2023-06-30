@@ -41,7 +41,7 @@ public class TvShowRepository implements ITvShowRepository
     public <S extends TvShow> S save(S entity)
     {
         var count = count();
-        entity.setTv_show_id(count + 1);
+        entity.setTvshow_id(count + 1);
 
         var parameters = new BeanPropertySqlParameterSource(entity);
         parameters.registerSqlType("realId", Types.BIGINT);
@@ -60,7 +60,7 @@ public class TvShowRepository implements ITvShowRepository
     @Override
     public void delete(TvShow entity)
     {
-        deleteById(entity.getTv_show_id());
+        deleteById(entity.getTvshow_id());
     }
 
     @Override
@@ -152,8 +152,8 @@ public class TvShowRepository implements ITvShowRepository
         genre.setGenre_id((int) (count + 1));
 
         var parameters = new BeanPropertySqlParameterSource(genre);
-        parameters.registerSqlType("p_dbId", Types.BIGINT);
-        parameters.registerSqlType("p_detailId", Types.BIGINT);
+        parameters.registerSqlType("genre_db_id", Types.BIGINT);
+        parameters.registerSqlType("tvshow_detail_id", Types.BIGINT);
 
         m_jdbcTemplate.update(TvShowQuery.SAVE_GENRE_QUERY.getQuery(), parameters);
     }
@@ -165,8 +165,8 @@ public class TvShowRepository implements ITvShowRepository
         company.setCompany_id((int) (count + 1));
 
         var parameters = new BeanPropertySqlParameterSource(company);
-        parameters.registerSqlType("p_dbId", Types.BIGINT);
-        parameters.registerSqlType("p_detailId", Types.BIGINT);
+        parameters.registerSqlType("company_db_id", Types.BIGINT);
+        parameters.registerSqlType("tvshow_detail_id", Types.BIGINT);
 
         m_jdbcTemplate.update(TvShowQuery.SAVE_COMPANY_QUERY.getQuery(), parameters);
     }
@@ -178,8 +178,8 @@ public class TvShowRepository implements ITvShowRepository
         country.setCountry_id((int) (count + 1));
 
         var parameters = new BeanPropertySqlParameterSource(country);
-        parameters.registerSqlType("p_dbId", Types.BIGINT);
-        parameters.registerSqlType("p_detailId", Types.BIGINT);
+        parameters.registerSqlType("country_db_id", Types.BIGINT);
+        parameters.registerSqlType("tvshow_detail_id", Types.BIGINT);
 
         m_jdbcTemplate.update(TvShowQuery.SAVE_COUNTRY_QUERY.getQuery(), parameters);
     }
