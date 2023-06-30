@@ -88,10 +88,14 @@ public class TvShowGetDbService
         var countryIds = new HashSet<Long>();
 
         //GENRE NULL
-        for (DbTvShowWithDetailDTO show : tvShows) {
-            genreIds.addAll(stream(show.genres.split(",")).map(Long::parseLong).toList());
-            companyIds.addAll(stream(show.companies.split(",")).map(Long::parseLong).toList());
-            countryIds.addAll(stream(show.countries.split(",")).map(Long::parseLong).toList());
+        for (DbTvShowWithDetailDTO show : tvShows)
+        {
+            if (show.genres != null)
+                genreIds.addAll(stream(show.genres.split(",")).map(Long::parseLong).toList());
+            if (show.companies != null)
+                companyIds.addAll(stream(show.companies.split(",")).map(Long::parseLong).toList());
+            if (show.countries != null)
+                countryIds.addAll(stream(show.countries.split(",")).map(Long::parseLong).toList());
         }
 
         var genres = m_restTemplate.getForObject(format(m_valueConfig.findAllGenreUrl, genreIds.stream()
@@ -101,31 +105,49 @@ public class TvShowGetDbService
         var countries = m_restTemplate.getForObject(format(m_valueConfig.findAllCountryUrl, countryIds.stream()
                 .map(String::valueOf).collect(joining(","))), ProductionCountriesDTO.class);
 
-        return StreamSupport.stream(tvShows.spliterator(), true).peek(show -> convertGenres(show, genres))
-                .peek(show -> convertCompanies(show, companies)).peek(show -> convertCountries(show, countries)).toList();
+        return StreamSupport.stream(tvShows.spliterator(), true)
+               /* .filter(show -> show.genres != null)
+                .filter(show -> show.companies != null)
+                .filter(show -> show.countries != null)*/
+                .peek(show -> convertGenres(show, genres))
+                .peek(show -> convertCompanies(show, companies))
+                .peek(show -> convertCountries(show, countries))
+                .toList();
     }
 
     private void convertCountries(DbTvShowWithDetailDTO show, ProductionCountriesDTO countries)
     {
-        var ids = stream(show.countries.split(",")).map(Long::parseLong).toList();
-        var countryList = new ArrayList<String>();
-        countries.production_countries.stream().filter(c -> ids.contains(c.getCountry_id())).forEach(c -> countryList.add(c.getName()));
-        show.countries = String.join(",", countryList);
+        if (show.countries == null)
+            show.countries = "N/A";
+        else {
+            var ids = stream(show.countries.split(",")).map(Long::parseLong).toList();
+            var countryList = new ArrayList<String>();
+            countries.production_countries.stream().filter(c -> ids.contains(c.getCountry_id())).forEach(c -> countryList.add(c.getName()));
+            show.countries = String.join(",", countryList);
+        }
     }
 
     private void convertCompanies(DbTvShowWithDetailDTO show, ProductionCompaniesDTO companies)
     {
-        var ids = stream(show.companies.split(",")).map(Long::parseLong).toList();
-        var countryList = new ArrayList<String>();
-        companies.production_companies.stream().filter(c -> ids.contains(c.company_id)).forEach(c -> countryList.add(c.name));
-        show.companies = String.join(",", countryList);
+        if (show.companies == null)
+            show.companies = "N/A";
+        else {
+            var ids = stream(show.companies.split(",")).map(Long::parseLong).toList();
+            var countryList = new ArrayList<String>();
+            companies.production_companies.stream().filter(c -> ids.contains(c.company_id)).forEach(c -> countryList.add(c.name));
+            show.companies = String.join(",", countryList);
+        }
     }
 
     private void convertGenres(DbTvShowWithDetailDTO show, GenresDbDTO genres)
     {
-        var ids = stream(show.genres.split(",")).map(Long::parseLong).toList();
-        var countryList = new ArrayList<String>();
-        genres.genres.stream().filter(c -> ids.contains(c.getGenre_id())).forEach(c -> countryList.add(c.getName()));
-        show.genres = String.join(",", countryList);
+        if (show.genres == null)
+            show.genres = "N/A";
+        else {
+            var ids = stream(show.genres.split(",")).map(Long::parseLong).toList();
+            var countryList = new ArrayList<String>();
+            genres.genres.stream().filter(c -> ids.contains(c.getGenre_id())).forEach(c -> countryList.add(c.getName()));
+            show.genres = String.join(",", countryList);
+        }
     }
 }
