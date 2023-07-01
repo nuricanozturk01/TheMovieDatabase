@@ -34,6 +34,7 @@
         <option value="$PROJECT_DIR$/TvShowService/TvShowGetServiceTMDB/pom.xml" />
         <option value="$PROJECT_DIR$/TvShowService/TvShowPostService/pom.xml" />
         <option value="$PROJECT_DIR$/MovieService/MoviePostService/pom.xml" />
+        <option value="$PROJECT_DIR$/RepositoryLib/UserRepositoryLib/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -41,6 +42,9 @@
         <option value="$PROJECT_DIR$/AppRunner/pom.xml" />
         <option value="$PROJECT_DIR$/MovieService/MovieSaveService/pom.xml" />
         <option value="$PROJECT_DIR$/RepositoryLib/ExternalResourcesRepositoryLib/pom.xml" />
+        <option value="$PROJECT_DIR$/RepositoryLib/UserRepository/pom.xml" />
+        <option value="$PROJECT_DIR$/RepositoryLib/UserRepositoryLib/pom.xml" />
+        <option value="$PROJECT_DIR$/UserService/pom.xml" />
       </set>
     </option>
   </component>
